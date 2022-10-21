@@ -1,6 +1,8 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, OnDestroy} from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,10 @@ export class AppComponent {
   breakpointSubscribe!:Subscription;
   modeSide:boolean = false;
 
-  constructor(private breakpointObserver:BreakpointObserver) {
+  constructor(private breakpointObserver:BreakpointObserver,
+    public authService: AuthService,
+    //public signalrService: SignalrService,
+    private JwtHelper: JwtHelperService) {
 
   }
   ngOnInit(): void {
