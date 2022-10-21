@@ -1,6 +1,11 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <button mat-button (click) = "sidenavOpened = !sidenavOpened"> <mat-icon>menu</mat-icon></button>
+    <span class="spacer"></span>
+    <input  #userNameInput  type="text" [hidden] = "authService.isAuthenticated()" placeholder="User name">
+    <input  #passwordNameInput  type="password" [hidden] = "authService.isAuthenticated()" placeholder="Password">
+    <button *ngIf="!authService.isAuthenticated()" mat-raised-button color = "accent" (click)="login(userNameInput.value)">Login</button>
+    <button *ngIf="authService.isAuthenticated()" mat-raised-button color = "accent" (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
