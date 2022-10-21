@@ -7,7 +7,7 @@ import { Token } from '../models/Token';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
-export const ACCES_TOKEN_KEY = "chat_access_token"
+export const ACCES_TOKEN_KEY = "messenger_access_token"
 
 @Injectable({
   providedIn: 'root'
