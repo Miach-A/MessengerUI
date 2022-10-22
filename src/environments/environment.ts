@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  authApi:"https://localhost:7214/",
-  messengerApi:"https://localhost:7214/"
+  backendApi:"https://localhost:7214/"
 };
 
 /*

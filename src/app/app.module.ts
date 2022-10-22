@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './modules/angular-material.module';
-import { AUTH_API_URL, MESSENGER_API_URL } from './app-injection-tokens';
+import { BACKEND_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCES_TOKEN_KEY } from './services/auth.service';
@@ -30,16 +30,12 @@ export function tokenGetter(){
     JwtModule . forRoot ({
       config : {
         tokenGetter : tokenGetter,
-        allowedDomains: [environment.messengerApi]
+        allowedDomains: [environment.backendApi]
       } })
   ],
   providers: [{
-    provide:AUTH_API_URL,
-    useValue:environment.authApi
-  },
-  {
-    provide:MESSENGER_API_URL,
-    useValue:environment.messengerApi
+    provide:BACKEND_API_URL,
+    useValue:environment.backendApi
   }],
   bootstrap: [AppComponent]
 })

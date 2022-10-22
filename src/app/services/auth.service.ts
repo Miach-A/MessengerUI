@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { User } from '../models/User';
 import { HttpClient } from '@angular/common/http';
-import { AUTH_API_URL } from '../app-injection-tokens';
+import { BACKEND_API_URL } from '../app-injection-tokens';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Token } from '../models/Token';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export const ACCES_TOKEN_KEY = "messenger_access_token"
 export class AuthService {
   private _user:User = new User();
   constructor(private httpClient:HttpClient,
-    @Inject(AUTH_API_URL) private apiUrl:string,
+    @Inject(BACKEND_API_URL) private apiUrl:string,
     private JwtHelper:JwtHelperService,
     private router:Router) {   }
 
