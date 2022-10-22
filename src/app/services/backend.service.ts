@@ -9,7 +9,7 @@ import { ACCES_TOKEN_KEY } from './auth.service';
 })
 export class BackendService {
 
-  constructor(private httpClient: HttpClient,
+  constructor(public httpClient: HttpClient,
     @Inject(BACKEND_API_URL) private uriBase: string) { }
 
   public get(uri: string | undefined, guid?: string, search?: { [key: string]: string }): Observable<Object> {

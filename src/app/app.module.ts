@@ -28,11 +28,11 @@ export function tokenGetter(){
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-/*     JwtModule . forRoot ({
+    JwtModule . forRoot ({
       config : {
         tokenGetter : tokenGetter,
         allowedDomains: [environment.backendApi]
-      } }) */
+      } })
   ],
   providers: [
     {provide:BACKEND_API_URL,useValue:environment.backendApi},

@@ -53,7 +53,7 @@ export class AppComponent {
        var subUser = this.backendService.get("User").subscribe({
         next: (user) => {
           this.user = user as User;
-          console.log(this.user);
+          //console.log(this.user);
         },
         error: (er) => {
           alert(er.message);
@@ -65,7 +65,8 @@ export class AppComponent {
 
     },
     error: (error) => {
-      alert('Login error');
+      //console.log(error);
+      alert(error.message);
     }
   });
 
