@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { User } from '../models/User';
-import { HttpClient } from '@angular/common/http';
-import { BACKEND_API_URL } from '../app-injection-tokens';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Token } from '../models/Token';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { BackendService } from './backend.service';
 
 export const ACCES_TOKEN_KEY = "messenger_access_token"
 
@@ -14,13 +13,13 @@ export const ACCES_TOKEN_KEY = "messenger_access_token"
 })
 export class AuthService {
   private _user:User = new User();
-  constructor(private httpClient:HttpClient,
-    @Inject(BACKEND_API_URL) private apiUrl:string,
+  constructor(
+    private backendService:BackendService,
     private JwtHelper:JwtHelperService,
     private router:Router) {   }
 
   login(name:string, password:string):Observable<Token>{
-    return this.httpClient.post<Token>(`${this.apiUrl}api/Authenticate`, {name: name, password:password});
+    return this.backendService.post("Authenticate",{name: name, password:password}) as Observable<Token>;
   }
 
   isAuthenticated():boolean{
@@ -35,5 +34,10 @@ export class AuthService {
 
   CurentUser():User{
     return this._user;
+  }
+
+  GetToken():string {
+    var token = localStorage.getItem(ACCES_TOKEN_KEY); 
+    return token === null ? "" : token;
   }
 }
