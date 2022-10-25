@@ -19,6 +19,9 @@ export class User{
             obj.chats.forEach(element => {
                 this.chats.push(new Chat(element))   
             });
+            obj.contacts.forEach(element => {
+                this.contacts.push(new Contact(element))   
+            });
         }
     }
  }
