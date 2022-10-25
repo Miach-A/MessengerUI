@@ -31,6 +31,7 @@ export class AuthService {
         localStorage.setItem(ACCES_TOKEN_KEY, (token as Token).access_token);
         console.log("token");
         console.log(token);},
+        error: () => alert("Unauthorized") 
       }),
       //switchMap(() => this.backendService.get("User") as Observable<User>)
       );
@@ -40,12 +41,19 @@ export class AuthService {
       );
 
       var loginsub = getUserInfo.subscribe({
-        next: (user => {
-          this._user = user;
-          console.log("user");
-          console.log(user);
+        next: (user) => {
+          //console.log("user1");
+          //console.log(user);
+          //Object.setPrototypeOf(user,User);
+          //console.log("user2");
+          //console.log(user);
+          //console.log("instanceof");
+          //console.log(user instanceof User);
+          this._user = new User(user);// user;
+
           console.log("_user");
-          console.log(this._user);})
+          console.log(this._user);},
+        error : () => {alert("Unauthorized"); this.logout();}
       });
 
 
