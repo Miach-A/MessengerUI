@@ -40,7 +40,7 @@ export class AppComponent {
   }
 
   login(name: string,password:string) {
-    var sub = this.authService.login(name,password).subscribe({
+/*     var sub = this.authService.login(name,password).subscribe({
       next: (token) => {
       localStorage.setItem(ACCES_TOKEN_KEY, token.access_token);
       //this.token = token.access_token;
@@ -61,6 +61,7 @@ export class AppComponent {
           //this.authService.logout();
         }
       });
+      
       this.subscriptions.push(subUser);
 
     },
@@ -71,7 +72,9 @@ export class AppComponent {
   });
 
 
-    this.subscriptions.push(sub);
+    this.subscriptions.push(sub); */
+    this.authService.login(name,password);
+
   }
 
   logout() {
