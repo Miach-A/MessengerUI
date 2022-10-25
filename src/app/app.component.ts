@@ -40,41 +40,7 @@ export class AppComponent {
   }
 
   login(name: string,password:string) {
-/*     var sub = this.authService.login(name,password).subscribe({
-      next: (token) => {
-      localStorage.setItem(ACCES_TOKEN_KEY, token.access_token);
-      //this.token = token.access_token;
-      //var decodeToken = this.JwtHelper.decodeToken(token.access_token);
-      //this.user.name = decodeToken.name;
-      //this.user = decodeToken.sub;
-      //this.signalrService.user = this.user;
-      //this.signalrService.Connect(); 
-
-       var subUser = this.backendService.get("User").subscribe({
-        next: (user) => {
-          this.user = user as User;
-          //console.log(this.user);
-        },
-        error: (er) => {
-          alert(er.message);
-          //console.log(er);
-          //this.authService.logout();
-        }
-      });
-      
-      this.subscriptions.push(subUser);
-
-    },
-    error: (error) => {
-      //console.log(error);
-      alert(error.message);
-    }
-  });
-
-
-    this.subscriptions.push(sub); */
     this.authService.login(name,password);
-
   }
 
   logout() {
