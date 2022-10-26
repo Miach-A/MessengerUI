@@ -18,7 +18,7 @@ export class AuthService {
     private JwtHelper:JwtHelperService,
     private router:Router) {   }
 
-  login(name:string, password:string){
+  LogIn(name:string, password:string){
 
     const getToken:Observable<{}> = this.backendService.post("Authenticate",{name: name, password:password})
     .pipe(
@@ -34,18 +34,26 @@ export class AuthService {
         next: (user) => this._user = new User(user),
         error : () => {
           alert("Unauthorized");
-          this.logout();}
+          this.Logout();}
       });
 
   }
 
-  isAuthenticated():boolean{
+  GetUserInfo(){
+    (this.backendService.get("User") as Observable<User>).subscribe({
+      next: (user) => this._user = new User(user),
+      error : () => this.Logout()
+    })
+  }
+
+  IsAuthenticated():boolean{
     var token = localStorage.getItem(ACCES_TOKEN_KEY);
     return !!token && !this.JwtHelper.isTokenExpired(token);
   }
 
-  logout():void{
+  Logout():void{
     localStorage.removeItem(ACCES_TOKEN_KEY);
+    this._user = new User();
     this.router.navigate(['']);
   }
 

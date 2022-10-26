@@ -2,10 +2,10 @@
   <mat-toolbar-row>
     <button mat-button (click) = "sidenavOpened = !sidenavOpened"> <mat-icon>menu</mat-icon></button>
     <span class="spacer"></span>
-    <input  #userNameInput  type="text" [hidden] = "authService.isAuthenticated()" placeholder="User name">
-    <input  #passwordNameInput  type="password" [hidden] = "authService.isAuthenticated()" placeholder="Password">
-    <button *ngIf="!authService.isAuthenticated()" mat-raised-button color = "accent" (click)="login(userNameInput.value,passwordNameInput.value)">Login</button>
-    <button *ngIf="authService.isAuthenticated()" mat-raised-button color = "accent" (click)="logout()">Logout</button>
+    <input  #userNameInput  type="text" [hidden] = "authService.IsAuthenticated()" placeholder="User name">
+    <input  #passwordNameInput  type="password" [hidden] = "authService.IsAuthenticated()" placeholder="Password">
+    <button *ngIf="!authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Login(userNameInput.value,passwordNameInput.value)">Login</button>
+    <button *ngIf="authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -19,6 +19,7 @@
             Contacts
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <div>{{authService.CurentUser().name}}</div>
         <app-contact-icon [contact]="contact" *ngFor="let contact of this.authService.CurentUser().contacts"></app-contact-icon>
 <!--         <button class="sidenav_button" mat-button routerLink="/directories/organization">Organization</button>
         <button class="sidenav_button" mat-button routerLink="/directories/warehouse">Warehouse</button>

@@ -27,24 +27,29 @@ export class AppComponent {
     private JwtHelper: JwtHelperService) {
 
   }
+
   ngOnInit(): void {
     this.breakpointSubscribe = this.breakpointObserver.observe(["(min-width:1024px)"]).subscribe(x => this.modeSide = x.matches);
+    this.authService.GetUserInfo();
     /*var token = localStorage.getItem(ACCES_TOKEN_KEY);
     if (token != null){
       this.token = token;
     }  */
+  }
+  ngAfterViewChecked(){
+    console.log(this.authService.CurentUser());
   }
 
   ngOnDestroy():void{
     this.breakpointSubscribe.unsubscribe();
   }
 
-  login(name: string,password:string) {
-    this.authService.login(name,password);
+  Login(name: string,password:string) {
+    this.authService.LogIn(name,password);
   }
 
-  logout() {
-    this.authService.logout();
+  Logout() {
+    this.authService.Logout();
     
     //this.signalrService.Disconnect();
     //this.curentGroup = null;
