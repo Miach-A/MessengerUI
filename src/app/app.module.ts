@@ -13,13 +13,15 @@ import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCES_TOKEN_KEY } from './services/auth.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ContactIconComponent } from './components/contact-icon/contact-icon.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCES_TOKEN_KEY);
 }
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ContactIconComponent
   ],
   imports: [
     BrowserModule,

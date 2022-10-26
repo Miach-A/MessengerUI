@@ -18,11 +18,11 @@ export class AppComponent {
   modeSide:boolean = false;
   subscriptions: Subscription[] = [];
   //token:string = "";
-  public user: User = new User();
+  //public user: User = new User();
 
   constructor(private breakpointObserver:BreakpointObserver,
     public authService: AuthService,
-    private backendService:BackendService,
+    //private backendService:BackendService,
     //public signalrService: SignalrService,
     private JwtHelper: JwtHelperService) {
 
@@ -45,6 +45,7 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+    
     //this.signalrService.Disconnect();
     //this.curentGroup = null;
   }
