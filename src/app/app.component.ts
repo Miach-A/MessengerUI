@@ -36,9 +36,6 @@ export class AppComponent {
       this.token = token;
     }  */
   }
-  ngAfterViewChecked(){
-    console.log(this.authService.CurentUser());
-  }
 
   ngOnDestroy():void{
     this.breakpointSubscribe.unsubscribe();

@@ -13,7 +13,7 @@ export class ContactIconComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.contact);
+    
   }
 
 }
