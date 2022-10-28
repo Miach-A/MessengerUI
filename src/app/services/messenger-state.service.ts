@@ -70,10 +70,9 @@ export class MessengerStateService {
   }
 
   public GetMessageDTO(text:string):UpdateMessageDTO|CreateMessageDTO|undefined{
-    
     if (this.GetChat() === undefined
       || this._user === undefined) {
-      return new Message();
+      return undefined;
     } 
 
     if (this._event === ChatEvent.Update){
@@ -82,12 +81,6 @@ export class MessengerStateService {
     else{
       return this.GetCreateMessageDTO(text);
     }
- 
-/*     message.chatGuid = (this.GetChat() as Chat).guid;
-    message.commentedMessage = this._targetMessage;
-    message.contactName = this._user.name;
-    message.text = text;
-    return message; */
   }
 
   private GetUpdateMessageDTO(text:string):UpdateMessageDTO{
@@ -101,7 +94,10 @@ export class MessengerStateService {
 
   private GetCreateMessageDTO(text:string):CreateMessageDTO{
     const message = new CreateMessageDTO();
-
+    message.chatGuid = (this.GetChat() as Chat).guid;
+    message.commentedMessageGuid = this._targetMessage?.guid;
+    message.text = text;
     return message;
   }
+
 }
