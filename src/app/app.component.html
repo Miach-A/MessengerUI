@@ -19,7 +19,7 @@
             Contacts
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-contact-icon [contact]="contact" *ngFor="let contact of this.authService.CurentUser().contacts"></app-contact-icon>
+        <app-contact-icon [contact]="contact" *ngFor="let contact of this.messengerState.GetUser()?.contacts"></app-contact-icon>
       </mat-expansion-panel>
     </mat-accordion>
 
@@ -36,7 +36,6 @@
 
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-workplace></app-workplace>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
