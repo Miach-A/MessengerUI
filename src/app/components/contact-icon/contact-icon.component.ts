@@ -18,7 +18,7 @@ export class ContactIconComponent implements OnInit {
   }
 
   SetCurrentChat(){
-    console.log('click');
+    this.messengerState.SetContact(this.contact);
     this.messengerState.SetChat(this.contact);
   }
 

@@ -12,6 +12,7 @@ import { User } from '../models/User';
 })
 export class MessengerStateService {
   private _user?:User;
+  private _contact?:Contact;
   private _chat?:Chat;
   private _event:ChatEvent = ChatEvent.New;
   private _targetMessage?:Message;
@@ -19,9 +20,6 @@ export class MessengerStateService {
   constructor() { }
 
   public SetUser(user:User){
-    console.log("user");
-    console.log(this._user);
-    console.log("----");
     this._user = user; 
     this._chat = undefined;
     this._event = ChatEvent.New;
@@ -33,31 +31,23 @@ export class MessengerStateService {
     return this._user;
   }
 
+  public SetContact(contact:Contact){
+    this._contact = contact;
+  }
+
   public SetChat(contact:Contact):void;
   public SetChat(chat:Chat):void;
   public SetChat(arg:Chat|Contact){
-    //console.log(this._user);
-    console.log(this._user?.chats);
-    console.log("1");
-    console.log(this._user?.chats.find(x => x.users.length == 2));
-    console.log("2");
-    //var dd = (arg as Contact);
-    //console.log(dd);
- 
-    //console.log(this._user?.chats.find(x => x.users.includes((arg as Contact))));
-    console.log(this._user?.chats.find(x => x.users.findIndex(y => y.name === arg.name) !== -1));
     if (arg instanceof Chat){
       this._chat = arg;
     }
     else{
-      this._chat = this._user?.chats.find(x => x.users.length == 2 && x.users.includes((arg as Contact)));
+      this._chat = this._user?.chats.find(x => x.users.length == 2 && x.users.findIndex(y => y.name === arg.name) !== -1 );
     }
     this._event = ChatEvent.New;
     this._targetMessage = undefined;
     this._targetChat = undefined;
-    //console.log(this._chat);
   }
-
 
   private GetChat():Chat|undefined{
     return this._targetChat === undefined ? this._chat : this._targetChat;

@@ -14,6 +14,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ACCES_TOKEN_KEY } from './services/auth.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ContactIconComponent } from './components/contact-icon/contact-icon.component';
+import { WorkplaceComponent } from './components/workplace/workplace.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCES_TOKEN_KEY);
@@ -21,7 +22,8 @@ export function tokenGetter(){
 @NgModule({
   declarations: [
     AppComponent,
-    ContactIconComponent
+    ContactIconComponent,
+    WorkplaceComponent
   ],
   imports: [
     BrowserModule,
