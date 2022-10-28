@@ -5,6 +5,7 @@ import { Token } from '../models/Token';
 import { Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { BackendService } from './backend.service';
+import { MessengerStateService } from './messenger-state.service';
 
 export const ACCES_TOKEN_KEY = "messenger_access_token"
 
@@ -14,6 +15,7 @@ export const ACCES_TOKEN_KEY = "messenger_access_token"
 export class AuthService {
   private _user:User = new User();
   constructor(
+    private messengerState:MessengerStateService,
     private backendService:BackendService,
     private JwtHelper:JwtHelperService,
     private router:Router) {   }
@@ -31,7 +33,7 @@ export class AuthService {
       );
 
       getUserInfo.subscribe({
-        next: (user) => this._user = new User(user),
+        next: (user) => this.messengerState.SetUser(new User(user)),//this._user = new User(user),
         error : () => {
           alert("Unauthorized");
           this.Logout();}
@@ -41,7 +43,7 @@ export class AuthService {
 
   GetUserInfo(){
     (this.backendService.get("User") as Observable<User>).subscribe({
-      next: (user) => this._user = new User(user),
+      next: (user) => this.messengerState.SetUser(new User(user)),//this._user = new User(user),
       error : () => this.Logout()
     })
   }
@@ -53,12 +55,14 @@ export class AuthService {
 
   Logout():void{
     localStorage.removeItem(ACCES_TOKEN_KEY);
-    this._user = new User();
+    //this._user = new User();
+    this.messengerState.SetUser(new User());
     this.router.navigate(['']);
   }
 
   CurentUser():User{
-    return this._user;
+    //return this._user;
+    return this.messengerState.GetUser() ?? new User();
   }
 
   GetToken():string {

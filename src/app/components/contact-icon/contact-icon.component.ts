@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/Contact';
+import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
 @Component({
   selector: 'app-contact-icon',
@@ -10,10 +11,15 @@ export class ContactIconComponent implements OnInit {
 
   @Input()
   contact!:Contact;
-  constructor() { }
+  constructor(private messengerState:MessengerStateService) { }
 
   ngOnInit(): void {
     
+  }
+
+  SetCurrentChat(){
+    console.log('click');
+    this.messengerState.SetChat(this.contact);
   }
 
 }
