@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { User } from './models/User';
 import { ACCES_TOKEN_KEY, AuthService } from './services/auth.service';
 import { BackendService } from './services/backend.service';
+import { MessengerStateService } from './services/messenger-state.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
 
   constructor(private breakpointObserver:BreakpointObserver,
     public authService: AuthService,
+    public messengerState: MessengerStateService,
     //private backendService:BackendService,
     //public signalrService: SignalrService,
     private JwtHelper: JwtHelperService) {

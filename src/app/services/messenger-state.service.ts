@@ -19,7 +19,7 @@ export class MessengerStateService {
   private _targetChat?:Chat;
   constructor() { }
 
-  public SetUser(user:User){
+  public SetUser(user?:User){
     this._user = user; 
     this._chat = undefined;
     this._event = ChatEvent.New;

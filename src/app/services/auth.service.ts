@@ -33,7 +33,7 @@ export class AuthService {
       );
 
       getUserInfo.subscribe({
-        next: (user) => this.messengerState.SetUser(new User(user)),//this._user = new User(user),
+        next: (user) => this.messengerState.SetUser(new User(user)),
         error : () => {
           alert("Unauthorized");
           this.Logout();}
@@ -43,7 +43,7 @@ export class AuthService {
 
   GetUserInfo(){
     (this.backendService.get("User") as Observable<User>).subscribe({
-      next: (user) => this.messengerState.SetUser(new User(user)),//this._user = new User(user),
+      next: (user) => this.messengerState.SetUser(new User(user)),
       error : () => this.Logout()
     })
   }
@@ -55,14 +55,8 @@ export class AuthService {
 
   Logout():void{
     localStorage.removeItem(ACCES_TOKEN_KEY);
-    //this._user = new User();
-    this.messengerState.SetUser(new User());
+    this.messengerState.SetUser(undefined);
     this.router.navigate(['']);
-  }
-
-  CurentUser():User{
-    //return this._user;
-    return this.messengerState.GetUser() ?? new User();
   }
 
   GetToken():string {

@@ -14,7 +14,11 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ACCES_TOKEN_KEY } from './services/auth.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ContactIconComponent } from './components/contact-icon/contact-icon.component';
-import { WorkplaceComponent } from './components/workplace/workplace.component';
+import { ContactInfoComponent } from './components/contact-info/contact-info.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
+import { ChatInfoComponent } from './components/chat-info/chat-info.component';
+import { HomeComponent } from './components/home/home.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCES_TOKEN_KEY);
@@ -23,7 +27,11 @@ export function tokenGetter(){
   declarations: [
     AppComponent,
     ContactIconComponent,
-    WorkplaceComponent
+    ContactInfoComponent,
+    ChatComponent,
+    ChatIconComponent,
+    ChatInfoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
