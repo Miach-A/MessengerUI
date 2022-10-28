@@ -1,8 +1,6 @@
-export class Message{
+export class UpdateMessageDTO{
     date:Date = new Date();
     guid:string = "";
     chatGuid:string = "";
-    contactName:string = "";
-    commentedMessage?:Message;
     text:string = "";
 }
