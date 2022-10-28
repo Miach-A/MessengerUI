@@ -96,6 +96,7 @@ export class MessengerStateService {
     const message = new CreateMessageDTO();
     message.chatGuid = (this.GetChat() as Chat).guid;
     message.commentedMessageGuid = this._targetMessage?.guid;
+    message.commentedMessageDate = this._targetMessage?.date;
     message.text = text;
     return message;
   }
