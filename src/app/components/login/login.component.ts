@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,8 +10,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   private trySubmit:boolean = false;
-  //public username:string = "";
-  //public password:string = "";
   public loginForm!:FormGroup;
 
   constructor(
@@ -20,8 +18,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      name: new FormControl(),
-      password: new FormControl()
+      name: new FormControl('',[Validators.required]),
+      password: new FormControl('',[Validators.required])
     });
   }
 
@@ -30,8 +28,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    this.authService.LogIn(this.loginForm.value.name,this.loginForm.value.password);
-    this.trySubmit = true;
+    if (this.loginForm.valid) {
+      this.authService.LogIn(this.loginForm.value.name,this.loginForm.value.password);
+      this.trySubmit = true;
+    }
   }
 
 }
