@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { BackendService } from 'src/app/services/backend.service';
+import { ValidateService } from 'src/app/services/validate.service';
 
 @Component({
   selector: 'app-registration',
@@ -8,37 +10,31 @@ import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 })
 export class RegistrationComponent implements OnInit {
   public registrationForm!:FormGroup;
- 
+  public error?:string;
+
   constructor(
+    private validateService:ValidateService,
+    private backend:BackendService
   ) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
       name: new FormControl('',[Validators.required]),
       password: new FormControl('',[Validators.required]),
-      passwordConfirmation: new FormControl('',[Validators.required])
+      passwordConfirm: new FormControl('',[Validators.required])
     },
-    //{validators:[this.MastMatch('password','passwordConfirmation')]}
-    
-/*     {
-      validators:this.MastMatch('password','passwordConfirmation')
-    } */
+    this.validateService.passwordMatch('password', 'passwordConfirm')
     );
   }
-  
-  MastMatch(value1:string,value2:string){
-    return function(formGroup:FormGroup){
-      const control = formGroup.controls[value1];
-      const controlConfirm = formGroup.controls[value2];
-      if (control.value != controlConfirm.value){
-        controlConfirm.setErrors({MastMatch:true});
-        //{MastMatch:true};
-      }
-      else{
-        controlConfirm.setErrors(null);
-        //return null;
-      }
-    }
-  }
 
+  onSubmit(){
+    if (this.registrationForm.invalid){
+      return;
+    }
+    var sub = this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
+      next: (user) => {console.log(user); this.error = undefined;},
+      error: (error) => this.error = error.error
+    })
+  }
+  
 }

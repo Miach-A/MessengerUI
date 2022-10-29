@@ -28,10 +28,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    if (this.loginForm.valid) {
-      this.authService.LogIn(this.loginForm.value.name,this.loginForm.value.password);
-      this.trySubmit = true;
+    if (this.loginForm.invalid) {
+      return;
     }
+
+    this.authService.LogIn(this.loginForm.value.name, this.loginForm.value.password);
+    this.trySubmit = true;
   }
 
 }

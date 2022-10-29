@@ -32,7 +32,10 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.breakpointSubscribe = this.breakpointObserver.observe(["(min-width:1024px)"]).subscribe(x => this.modeSide = x.matches);
-    this.authService.GetUserInfo();
+    if (this.authService.IsAuthenticated()){
+      this.authService.GetUserInfo();
+    }
+    
     /*var token = localStorage.getItem(ACCES_TOKEN_KEY);
     if (token != null){
       this.token = token;

@@ -10,7 +10,7 @@ import { LoginGuardService } from './services/login-guard.service';
 const routes: Routes = [
   {path:"",component:HomeComponent},
   {path:"login",component:LoginComponent, canActivate: [LoginGuardService] },
-  {path:"registration",component:RegistrationComponent},
+  {path:"registration",component:RegistrationComponent,canActivate: [LoginGuardService]},
   {path:"contactinfo/:name",component:ContactInfoComponent},
   {path:"chat/:guid",component:ChatComponent}
 ];
