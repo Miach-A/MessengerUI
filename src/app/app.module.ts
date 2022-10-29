@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './modules/angular-material.module';
 import { BACKEND_API_URL } from './app-injection-tokens';
@@ -35,14 +35,16 @@ export function tokenGetter(){
     ChatInfoComponent,
     HomeComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularMaterialModule,
     BrowserAnimationsModule,
-    FormsModule,
+    //FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     JwtModule . forRoot ({
       config : {

@@ -4,9 +4,9 @@
     <span class="spacer"></span>
 <!--     <input  #userNameInput  type="text" [hidden] = "authService.IsAuthenticated()" placeholder="User name">
     <input  #passwordNameInput  type="password" [hidden] = "authService.IsAuthenticated()" placeholder="Password">
-    <button *ngIf="!authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Login(userNameInput.value,passwordNameInput.value)">Login</button>
-    <button *ngIf="authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Logout()">Logout</button> -->
-    <button routerLink="login" mat-raised-button color = "accent">Login</button>
+    <button *ngIf="!authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Login(userNameInput.value,passwordNameInput.value)">Login</button>-->
+    <button *ngIf="authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Logout()">Logout</button> 
+    <button *ngIf="!authService.IsAuthenticated()" routerLink="login" mat-raised-button color = "accent">Login</button>
   </mat-toolbar-row>
 </mat-toolbar>
 

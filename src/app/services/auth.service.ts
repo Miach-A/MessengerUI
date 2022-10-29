@@ -33,10 +33,11 @@ export class AuthService {
       );
 
       getUserInfo.subscribe({
-        next: (user) => this.messengerState.SetUser(new User(user)),
+        next: (user) => {this.messengerState.SetUser(new User(user)); this.router.navigate(['/'])},
         error : () => {
-          alert("Unauthorized");
-          this.Logout();}
+          //alert("Unauthorized");
+          //this.Logout();
+        }
       });
 
   }
@@ -56,7 +57,7 @@ export class AuthService {
   Logout():void{
     localStorage.removeItem(ACCES_TOKEN_KEY);
     this.messengerState.SetUser(undefined);
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
   }
 
   GetToken():string {
