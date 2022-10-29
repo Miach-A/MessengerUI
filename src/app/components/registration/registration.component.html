@@ -1,10 +1,17 @@
 <mat-card>
     <mat-card-content>
-      <form [formGroup] = "registrationForm" (ngSubmit)="onSubmit()">
+      <form [formGroup] = "registrationForm" (ngSubmit)="Submit()">
         <h2>Registration</h2>
-        <mat-error *ngIf="this.error != undefined">
-          {{this.error}}
-        </mat-error>
+
+        <div *ngIf="HasErrors()">
+            <div *ngFor="let error of GetErrors()">
+                {{error[0]}}
+                <mat-error *ngFor="let error of error[1]">         
+                    {{error}}
+                </mat-error>
+            </div>
+        </div>
+
         <mat-form-field>
           <input matInput placeholder="Name" formControlName = "name">
         </mat-form-field>

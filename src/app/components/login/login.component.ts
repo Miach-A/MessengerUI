@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     return !this.trySubmit || this.authService.IsAuthenticated();
   }
 
-  onSubmit(){
+  Submit(){
     if (this.loginForm.invalid) {
       return;
     }

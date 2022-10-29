@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
 import { ValidateService } from 'src/app/services/validate.service';
 
@@ -10,11 +11,12 @@ import { ValidateService } from 'src/app/services/validate.service';
 })
 export class RegistrationComponent implements OnInit {
   public registrationForm!:FormGroup;
-  public error?:string;
+  public errors?:object = undefined;
 
   constructor(
     private validateService:ValidateService,
-    private backend:BackendService
+    private backend:BackendService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -27,13 +29,21 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  onSubmit(){
+  HasErrors():boolean{ 
+    return this.errors != undefined;
+  }
+
+  GetErrors(){
+    return Object.entries((this.errors as object));
+  }
+
+  Submit(){
     if (this.registrationForm.invalid){
       return;
     }
     var sub = this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
-      next: (user) => {console.log(user); this.error = undefined;},
-      error: (error) => this.error = error.error
+      next: (user) => {this.errors = undefined; this.router.navigate(['/login'])},
+      error: (responce) => {this.errors = responce.error.errors; console.log(responce);} 
     })
   }
   

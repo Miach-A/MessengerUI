@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-      <form [formGroup] = "loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup] = "loginForm" (ngSubmit)="Submit()">
         <h2>Login</h2>
         <mat-error *ngIf="!LoginValid()">
           The username and password were not recognized
