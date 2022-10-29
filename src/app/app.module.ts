@@ -19,6 +19,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
 import { ChatInfoComponent } from './components/chat-info/chat-info.component';
 import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCES_TOKEN_KEY);
@@ -31,7 +33,9 @@ export function tokenGetter(){
     ChatComponent,
     ChatIconComponent,
     ChatInfoComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
