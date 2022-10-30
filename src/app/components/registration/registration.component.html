@@ -19,7 +19,7 @@
           Min length 3
         </mat-error>
         <mat-error *ngIf="this.registrationForm.controls['name'].hasError('maxlength')">
-          Man length 36
+          Max length 36
         </mat-error>
         <mat-error *ngIf="this.registrationForm.controls['name'].hasError('pattern')">
           Only alphabet and numbers
@@ -35,7 +35,7 @@
             Password mismatch
         </mat-error>
          <br>
-         
+
         <button mat-raised-button color="accent">Submit</button>
       </form>
     </mat-card-content>
