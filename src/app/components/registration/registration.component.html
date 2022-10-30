@@ -15,6 +15,16 @@
         <mat-form-field>
           <input matInput placeholder="Name" formControlName = "name">
         </mat-form-field>
+        <mat-error *ngIf="this.registrationForm.controls['name'].hasError('minlength')">
+          Min length 3
+        </mat-error>
+        <mat-error *ngIf="this.registrationForm.controls['name'].hasError('maxlength')">
+          Man length 36
+        </mat-error>
+        <mat-error *ngIf="this.registrationForm.controls['name'].hasError('pattern')">
+          Only alphabet and numbers
+        </mat-error>
+
         <mat-form-field>
           <input matInput type="password" placeholder="Password" formControlName = "password">
         </mat-form-field>
@@ -25,6 +35,7 @@
             Password mismatch
         </mat-error>
          <br>
+         
         <button mat-raised-button color="accent">Submit</button>
       </form>
     </mat-card-content>

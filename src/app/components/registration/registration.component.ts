@@ -21,7 +21,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      name: new FormControl('',[Validators.required]),
+      name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(36),Validators.pattern("^[a-zA-Z0-9]+$")]),
       password: new FormControl('',[Validators.required]),
       passwordConfirm: new FormControl('',[Validators.required])
     },
@@ -38,12 +38,16 @@ export class RegistrationComponent implements OnInit {
   }
 
   Submit(){
+    //console.log(this.registrationForm);
+    //return;
     if (this.registrationForm.invalid){
       return;
     }
     var sub = this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
-      next: (user) => {this.errors = undefined; this.router.navigate(['/login'])},
-      error: (responce) => {this.errors = responce.error.errors; console.log(responce);} 
+      next: (user) => {
+        this.errors = undefined; 
+        this.router.navigate(['/login'])},
+      error: (responce) => {this.errors = responce.error.errors;} 
     })
   }
   
