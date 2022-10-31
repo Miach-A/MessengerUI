@@ -19,7 +19,7 @@ export class UserInfoComponent implements OnInit {
   constructor(
     private messengerState:MessengerStateService,
     private authService:AuthService,
-    private back:BackendService,
+    private backendService:BackendService,
   ) { 
     this.user = messengerState.GetUser();
   }
@@ -28,19 +28,32 @@ export class UserInfoComponent implements OnInit {
     if (this.user === undefined) {
       this._subscriptions.push(
         this.authService.GetUserInfo().subscribe({
-        next: () => {this.user = this.messengerState.GetUser();}
+        next: () => {
+          this.user = this.messengerState.GetUser();
+          this.SetUserForm();} 
       }));   
     }
-    
+    else{
+      this.SetUserForm();
+    }
+  }
+
+  SetUserForm(){
     this.userForm = new FormGroup({
       firstName: new FormControl(),
       lastName: new FormControl(),
       phoneNumber:new FormControl('',[Validators.pattern('^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$')])
     });
+
+    this.userForm.setValue({
+      firstName:this.user?.firstName,
+      lastName:this.user?.lastName,
+      phoneNumber:this.user?.phoneNumber,
+    });
   }
 
   public Submit(){
-
+    this._subscriptions.push(this.backendService.put('user',this.userForm.value).subscribe());
   }
 
   ngOnDestroy(){
