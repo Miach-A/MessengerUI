@@ -27,8 +27,8 @@ export class MessengerStateService {
     this._targetChat = undefined;
   }
 
-  public GetUser():User|undefined{
-    return this._user;
+  public GetUser():User{
+    return this._user ?? new User();
   }
 
   public SetContact(contact:Contact){

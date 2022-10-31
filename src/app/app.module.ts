@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ChatModule } from './components/chat/chat.module';
 import { ContactModule } from './components/contact/contact.module';
+import { UserModule } from './components/user/user.module';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCES_TOKEN_KEY);
@@ -27,7 +28,7 @@ export function tokenGetter(){
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegistrationComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,7 @@ export function tokenGetter(){
     BrowserAnimationsModule,
     ChatModule,
     ContactModule,
+    UserModule,
     ReactiveFormsModule,
     HttpClientModule,
     JwtModule . forRoot ({
