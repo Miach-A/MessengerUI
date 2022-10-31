@@ -1,7 +1,7 @@
-p:hover{
-    margin: 0.3rem;
-}
-
 .active{
     background-color: antiquewhite;
+}
+
+:host{
+    display: block;
 }
