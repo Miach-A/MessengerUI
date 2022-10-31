@@ -35,10 +35,10 @@ export function tokenGetter(){
     AppRoutingModule,
     AngularMaterialModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     ChatModule,
     ContactModule,
     UserModule,
-    ReactiveFormsModule,
     HttpClientModule,
     JwtModule . forRoot ({
       config : {

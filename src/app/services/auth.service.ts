@@ -42,11 +42,16 @@ export class AuthService {
 
   }
 
-  GetUserInfo(){
-    (this.backendService.get("User") as Observable<User>).subscribe({
+  GetUserInfo():Observable<User>{
+    return (this.backendService.get("User") as Observable<User>)
+    .pipe(
+      tap(user => this.messengerState.SetUser(new User(user)))
+      );
+/*     .subscribe({
       next: (user) => this.messengerState.SetUser(new User(user)),
       error : () => this.Logout()
-    })
+    }) */
+    
   }
 
   IsAuthenticated():boolean{
