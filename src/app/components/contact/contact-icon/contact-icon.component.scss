@@ -1,7 +1,17 @@
-.active{
-    background-color: antiquewhite;
+a{
+    width: 100%;
 }
 
 :host{
     display: block;
 }
+
+img{
+    width: 30px;
+    height: 30px;
+    display: inline;
+}
+/* .user-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  } */

@@ -20,6 +20,11 @@ export class ContactIconComponent implements OnInit {
   SetCurrentChat(){
     this.messengerState.SetContact(this.contact);
     this.messengerState.SetChat(this.contact);
+    console.log(this.IsCurrentContact());
+  }
+
+  IsCurrentContact():boolean{
+    return this.contact === this.messengerState.GetContact();
   }
 
 }

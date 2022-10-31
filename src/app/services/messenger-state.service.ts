@@ -35,6 +35,10 @@ export class MessengerStateService {
     this._contact = contact;
   }
 
+  public GetContact():Contact | undefined{
+    return this._contact;
+  }
+
   public SetChat(contact:Contact):void;
   public SetChat(chat:Chat):void;
   public SetChat(arg:Chat|Contact){
