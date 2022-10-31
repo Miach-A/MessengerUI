@@ -5,6 +5,13 @@
 <!--     <input  #userNameInput  type="text" [hidden] = "authService.IsAuthenticated()" placeholder="User name">
     <input  #passwordNameInput  type="password" [hidden] = "authService.IsAuthenticated()" placeholder="Password">
     <button *ngIf="!authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Login(userNameInput.value,passwordNameInput.value)">Login</button>-->
+    <mat-chip-list>
+      <mat-chip color="accent" routerLink="user" *ngIf="authService.IsAuthenticated()">
+        <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"/>
+        {{messengerState.GetUser()?.name}}
+      </mat-chip>
+    </mat-chip-list>
+    <span>&nbsp;&nbsp;</span>
     <button *ngIf="authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Logout()">Logout</button> 
     <button *ngIf="!authService.IsAuthenticated()" routerLink="login" mat-raised-button color = "accent">Login</button>
   </mat-toolbar-row>

@@ -11,13 +11,10 @@ import { MessengerStateService } from './services/messenger-state.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'MessengerUI';
-  sidenavOpened:boolean = true;
-  breakpointSubscribe!:Subscription;
-  modeSide:boolean = false;
-  subscriptions: Subscription[] = [];
-  //token:string = "";
-  //public user: User = new User();
+  public title = 'MessengerUI';
+  public sidenavOpened:boolean = true;
+  public modeSide:boolean = false;
+  private _subscriptions: Subscription[] = [];
 
   constructor(private breakpointObserver:BreakpointObserver,
     public authService: AuthService,
@@ -29,19 +26,16 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.breakpointSubscribe = this.breakpointObserver.observe(["(min-width:1024px)"]).subscribe(x => this.modeSide = x.matches);
+    this._subscriptions.push(this.breakpointObserver.observe(["(min-width:1024px)"]).subscribe(x => this.modeSide = x.matches));
     if (this.authService.IsAuthenticated()){
-      this.authService.GetUserInfo();
+      this._subscriptions.push(this.authService.GetUserInfo().subscribe());
     }
-    
-    /*var token = localStorage.getItem(ACCES_TOKEN_KEY);
-    if (token != null){
-      this.token = token;
-    }  */
   }
 
   ngOnDestroy():void{
-    this.breakpointSubscribe.unsubscribe();
+    this._subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
   }
 
   Login(name: string,password:string) {
@@ -49,8 +43,7 @@ export class AppComponent {
   }
 
   Logout() {
-    this.authService.Logout();
-    
+    this.authService.Logout(); 
     //this.signalrService.Disconnect();
     //this.curentGroup = null;
   }
