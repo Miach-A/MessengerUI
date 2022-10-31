@@ -1,11 +1,11 @@
 <a *ngIf="IsCurrentContact(); else elseBlock"  mat-raised-button color="primary"  routerLink="/contactinfo/{{contact.name}}">
-    <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"/>
+    <!-- <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"/> -->
     {{contact.name}}
 </a>
 
 <ng-template #elseBlock>
     <a mat-card-avatar mat-button routerLink="/contactinfo/{{contact.name}}" (click)="SetCurrentChat()">
-        <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"/>
+        <!-- <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"/> -->
         {{contact.name}}
     </a>
 </ng-template>
