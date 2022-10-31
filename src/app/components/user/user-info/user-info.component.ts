@@ -25,7 +25,6 @@ export class UserInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.userForm = new FormGroup({
       firstName: new FormControl(),
       lastName: new FormControl(),
@@ -37,15 +36,15 @@ export class UserInfoComponent implements OnInit {
         this.authService.GetUserInfo().subscribe({
         next: () => {
           this.user = this.messengerState.GetUser();
-          this.SetUserForm();} 
+          this.SetUserFormValue();} 
       }));   
     }
     else{
-      this.SetUserForm();
+      this.SetUserFormValue();
     }
   }
 
-  SetUserForm(){  
+  SetUserFormValue(){  
     this.userForm.setValue({
       firstName:this.user?.firstName,
       lastName:this.user?.lastName,

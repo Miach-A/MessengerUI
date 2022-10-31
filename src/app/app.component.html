@@ -2,9 +2,6 @@
   <mat-toolbar-row>
     <button mat-button (click) = "sidenavOpened = !sidenavOpened"> <mat-icon>menu</mat-icon></button>
     <span class="spacer"></span>
-<!--     <input  #userNameInput  type="text" [hidden] = "authService.IsAuthenticated()" placeholder="User name">
-    <input  #passwordNameInput  type="password" [hidden] = "authService.IsAuthenticated()" placeholder="Password">
-    <button *ngIf="!authService.IsAuthenticated()" mat-raised-button color = "accent" (click)="Login(userNameInput.value,passwordNameInput.value)">Login</button>-->
     <mat-chip-list>
       <mat-chip color="accent" routerLink="user" *ngIf="authService.IsAuthenticated()">
         <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"/>
@@ -27,6 +24,7 @@
             Contacts
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <app-contacts-search></app-contacts-search>
         <app-contact-icon [contact]="contact" *ngFor="let contact of this.messengerState.GetUser()?.contacts"></app-contact-icon>
       </mat-expansion-panel>
     </mat-accordion>
