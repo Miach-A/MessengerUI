@@ -5,18 +5,20 @@ import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { ContactsSearchComponent } from './contacts-search/contacts-search.component';
 import { AngularMaterialModule } from 'src/app/modules/angular-material.module';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     ContactIconComponent,
     ContactInfoComponent,
-    ContactsSearchComponent
+    ContactsSearchComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     RouterLink,
+    ReactiveFormsModule, 
     AngularMaterialModule
   ],
   exports:[

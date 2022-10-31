@@ -13,10 +13,10 @@ const routes: Routes = [
   {path:"",component:HomeComponent},
   {path:"login",component:LoginComponent, canActivate: [LoginGuardService] },
   {path:"registration",component:RegistrationComponent,canActivate: [LoginGuardService]},
-  {path:"user", component:UserInfoComponent},
-  {path:"searchcontact",component:ContactsSearchComponent},
-  {path:"contactinfo/:name",component:ContactInfoComponent},
-  {path:"chat/:guid",component:ChatComponent}
+  {path:"user", component:UserInfoComponent,canActivate: [LoginGuardService]},
+  {path:"searchcontact",component:ContactsSearchComponent,canActivate: [LoginGuardService]},
+  {path:"contactinfo/:name",component:ContactInfoComponent,canActivate: [LoginGuardService]},
+  {path:"chat/:guid",component:ChatComponent,canActivate: [LoginGuardService]}
 ];
 
 @NgModule({

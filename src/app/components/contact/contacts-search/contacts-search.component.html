@@ -1,6 +1,15 @@
 <!-- <mat-icon>search</mat-icon> -->
-<mat-form-field appearance="standard">
-    <mat-label>Search</mat-label>
-    <input matInput placeholder="...">
-    <mat-icon matSuffix>search</mat-icon>
-</mat-form-field>
+<mat-card class="user-card">
+    <form [formGroup]="contactSearchForm" (ngSubmit)="Submit()">
+        <div class="flex-conteiner">
+            <mat-form-field class="search-input" appearance="standard">
+                <mat-label>Search</mat-label>
+                <input class="search-input" matInput placeholder="...">  
+            </mat-form-field>
+            <button type="submit" mat-button color="primary"><mat-icon matSuffix>search</mat-icon></button>
+        </div>
+    </form>
+
+    
+
+</mat-card>
