@@ -2,9 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
-import { User } from './models/User';
-import { ACCES_TOKEN_KEY, AuthService } from './services/auth.service';
-import { BackendService } from './services/backend.service';
+import { AuthService } from './services/auth.service';
 import { MessengerStateService } from './services/messenger-state.service';
 
 @Component({

@@ -13,14 +13,11 @@ import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCES_TOKEN_KEY } from './services/auth.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { ContactIconComponent } from './components/contact-icon/contact-icon.component';
-import { ContactInfoComponent } from './components/contact-info/contact-info.component';
-import { ChatComponent } from './components/chat/chat.component';
-import { ChatIconComponent } from './components/chat-icon/chat-icon.component';
-import { ChatInfoComponent } from './components/chat-info/chat-info.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { ChatModule } from './components/chat/chat.module';
+import { ContactModule } from './components/contact/contact.module';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCES_TOKEN_KEY);
@@ -28,22 +25,17 @@ export function tokenGetter(){
 @NgModule({
   declarations: [
     AppComponent,
-    ContactIconComponent,
-    ContactInfoComponent,
-    ChatComponent,
-    ChatIconComponent,
-    ChatInfoComponent,
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
-    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularMaterialModule,
     BrowserAnimationsModule,
-    //FormsModule,
+    ChatModule,
+    ContactModule,
     ReactiveFormsModule,
     HttpClientModule,
     JwtModule . forRoot ({
