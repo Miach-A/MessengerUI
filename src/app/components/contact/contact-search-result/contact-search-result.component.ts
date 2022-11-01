@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, switchMap, tap } from 'rxjs';
+import { Contact } from 'src/app/models/Contact';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -11,31 +12,37 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 export class ContactSearchResultComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
   private _searchForm:any;
+  private _contacts:Contact[] = [];
+  private _totalCount:number = 0;
   
   constructor(
-    private messengerState:MessengerStateService,
-    private backendService:BackendService
-  ) { 
-/*     this._subscriptions.push(
-      this.messengerState.getContactSearchEmitter()
-      .subscribe({
-        next: (data:any) => this.ContactSearchChange(data)
-      })
-    ); */
+    private messengerState: MessengerStateService,
+    private backendService: BackendService
+  ) {
+    /*     this._subscriptions.push(
+          this.messengerState.getContactSearchEmitter()
+          .subscribe({
+            next: (data:any) => this.ContactSearchChange(data)
+          })
+        ); */
     this._subscriptions.push(
-    this.messengerState.getContactSearchEmitter()
-    .pipe(
-      tap((data:any) => this._searchForm = data),
-      switchMap((data:any) => this.backendService.get("GetUsers", undefined, data))
-    ).subscribe({
-      next: (data) => { console.log(data); }
-    }));
+      this.messengerState.getContactSearchEmitter()
+        .pipe(
+          tap((data: any) => this._searchForm = data),
+          switchMap((data: any) => this.backendService.get("GetUsers", undefined, data))
+        ).subscribe({
+          next: (data) => {this.SetData(data);}
+        }));
   }
 
   ngOnDestroy(): void {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
+  }
+
+  SetData(data:any){
+    console.log(data);
   }
 
   ngOnInit(): void {
