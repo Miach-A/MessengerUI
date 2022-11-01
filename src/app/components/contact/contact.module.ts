@@ -7,6 +7,7 @@ import { ContactsSearchComponent } from './contacts-search/contacts-search.compo
 import { AngularMaterialModule } from 'src/app/modules/angular-material.module';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ContactSearchResultComponent } from './contact-search-result/contact-search-result.component';
+import { SavedContactInfoComponent } from './saved-contact-info/saved-contact-info.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ContactSearchResultComponent } from './contact-search-result/contact-se
     ContactInfoComponent,
     ContactsSearchComponent,
     ContactSearchResultComponent,
+    SavedContactInfoComponent,
   ],
   imports: [
     CommonModule,

@@ -42,7 +42,12 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   }
 
   SetData(data:any){
-    console.log(data);
+    this._totalCount = data.totalCount;
+    this._contacts = [];
+    data.contacts.forEach((contact:Contact) => {
+      this._contacts.push(new Contact(contact));
+    });
+    console.log(this._contacts);
   }
 
   ngOnInit(): void {
