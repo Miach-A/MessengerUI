@@ -1,21 +1,14 @@
 a{
     width: 100%;
+    text-align: left;
 }
 
 :host{
     display: block;
 }
 
-img{
-    width: 30px;
-    height: 30px;
-    display: inline;
-}
-
 .active{
-    //background-color: #673ab7;
     border: 1px;
     border-color: #673ab7;
-    border-style: solid;
-    
+    border-style: solid;  
 }

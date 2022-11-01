@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/services/backend.service';
 import { ValidateService } from 'src/app/services/validate.service';
 
@@ -9,7 +10,8 @@ import { ValidateService } from 'src/app/services/validate.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
+  private _subscriptions:Subscription[] = [];
   public registrationForm!:FormGroup;
   public errors?:object = undefined;
 
@@ -38,17 +40,23 @@ export class RegistrationComponent implements OnInit {
   }
 
   Submit(){
-    //console.log(this.registrationForm);
-    //return;
     if (this.registrationForm.invalid){
       return;
     }
-    var sub = this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
+    
+    this._subscriptions.push(
+      this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
       next: (user) => {
         this.errors = undefined; 
         this.router.navigate(['/login'])},
       error: (responce) => {this.errors = responce.error.errors;} 
-    })
+    }));
+  }
+
+  ngOnDestroy(){
+    this._subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
   }
   
 }

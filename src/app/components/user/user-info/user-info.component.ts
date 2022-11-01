@@ -11,7 +11,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, OnDestroy{
   public user?:User;
   public userForm!:FormGroup;
   private _subscriptions:Subscription[] = [];
