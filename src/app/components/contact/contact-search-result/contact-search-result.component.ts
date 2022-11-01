@@ -24,8 +24,17 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._subscriptions.push(
-      this.backendService.get("GetUsers",undefined,this.messengerState.GetData()).subscribe({
-        next: (data) => {console.log(data);}
-      })); 
+      this.messengerState.getContactSearchEmitter().subscribe({
+        next: (data:any) => this.ContactSearchChange(data)
+      })
+    );
   }
+
+  ContactSearchChange(data:any){
+    this._subscriptions.push(
+      this.backendService.get("GetUsers", undefined, data).subscribe({
+        next: (data) => { console.log(data); }
+      }));
+  }
+
 }

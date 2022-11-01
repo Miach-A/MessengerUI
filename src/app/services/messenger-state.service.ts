@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Chat } from '../models/Chat';
 import { ChatEvent } from '../models/ChatEvent';
 import { Contact } from '../models/Contact';
@@ -17,16 +17,16 @@ export class MessengerStateService {
   private _event:ChatEvent = ChatEvent.New;
   private _targetMessage?:Message;
   private _targetChat?:Chat;
-  private _data:any;
+  private _contactSearch: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  SetData(data:any){
-    this._data = data;   
+  emitContactSearchEvent(data:any) {
+    this._contactSearch.emit(data);
   }
 
-  GetData():any{
-    return this._data;   
+  getContactSearchEmitter() {
+    return this._contactSearch;
   }
 
   public SetUser(user?:User){

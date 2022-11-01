@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
 @Component({
@@ -28,7 +26,7 @@ export class ContactsSearchComponent implements OnInit {
   }
 
   Submit(){
-    this.messengerState.SetData(this.contactSearchForm.value);
+    this.messengerState.emitContactSearchEvent(this.contactSearchForm.value);
     this.router.navigate(['/contactsearchresult']);
   }
 }
