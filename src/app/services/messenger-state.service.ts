@@ -21,11 +21,15 @@ export class MessengerStateService {
 
   constructor() { }
 
-  emitContactSearchEvent(data:any) {
+  public AddContact(contact:Contact){
+    this._user?.contacts.push(contact);
+  }
+
+  public emitContactSearchEvent(data:any) {
     this._contactSearch.emit(data);
   }
 
-  getContactSearchEmitter() {
+  public getContactSearchEmitter() {
     return this._contactSearch;
   }
 

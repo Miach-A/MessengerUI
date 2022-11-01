@@ -21,7 +21,7 @@ export class ContactInfoComponent implements OnInit {
 
   Submit(){
     this.backendService.post("PostContact",{name:this.contact.name}).subscribe({
-      next: (res) => {this.messengerState}
+      next: (contact) => {this.messengerState.AddContact(new Contact(contact as Contact));}
     })
   }
 }
