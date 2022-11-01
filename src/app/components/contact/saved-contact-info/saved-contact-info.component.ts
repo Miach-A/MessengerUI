@@ -13,10 +13,12 @@ export class SavedContactInfoComponent implements OnInit {
   constructor(
     private messengerState:MessengerStateService
   ) { 
-    this.contact = messengerState.GetContact();
-  }
 
+  }
+  
   ngOnInit(): void {
+    this.contact = this.messengerState.GetContact();
+    console.log(this.contact );
   }
 
 }

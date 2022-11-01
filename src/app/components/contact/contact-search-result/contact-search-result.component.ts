@@ -12,7 +12,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 export class ContactSearchResultComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
   private _searchForm:any;
-  private _contacts:Contact[] = [];
+  public contacts:Contact[] = [];
   private _totalCount:number = 0;
   
   constructor(
@@ -43,11 +43,11 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
 
   SetData(data:any){
     this._totalCount = data.totalCount;
-    this._contacts = [];
+    this.contacts = [];
     data.contacts.forEach((contact:Contact) => {
-      this._contacts.push(new Contact(contact));
+      this.contacts.push(new Contact(contact));
     });
-    console.log(this._contacts);
+    console.log(this.contacts);
   }
 
   ngOnInit(): void {
