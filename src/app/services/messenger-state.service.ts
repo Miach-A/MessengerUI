@@ -12,7 +12,7 @@ import { User } from '../models/User';
 })
 export class MessengerStateService {
   private _user?:User;
-  private _contact?:Contact;
+  //private _contact?:Contact;
   private _chat?:Chat;
   private _event:ChatEvent = ChatEvent.New;
   private _targetMessage?:Message;
@@ -41,12 +41,9 @@ export class MessengerStateService {
     return this._user;
   }
 
-  public SetContact(contact:Contact){
-    this._contact = contact;
-  }
 
-  public GetContact():Contact | undefined{
-    return this._contact;
+  public GetContact(name:string):Contact | undefined{
+    return this._user?.contacts.find(x => x.name === name);
   }
 
   public SetChat(contact:Contact):void;

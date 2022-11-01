@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Contact } from 'src/app/models/Contact';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -9,16 +10,21 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 })
 export class SavedContactInfoComponent implements OnInit {
   public contact?:Contact;
+  private _contactName:string = "";
   
   constructor(
-    private messengerState:MessengerStateService
+    private messengerState:MessengerStateService,
+    private activatedRoute:ActivatedRoute
   ) { 
 
   }
   
   ngOnInit(): void {
-    this.contact = this.messengerState.GetContact();
-    console.log(this.contact );
+    this.activatedRoute.paramMap.subscribe({
+      next: (param) => {
+        this._contactName = param.get('name') ?? "";
+        this.contact = this.messengerState.GetContact(this._contactName)}
+    })
   }
 
 }
