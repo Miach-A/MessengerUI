@@ -1,26 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/services/backend.service';
+import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
 @Component({
   selector: 'app-contacts-search',
   templateUrl: './contacts-search.component.html',
   styleUrls: ['./contacts-search.component.scss']
 })
-export class ContactsSearchComponent implements OnInit, OnDestroy {
+export class ContactsSearchComponent implements OnInit {
   public contactSearchForm!:FormGroup;
-  private _subscriptions:Subscription[] = [];
 
   constructor(
-    private backendService:BackendService
+    private messengerState:MessengerStateService,
+    private router:Router
   ) { }
-
-  ngOnDestroy(): void {
-    this._subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
-    });
-  }
 
   ngOnInit(): void {
     this.contactSearchForm = new FormGroup({
@@ -32,9 +28,11 @@ export class ContactsSearchComponent implements OnInit, OnDestroy {
   }
 
   Submit(){
-    this._subscriptions.push(
+    //this.contactSearchForm.value
+    this.router.navigate(['/contactsearchresult']);
+/*     this._subscriptions.push(
       this.backendService.get("GetUsers",undefined,this.contactSearchForm.value).subscribe({
-        next: (data) => console.log(data)
-      }));
+        next: (data) => {console.log(data); this.router.navigate(['/contactsearchresult'])}
+      })); */
   }
 }
