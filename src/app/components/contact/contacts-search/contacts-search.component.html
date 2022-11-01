@@ -2,7 +2,7 @@
     <div class="flex-conteiner">
         <mat-form-field class="search-input" appearance="standard">
             <mat-label>Search</mat-label>
-            <input class="search-input" matInput placeholder="..." formControlName="name">
+            <input class="search-input" matInput placeholder="..." formControlName="name" (input)="NavigateSearchResult()" #searchInput>
         </mat-form-field>
         <button type="submit" mat-button color="primary">
             <mat-icon matSuffix>search</mat-icon>

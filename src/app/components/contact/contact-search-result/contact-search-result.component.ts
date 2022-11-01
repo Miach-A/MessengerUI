@@ -14,7 +14,13 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   constructor(
     private messengerState:MessengerStateService,
     private backendService:BackendService
-  ) { }
+  ) { 
+    this._subscriptions.push(
+      this.messengerState.getContactSearchEmitter().subscribe({
+        next: (data:any) => this.ContactSearchChange(data)
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     this._subscriptions.forEach(subscription => {
@@ -23,11 +29,7 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._subscriptions.push(
-      this.messengerState.getContactSearchEmitter().subscribe({
-        next: (data:any) => this.ContactSearchChange(data)
-      })
-    );
+
   }
 
   ContactSearchChange(data:any){

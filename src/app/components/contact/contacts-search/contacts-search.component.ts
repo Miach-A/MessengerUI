@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, fromEvent, map, Observable, tap } from 'rxjs';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
 @Component({
@@ -8,8 +9,10 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   templateUrl: './contacts-search.component.html',
   styleUrls: ['./contacts-search.component.scss']
 })
-export class ContactsSearchComponent implements OnInit {
+export class ContactsSearchComponent implements OnInit, AfterViewInit {
   public contactSearchForm!:FormGroup;
+  public search$:Observable<Event> = new Observable;
+  @ViewChild('searchInput') searchInput!:ElementRef;
 
   constructor(
     private messengerState:MessengerStateService,
@@ -25,8 +28,27 @@ export class ContactsSearchComponent implements OnInit {
     });
   }
 
-  Submit(){
-    this.messengerState.emitContactSearchEvent(this.contactSearchForm.value);
-    this.router.navigate(['/contactsearchresult']);
+  ngAfterViewInit(){
+    this.search$ = fromEvent(this.searchInput.nativeElement,'input');
+    this.search$.pipe(
+      map(event => {
+        return (event.target as HTMLInputElement).value;
+      }),
+      debounceTime(500),
+      map(value => value.length >= 3 ? value : ''),
+      distinctUntilChanged(),
+      tap(() => this.router.navigate(['/contactsearchresult']))
+    ).subscribe(value => {
+      //console.log(value);
+      this.messengerState.emitContactSearchEvent(this.contactSearchForm.value);
+    });
+  }
+
+  NavigateSearchResult(){
+    //this.router.navigate(['/contactsearchresult']);
+  }
+
+  Submit(){ 
+   //this.messengerState.emitContactSearchEvent(this.contactSearchForm.value);
   }
 }
