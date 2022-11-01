@@ -11,7 +11,11 @@ img{
     height: 30px;
     display: inline;
 }
-/* .user-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-  } */
+
+.active{
+    //background-color: #673ab7;
+    border: 1px;
+    border-color: #673ab7;
+    border-style: solid;
+    
+}

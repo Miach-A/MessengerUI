@@ -12,14 +12,12 @@ export class ContactsSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactSearchForm = new FormGroup({
-      name: new FormControl(),
-      firstName: new FormControl(),
-      lastName: new FormControl(),
+      name: new FormControl()
     });
   }
 
   Submit(){
-    //console.log(this.contactSearchForm.value);
+    console.log(this.contactSearchForm.value);
   }
 
 }

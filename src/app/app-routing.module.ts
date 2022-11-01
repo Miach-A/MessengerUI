@@ -8,11 +8,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { UserInfoComponent } from './components/user/user-info/user-info.component';
 import { LoginGuardService } from './services/login-guard.service';
+import { LogoutGuardService } from './services/logout-guard.service';
 
 const routes: Routes = [
   {path:"",component:HomeComponent},
-  {path:"login",component:LoginComponent, canActivate: [LoginGuardService] },
-  {path:"registration",component:RegistrationComponent,canActivate: [LoginGuardService]},
+  {path:"login",component:LoginComponent, canActivate: [LogoutGuardService] },
+  {path:"registration",component:RegistrationComponent,canActivate: [LogoutGuardService]},
   {path:"user", component:UserInfoComponent,canActivate: [LoginGuardService]},
   {path:"searchcontact",component:ContactsSearchComponent,canActivate: [LoginGuardService]},
   {path:"contactinfo/:name",component:ContactInfoComponent,canActivate: [LoginGuardService]},

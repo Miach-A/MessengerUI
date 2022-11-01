@@ -24,8 +24,8 @@
             Contacts
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <!-- <app-contacts-search></app-contacts-search> -->
-        <a class="search-contacts" mat-raised-button routerLink="searchcontact" color="primary" ><mat-icon matSuffix>search</mat-icon>  </a>
+        <app-contacts-search></app-contacts-search>
+        <!-- <a class="search-contacts" mat-raised-button routerLink="searchcontact" color="primary" ><mat-icon matSuffix>search</mat-icon>  </a> -->
         <app-contact-icon [contact]="contact" *ngFor="let contact of this.messengerState.GetUser()?.contacts"></app-contact-icon>
       </mat-expansion-panel>
     </mat-accordion>
