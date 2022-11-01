@@ -1,8 +1,8 @@
-<form [formGroup]="contactSearchForm" (ngSubmit)="Submit()">
+<form [formGroup]="contactSearchForm">
     <div class="flex-conteiner">
         <mat-form-field class="search-input" appearance="standard">
             <mat-label>Search</mat-label>
-            <input class="search-input" matInput placeholder="..." formControlName="name" (input)="NavigateSearchResult()" #searchInput>
+            <input class="search-input" matInput placeholder="min 3 char" formControlName="name" (input)="NavigateSearchResult()" #searchInput>
         </mat-form-field>
         <button type="submit" mat-button color="primary">
             <mat-icon matSuffix>search</mat-icon>
