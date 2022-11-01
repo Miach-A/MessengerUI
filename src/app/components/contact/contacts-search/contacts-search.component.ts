@@ -28,11 +28,7 @@ export class ContactsSearchComponent implements OnInit {
   }
 
   Submit(){
-    //this.contactSearchForm.value
+    this.messengerState.SetData(this.contactSearchForm.value);
     this.router.navigate(['/contactsearchresult']);
-/*     this._subscriptions.push(
-      this.backendService.get("GetUsers",undefined,this.contactSearchForm.value).subscribe({
-        next: (data) => {console.log(data); this.router.navigate(['/contactsearchresult'])}
-      })); */
   }
 }
