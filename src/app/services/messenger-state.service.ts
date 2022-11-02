@@ -12,12 +12,12 @@ import { User } from '../models/User';
 })
 export class MessengerStateService {
   private _user?:User;
-  //private _contact?:Contact;
   private _chat?:Chat;
   private _event:ChatEvent = ChatEvent.New;
   private _targetMessage?:Message;
   private _targetChat?:Chat;
   private _contactSearch: EventEmitter<any> = new EventEmitter();
+  private _userDataChange:EventEmitter<User> = new EventEmitter(); 
 
   constructor() { }
 
@@ -38,12 +38,20 @@ export class MessengerStateService {
     this._user?.contacts.splice(index, 1);
   }
 
-  public emitContactSearchEvent(data:any) {
+  public EmitContactSearchEvent(data:any) {
     this._contactSearch.emit(data);
   }
 
-  public getContactSearchEmitter() {
+  public GetContactSearchEmitter() {
     return this._contactSearch;
+  }
+
+  public GetUserDataChangeEmitter() {
+    return this._contactSearch;
+  }
+
+  public EmitUserDataChangeEvent() {
+    this._userDataChange.emit();
   }
 
   public SetUser(user?:User){
@@ -52,12 +60,12 @@ export class MessengerStateService {
     this._event = ChatEvent.New;
     this._targetMessage = undefined;
     this._targetChat = undefined;
+    this.EmitUserDataChangeEvent();
   }
 
   public GetUser():User|undefined{
     return this._user;
   }
-
 
   public GetContact(name:string):Contact | undefined{
     return this._user?.contacts.find(x => x.name === name);

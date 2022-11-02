@@ -21,7 +21,12 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     private activatedRoute:ActivatedRoute,
     private backendService:BackendService,
     private route:Router) {
-    
+
+    this._subscriptions.push(
+      this.messengerState.GetUserDataChangeEmitter()
+        .subscribe({
+          next: () => { this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
+        }));
    }
  
   ngOnDestroy(): void {
@@ -33,17 +38,13 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe({
       next: (param) => {
-        this.contact = this.messengerState.GetContact(param.get('name') ?? "");
-        this.deleted = false;}
-    })
+        this.UpdateData(param.get('name') ?? "");}
+    });
+  }
 
-    //this.messengerState
-    //does not have time to update from the back-end
-    //need to emit event from messengerState to active route
-
-/*     console.log(this.messengerState.GetUser()?.contacts);
-    this.contact = this.messengerState.GetContact(this.activatedRoute.snapshot.paramMap.get('name') ?? "");
-    console.log(this.contact); */
+  UpdateData(name:string){
+    this.contact = this.messengerState.GetContact(name);
+    this.deleted = false; // check in user contact array and set vulue. can bee fasle 
   }
 
   DeleteContact(){

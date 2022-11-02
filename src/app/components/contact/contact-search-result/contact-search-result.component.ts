@@ -20,7 +20,7 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
     private backendService: BackendService
   ) {
     this._subscriptions.push(
-      this.messengerState.getContactSearchEmitter()
+      this.messengerState.GetContactSearchEmitter()
         .pipe(
           tap((data: any) => this._searchForm = data),
           switchMap((data: any) => this.backendService.get("GetUsers", undefined, data))
