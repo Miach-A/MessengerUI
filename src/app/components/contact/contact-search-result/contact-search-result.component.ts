@@ -12,8 +12,8 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 export class ContactSearchResultComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
   private _searchForm:any;
-  public contacts:Contact[] = [];
   private _totalCount:number = 0;
+  public contacts:Contact[] = [];
   
   constructor(
     private messengerState: MessengerStateService,
