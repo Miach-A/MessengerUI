@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Subscription, switchMap, tap } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
 import { BackendService } from 'src/app/services/backend.service';
@@ -14,6 +15,10 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   private _searchForm:any;
   private _totalCount:number = 0;
   public contacts:Contact[] = [];
+  public length = 100;
+  public pageSize = 25;
+  public pageSizeOptions: number[] = [5, 25, 50, 100];
+  public pageEvent: PageEvent = new PageEvent();
   
   constructor(
     private messengerState: MessengerStateService,
