@@ -22,24 +22,21 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     private backendService:BackendService,
     private route:Router) {
 
+   }
+   
+  ngOnInit(): void {
+    this._subscriptions.push(
+      this.activatedRoute.paramMap.subscribe({
+        next: (param) => {
+          this.UpdateData(param.get('name') ?? "");
+        }
+      }));
+
     this._subscriptions.push(
       this.messengerState.GetUserDataChangeEmitter()
-        .subscribe({
-          next: () => { this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
+        .subscribe({ 
+          next: () => { console.log('test emit user update'); this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
         }));
-   }
- 
-  ngOnDestroy(): void {
-    this._subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
-    });
-  }
-  
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe({
-      next: (param) => {
-        this.UpdateData(param.get('name') ?? "");}
-    });
   }
 
   UpdateData(name:string){
@@ -82,5 +79,11 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
           this.route.navigate(['chat',newChat.guid]);
         }
       }));
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
   }
 }

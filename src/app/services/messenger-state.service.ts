@@ -47,7 +47,7 @@ export class MessengerStateService {
   }
 
   public GetUserDataChangeEmitter() {
-    return this._contactSearch;
+    return this._userDataChange;
   }
 
   public EmitUserDataChangeEvent() {
