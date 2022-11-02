@@ -36,6 +36,14 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
         this.contact = this.messengerState.GetContact(param.get('name') ?? "");
         this.deleted = false;}
     })
+
+    //this.messengerState
+    //does not have time to update from the back-end
+    //need to emit event from messengerState to active route
+
+/*     console.log(this.messengerState.GetUser()?.contacts);
+    this.contact = this.messengerState.GetContact(this.activatedRoute.snapshot.paramMap.get('name') ?? "");
+    console.log(this.contact); */
   }
 
   DeleteContact(){
