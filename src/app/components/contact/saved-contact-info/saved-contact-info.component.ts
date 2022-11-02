@@ -65,8 +65,8 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   }
 
   CreateChat(){
-    this._subscriptions.push(
-      this.backendService.post("PostChat",{contactName:this.contact?.name}).subscribe({
+    this._subscriptions.push(  
+      this.backendService.post("PostChat",{name:this.contact?.name}).subscribe({ 
         next: (chat) => {
           const newChat = new Chat(chat as Chat);
           this.messengerState.AddChat(newChat);
