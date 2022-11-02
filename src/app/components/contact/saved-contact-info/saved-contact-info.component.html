@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="SavedContact()">
   <mat-card-title>{{contact?.name}}</mat-card-title>
   <mat-card-subtitle>{{contact?.firstName}} {{contact?.lastName}}</mat-card-subtitle>
   <mat-card-subtitle>{{contact?.phoneNumber}}</mat-card-subtitle>

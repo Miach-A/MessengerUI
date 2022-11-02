@@ -35,7 +35,7 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     this._subscriptions.push(
       this.messengerState.GetUserDataChangeEmitter()
         .subscribe({ 
-          next: () => { console.log('test emit user update'); this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
+          next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
         }));
   }
 
@@ -79,6 +79,10 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
           this.route.navigate(['chat',newChat.guid]);
         }
       }));
+  }
+
+  SavedContact(){
+    return !!this.messengerState.GetUser()?.contacts.find(x => x === this.contact);
   }
 
   ngOnDestroy(): void {
