@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/Contact';
-import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
 @Component({
   selector: 'app-contact-icon',
@@ -11,7 +10,7 @@ export class ContactIconComponent implements OnInit {
 
   @Input()
   contact!:Contact;
-  constructor(private messengerState:MessengerStateService) { }
+  constructor() { }
 
   ngOnInit(): void {
     

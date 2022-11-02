@@ -1,0 +1,14 @@
+a{
+    width: 100%;
+    text-align: left;
+}
+
+:host{
+    display: block;
+}
+
+.active{
+    border: 1px;
+    border-color: #673ab7;
+    border-style: solid;  
+}

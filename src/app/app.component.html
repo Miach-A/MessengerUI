@@ -25,7 +25,6 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <app-contacts-search></app-contacts-search>
-        <!-- <a class="search-contacts" mat-raised-button routerLink="searchcontact" color="primary" ><mat-icon matSuffix>search</mat-icon>  </a> -->
         <app-contact-icon [contact]="contact" *ngFor="let contact of this.messengerState.GetUser()?.contacts"></app-contact-icon>
       </mat-expansion-panel>
     </mat-accordion>
@@ -37,6 +36,7 @@
             Chats
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <app-chat-icon [chat]="chat"  *ngFor="let chat of this.messengerState.GetUser()?.chats"></app-chat-icon>
        <!--  <button class="sidenav_button" mat-button routerLink="documents/BatchesOfGoodsInWarehouseDocument/income">Income</button> -->
       </mat-expansion-panel>
     </mat-accordion>

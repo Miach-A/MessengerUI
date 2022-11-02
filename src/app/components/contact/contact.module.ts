@@ -5,7 +5,7 @@ import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { ContactsSearchComponent } from './contacts-search/contacts-search.component';
 import { AngularMaterialModule } from 'src/app/modules/angular-material.module';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ContactSearchResultComponent } from './contact-search-result/contact-search-result.component';
 import { SavedContactInfoComponent } from './saved-contact-info/saved-contact-info.component';
 
