@@ -25,6 +25,10 @@ export class MessengerStateService {
     this._user?.contacts.push(contact);
   }
 
+  public AddChat(chat:Chat){
+    this._user?.chats.push(chat);
+  }
+
   public DeleteContact(contact: Contact) {
     const index = this._user?.contacts.indexOf(contact);
     if (index === undefined) {

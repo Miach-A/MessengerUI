@@ -1,6 +1,7 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Chat } from 'src/app/models/Chat';
 import { Contact } from 'src/app/models/Contact';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
@@ -18,7 +19,8 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   constructor(
     private messengerState:MessengerStateService,
     private activatedRoute:ActivatedRoute,
-    private backendService:BackendService) {
+    private backendService:BackendService,
+    private route:Router) {
     
    }
  
@@ -45,5 +47,31 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
             this.messengerState.DeleteContact(this.contact as Contact);
             this.deleted = true;}
         }));
+  }
+
+  OpenChat(){
+    const user = this.messengerState.GetUser();
+    if (!user || !this.contact){
+      return;
+    }
+
+    const chat = user.chats.find(x => x.users.length === 2 && x.users.find(y => y.name === this.contact!.name));
+    if (!chat){
+      this.CreateChat();
+      return;
+    }
+
+    this.route.navigate(['chat',chat.guid]);
+  }
+
+  CreateChat(){
+    this._subscriptions.push(
+      this.backendService.post("PostChat",{contactName:this.contact?.name}).subscribe({
+        next: (chat) => {
+          const newChat = new Chat(chat as Chat);
+          this.messengerState.AddChat(newChat);
+          this.route.navigate(['chat',newChat.guid]);
+        }
+      }));
   }
 }
