@@ -25,6 +25,15 @@ export class MessengerStateService {
     this._user?.contacts.push(contact);
   }
 
+  public DeleteContact(contact:Contact){
+    const index = this._user?.contacts.indexOf(contact);
+    if (index === undefined){
+      return;
+    }
+
+    this._user?.contacts.slice(index,1);
+  }
+
   public emitContactSearchEvent(data:any) {
     this._contactSearch.emit(data);
   }

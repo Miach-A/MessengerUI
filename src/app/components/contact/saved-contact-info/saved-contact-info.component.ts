@@ -37,9 +37,9 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   DeleteContact(){
     this._subscriptions.push(
       this.backendService
-        .post("PostContact", { name: this.contact?.name })
+        .delete("DeleteContact",this.contact?.name)
         .subscribe({
-          next: (contact) => { this.messengerState.AddContact(new Contact(contact as Contact)); }
+          next: (contact) => {this.messengerState.DeleteContact(this.contact as Contact);}
         }));
   }
 }
