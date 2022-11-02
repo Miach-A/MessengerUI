@@ -41,7 +41,6 @@ export class ContactsSearchComponent implements OnInit, AfterViewInit {
         ).subscribe({
           next: (value) => {
             if (value !== '') {
-              console.log(value);
               this.messengerState.emitContactSearchEvent(this.contactSearchForm.value);
             }
           }

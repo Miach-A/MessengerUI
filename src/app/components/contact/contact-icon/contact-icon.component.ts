@@ -16,10 +16,4 @@ export class ContactIconComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
-  SetCurrentContact(){
-    //this.messengerState.SetContact(this.contact);
-    //this.messengerState.SetChat(this.contact);
-  }
-
 }

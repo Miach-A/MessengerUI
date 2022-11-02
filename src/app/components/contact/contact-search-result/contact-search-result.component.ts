@@ -19,12 +19,6 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
     private messengerState: MessengerStateService,
     private backendService: BackendService
   ) {
-    /*     this._subscriptions.push(
-          this.messengerState.getContactSearchEmitter()
-          .subscribe({
-            next: (data:any) => this.ContactSearchChange(data)
-          })
-        ); */
     this._subscriptions.push(
       this.messengerState.getContactSearchEmitter()
         .pipe(
@@ -47,18 +41,9 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
     data.contacts.forEach((contact:Contact) => {
       this.contacts.push(new Contact(contact));
     });
-    console.log(this.contacts);
   }
 
   ngOnInit(): void {
 
   }
-
-/*   ContactSearchChange(data:any){
-    this._subscriptions.push(
-      this.backendService.get("GetUsers", undefined, data).subscribe({
-        next: (data) => { console.log(data); }
-      }));
-  } */
-
 }
