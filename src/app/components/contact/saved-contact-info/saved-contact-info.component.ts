@@ -13,6 +13,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 export class SavedContactInfoComponent implements OnInit,OnDestroy {
   private _subscriptions:Subscription[] = [];
   public contact?:Contact;
+  public deleted:boolean = false;
 
   constructor(
     private messengerState:MessengerStateService,
@@ -30,7 +31,8 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe({
       next: (param) => {
-        this.contact = this.messengerState.GetContact(param.get('name') ?? "")}
+        this.contact = this.messengerState.GetContact(param.get('name') ?? "");
+        this.deleted = false;}
     })
   }
 
@@ -39,7 +41,9 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
       this.backendService
         .delete("DeleteContact",this.contact?.name)
         .subscribe({
-          next: (contact) => {this.messengerState.DeleteContact(this.contact as Contact);}
+          next: (contact) => {
+            this.messengerState.DeleteContact(this.contact as Contact);
+            this.deleted = true;}
         }));
   }
 }

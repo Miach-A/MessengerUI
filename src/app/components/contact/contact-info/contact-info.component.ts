@@ -28,7 +28,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
       return false;
     } 
 
-    if (!!user.contacts.find(x => x.name === this.contact.name)){
+    if (!!user.contacts.find(x => x.name === this.contact.name) || user.name === this.contact.name){
       return true;
     }
     
