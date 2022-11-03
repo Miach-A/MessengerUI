@@ -1,4 +1,13 @@
-.flex-conteiner{
+.contacts-conteiner{
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap:wrap;  
+}
+
+.paginator{
+    display: flex;
+    justify-content:center;
+}
+
+.spacer{
+    flex: 1 0 auto;
 }
