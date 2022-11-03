@@ -3,8 +3,8 @@
       <form [formGroup] = "registrationForm" (ngSubmit)="Submit()">
         <h2>Registration</h2>
 
-        <div *ngIf="HasErrors()">
-            <div *ngFor="let error of GetErrors()">
+        <div *ngIf="hasErrors">
+            <div *ngFor="let error of errors">
                 {{error[0]}}
                 <mat-error *ngFor="let error of error[1]">         
                     {{error}}

@@ -13,7 +13,9 @@ import { ValidateService } from 'src/app/services/validate.service';
 export class RegistrationComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
   public registrationForm!:FormGroup;
-  public errors?:object = undefined;
+  //public errors?:object = undefined;
+  public hasErrors:boolean = false;
+  public errors:any;
 
   constructor(
     private validateService:ValidateService,
@@ -31,14 +33,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     );
   }
 
-  HasErrors():boolean{ 
-    return this.errors != undefined;
-  }
-
-  GetErrors(){
-    return Object.entries((this.errors as object));
-  }
-
   Submit(){
     if (this.registrationForm.invalid){
       return;
@@ -48,8 +42,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
       next: (user) => {
         this.errors = undefined; 
+        this.hasErrors = false;
         this.router.navigate(['/login'])},
-      error: (responce) => {this.errors = responce.error.errors;} 
+      error: (responce) => {this.errors =  Object.entries((responce.error.errors as object));this.hasErrors = true;}
     }));
   }
 

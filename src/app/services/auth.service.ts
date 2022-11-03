@@ -22,7 +22,7 @@ export class AuthService {
 
   LogIn(name:string, password:string){
 
-    const getToken:Observable<{}> = this.backendService.post("Authenticate",{name: name, password:password})
+    const getToken:Observable<Object> = this.backendService.post("Authenticate",{name: name, password:password})
     .pipe(
       tap({
         next: (token) => localStorage.setItem(ACCES_TOKEN_KEY, (token as Token).access_token),
