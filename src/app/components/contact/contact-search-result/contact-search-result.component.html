@@ -1,5 +1,5 @@
 <div class="paginator">
-     <div class = "page-counter">{{GetPage()+1}} of {{GetPageCount()}}</div>
+     <div class = "page-counter">{{this._searchForm === undefined ? 0 : this._searchForm.pageindex + 1}} of {{pageCount}}</div>
 
      <span>&nbsp;</span>
 

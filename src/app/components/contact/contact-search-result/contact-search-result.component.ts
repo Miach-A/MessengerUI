@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 import { Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
 import { BackendService } from 'src/app/services/backend.service';
@@ -12,9 +11,11 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 })
 export class ContactSearchResultComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
-  private _searchForm:any;
+  public _searchForm:any;
   private _totalCount:number = 0;
   public contacts:Contact[] = [];
+  public page:number = 0;
+  public pageCount:number = 0;
   
   constructor(
     private messengerState: MessengerStateService,
@@ -40,26 +41,16 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
     return this.backendService.get("GetUsers", undefined, this._searchForm);
   }
 
-  GetPageCount():number{
+  SetPageCount(){
     if (this._searchForm === undefined){
-      return 0;
+      this.pageCount = 0;
     }
-    console.log(this._totalCount);
-    console.log(this._searchForm.pagesize);
-    console.log(Math.floor(this._totalCount / this._searchForm.pagesize));
 
-    return Math.floor(this._totalCount / this._searchForm.pagesize)  + 1;
-  }
-
-  GetPage(){
-    if (this._searchForm === undefined){
-      return 0;
-    }
-    return this._searchForm.pageindex;
+    this.pageCount = Math.floor(this._totalCount / this._searchForm.pagesize)  + 1;
   }
 
   NextPage(){
-    if (this._searchForm.pageindex + 1 === this.GetPageCount()){
+    if (this._searchForm.pageindex + 1 === this.pageCount){
       return;
     }
 
@@ -89,6 +80,7 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
     data.contacts.forEach((contact:Contact) => {
       this.contacts.push(new Contact(contact));
     });
+    this.SetPageCount();
   }
 
   ngOnDestroy(): void {
