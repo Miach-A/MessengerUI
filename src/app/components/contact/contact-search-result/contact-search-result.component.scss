@@ -1,3 +1,6 @@
+:host{
+    margin: 0.3rem;
+}
 .contacts-conteiner{
     display: flex;
     flex-wrap:wrap;  
@@ -10,4 +13,8 @@
 
 .spacer{
     flex: 1 0 auto;
+}
+
+.page-counter{
+    font-size: 2rem;
 }

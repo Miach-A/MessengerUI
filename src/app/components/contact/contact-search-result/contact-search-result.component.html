@@ -1,29 +1,21 @@
+<div class="paginator">
+     <div class = "page-counter">{{GetPage()+1}} of {{GetPageCount()}}</div>
+
+     <span>&nbsp;</span>
+
+     <button mat-raised-button color="primary" (click)="PreviousPage()">
+         <mat-icon>keyboard_arrow_left</mat-icon>
+     </button>
+ 
+     <span>&nbsp;</span>
+ 
+     <button mat-raised-button color="primary" (click)="NextPage()">
+         <mat-icon>keyboard_arrow_right</mat-icon>
+     </button>
+   
+ </div>
+
 <div class="contacts-conteiner">
     <app-contact-info [contact]="contact" *ngFor="let contact of contacts"></app-contact-info>
 </div>
-<div class="paginator">
-   <!--  <span class = "spacer"></span> -->
-   
-    <button mat-raised-button color="primary">
-        <mat-icon>keyboard_arrow_left</mat-icon>
-    </button>
-    <span>&nbsp;</span>
-    <button mat-raised-button color="primary">
-        <mat-icon>keyboard_arrow_right</mat-icon>
-    </button>
-</div>
 
-
-<!-- <mat-paginator [length]="length"
-               [pageSize]="pageSize"
-               [pageSizeOptions]="pageSizeOptions"
-               (page)="pageEvent = $event"
-               aria-label="Select page">
-</mat-paginator>
-
-<div *ngIf="pageEvent">
-    <h5>Page Change Event Properties</h5>
-    <div>List length: {{pageEvent.length}}</div>
-    <div>Page size: {{pageEvent.pageSize}}</div>
-    <div>Page index: {{pageEvent.pageIndex}}</div>
-  </div> -->

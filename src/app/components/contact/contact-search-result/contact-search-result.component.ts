@@ -14,13 +14,7 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
   private _searchForm:any;
   private _totalCount:number = 0;
-  private _page:number = 0;
-  private _pageSize:number = 0;
   public contacts:Contact[] = [];
-/*   public length = 100;
-  public pageSize = 25;
-  public pageSizeOptions: number[] = [5, 25, 50, 100];
-  public pageEvent: PageEvent = new PageEvent(); */
   
   constructor(
     private messengerState: MessengerStateService,
@@ -31,12 +25,10 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
         .pipe(
           tap((data: any) => {
             this._searchForm = data;
-            this._pageSize = this._searchForm.pagesize;
-            this._page = this._searchForm.pageindex;
           }),
-          switchMap((data: any) => this.SearchData()) //this.backendService.get("GetUsers", undefined, data)
+          switchMap(() => this.SearchData())
         ).subscribe({
-          next: (data) => { this.SetData(data); }
+          next: (data) => {this.SetData(data); }
         }));
   }
 
@@ -49,15 +41,30 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   }
 
   GetPageCount():number{
-    return this._totalCount / this._pageSize + 1;
+    if (this._searchForm === undefined){
+      return 0;
+    }
+    console.log(this._totalCount);
+    console.log(this._searchForm.pagesize);
+    console.log(Math.floor(this._totalCount / this._searchForm.pagesize));
+
+    return Math.floor(this._totalCount / this._searchForm.pagesize)  + 1;
+  }
+
+  GetPage(){
+    if (this._searchForm === undefined){
+      return 0;
+    }
+    return this._searchForm.pageindex;
   }
 
   NextPage(){
-    if (this._searchForm.pageindex = this.GetPageCount()){
+    if (this._searchForm.pageindex + 1 === this.GetPageCount()){
       return;
     }
 
-    this._searchForm.pageindex += 1; 
+    this._searchForm.pageindex += 1;
+    this.GetData();
   }
 
   PreviousPage(){
@@ -66,6 +73,14 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
     }
 
     this._searchForm.pageindex -= 1; 
+    this.GetData();
+  }
+
+  GetData(){
+    this._subscriptions.push(
+      this.SearchData().subscribe({
+        next: (data) => {this.SetData(data); }
+      }));
   }
 
   SetData(data:any){
