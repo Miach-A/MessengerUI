@@ -1,8 +1,9 @@
 <mat-card>
   <mat-card-title>{{contact.name}}</mat-card-title>
-  <mat-card-subtitle>Full name:<span>&nbsp;&nbsp;</span> <b>{{contact.firstName}} {{contact.lastName}}</b></mat-card-subtitle>
+  <mat-card-subtitle>Full name:<span>&nbsp;&nbsp;</span> <b>{{contact.firstName}} {{contact.lastName}}</b>
+  </mat-card-subtitle>
   <mat-card-subtitle>Phone number: <span>&nbsp;&nbsp;</span> <b>{{contact.phoneNumber}}</b></mat-card-subtitle>
-  <mat-card-actions *ngIf="!ContactSaved()">
+  <mat-card-actions *ngIf="!saved">  <!-- "!ContactSaved()" -->
     <button mat-raised-button color="primary" (click)="Submit()">Save</button>
   </mat-card-actions>
 </mat-card>

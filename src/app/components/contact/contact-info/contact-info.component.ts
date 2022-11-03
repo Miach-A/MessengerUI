@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, OnDestroy} from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
 import { BackendService } from 'src/app/services/backend.service';
@@ -12,6 +11,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 })
 export class ContactInfoComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
+  public saved:boolean = false;
   @Input() contact!:Contact;
 
   constructor(
@@ -20,19 +20,23 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
 
   ) { }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { 
+    this.ContactSaved();
+  }
 
-  ContactSaved():boolean{
+  ContactSaved(){
     const user = this.messengerState.GetUser();
     if (user === undefined){
-      return false;
+      this.saved = false;
+      return;
     } 
 
     if (!!user.contacts.find(x => x.name === this.contact.name) || user.name === this.contact.name){
-      return true;
+      this.saved = true;
+      return;
     }
     
-    return false;
+    this.saved = false;
   }
 
   Submit() {
@@ -40,7 +44,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
       this.backendService
         .post("PostContact", { name: this.contact.name })
         .subscribe({
-          next: (contact) => { this.messengerState.AddContact(new Contact(contact as Contact)); }
+          next: (contact) => { this.messengerState.AddContact(new Contact(contact as Contact)); this.saved = true; }
         }));
   }
 
