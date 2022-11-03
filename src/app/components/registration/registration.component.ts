@@ -13,7 +13,6 @@ import { ValidateService } from 'src/app/services/validate.service';
 export class RegistrationComponent implements OnInit, OnDestroy {
   private _subscriptions:Subscription[] = [];
   public registrationForm!:FormGroup;
-  //public errors?:object = undefined;
   public hasErrors:boolean = false;
   public errors:any;
 
