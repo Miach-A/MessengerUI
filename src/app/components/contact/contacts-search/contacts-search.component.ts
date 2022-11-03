@@ -24,7 +24,7 @@ export class ContactsSearchComponent implements OnInit, AfterViewInit {
       name: new FormControl(),
       orderby:new FormControl(0),
       pageindex:new FormControl(0),
-      pagesize:new FormControl(5),
+      pagesize:new FormControl(25),
     });
   }
 
