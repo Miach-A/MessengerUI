@@ -2,7 +2,7 @@
   <mat-card-title>{{contact?.name}}</mat-card-title>
   <mat-card-subtitle>{{contact?.firstName}} {{contact?.lastName}}</mat-card-subtitle>
   <mat-card-subtitle>{{contact?.phoneNumber}}</mat-card-subtitle>
-  <mat-card-actions> <!-- *ngIf="!deleted" -->
+  <mat-card-actions> 
     <button mat-raised-button color="primary" (click)="OpenChat()">Open chat</button>
     <button mat-raised-button color="warn" (click)="DeleteContact()" >Delete contact</button> 
   </mat-card-actions>

@@ -15,7 +15,6 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 export class SavedContactInfoComponent implements OnInit,OnDestroy {
   private _subscriptions:Subscription[] = [];
   public contact?:Contact;
-  //public deleted:boolean = false;
 
   constructor(
     private messengerState:MessengerStateService,
@@ -42,7 +41,6 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
   UpdateData(name:string){
     this.contact = this.messengerState.GetContact(name);
-    //this.deleted = false; // check in user contact array and set vulue. can bee fasle 
   }
 
   DeleteContact(){
@@ -52,7 +50,6 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
         .subscribe({
           next: () => {
             this.messengerState.DeleteContact(this.contact as Contact);
-            //this.deleted = true;
           }
         }));
   }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
+import { CreateContactDTO } from 'src/app/models/CreateContactDTO';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -42,7 +43,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   Submit() {
     this._subscriptions.push(
       this.backendService
-        .post("PostContact", { name: this.contact.name })
+        .post("PostContact", new CreateContactDTO(this.contact.name ))
         .subscribe({
           next: (contact) => { this.messengerState.AddContact(new Contact(contact as Contact)); this.saved = true; }
         }));
