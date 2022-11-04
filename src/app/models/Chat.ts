@@ -1,5 +1,4 @@
 import { Contact } from "./Contact";
-import { User } from "./User";
 
 export class Chat{
     guid:string = "";

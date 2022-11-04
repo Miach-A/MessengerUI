@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
 import { Contact } from 'src/app/models/Contact';
+import { CreateChatDTO } from 'src/app/models/CreateChatDTO';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -73,7 +74,7 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
   CreateChat(){
     this._subscriptions.push(  
-      this.backendService.post("PostChat",{name:this.contact?.name}).subscribe({ 
+      this.backendService.post("PostChat",new CreateChatDTO(this.contact?.name ?? "")).subscribe({ 
         next: (chat) => {
           const newChat = new Chat(chat as Chat);
           this.messengerState.AddChat(newChat);
