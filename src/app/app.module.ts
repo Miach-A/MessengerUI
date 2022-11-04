@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './modules/angular-material.module';
-import { BACKEND_API_URL } from './app-injection-tokens';
+import { BACKEND_API_URL, SIGNALR_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCES_TOKEN_KEY } from './services/auth.service';
@@ -50,6 +50,7 @@ export function tokenGetter(){
   ],
   providers: [
     {provide:BACKEND_API_URL,useValue:environment.backendApi},
+    {provide:SIGNALR_URL,useValue:environment.signalR},
     {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptorService,multi:true}
   ]
   ,
