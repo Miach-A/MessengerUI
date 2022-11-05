@@ -5,6 +5,7 @@ import { CreateMessageDTO } from '../models/CreateMessageDTO';
 import { Message } from '../models/Message';
 import { UpdateMessageDTO } from '../models/UpdateMessageDTO';
 import { ACCES_TOKEN_KEY } from './auth.service';
+import { MessengerStateService } from './messenger-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class SignalrService {
     .build();
 
   constructor(
-    @Inject(SIGNALR_URL) private signalrUri: string
+    @Inject(SIGNALR_URL) private signalrUri: string,
+    private messengerState:MessengerStateService
   ) { }
 
   isConnected() {
@@ -56,12 +58,13 @@ export class SignalrService {
   }
 
   EventsOn(){
-    this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessage(data));
+    this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessage(new Message(data)));
     this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessage(data));
   }
 
-  ReceiveMessage(data:Message){
-    console.log(data);  
+  ReceiveMessage(message:Message){
+    this.messengerState.AddMessage(message.chatGuid,message);
+    console.log(message);
   }
 
   EditMessage(data:Message){

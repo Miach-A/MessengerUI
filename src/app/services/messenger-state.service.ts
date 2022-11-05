@@ -172,4 +172,15 @@ export class MessengerStateService {
     this._messageList[chatGuid] = Array.prototype.concat(messages.reverse(),this._messageList[chatGuid]);
   }
 
+  public AddMessage(chatGuid:string,message:Message){
+    if (this._messageList[chatGuid] === undefined){
+      const newArray = new Array<Message>;
+      newArray.push(message);
+      this._messageList[chatGuid] = newArray;
+      return;
+    }
+
+    this._messageList[chatGuid].push(message);
+  }
+
 }

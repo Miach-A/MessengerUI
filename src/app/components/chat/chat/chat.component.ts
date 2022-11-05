@@ -61,15 +61,8 @@ export class ChatComponent implements OnInit,OnDestroy {
     return this.messengerState.GetMessages(this.chat.guid);
   }
 
-  Get1(){
-    console.log(this.messengerState.GetMessages(this.chat!.guid));
-  }
-
   GetMessagesFromBack(chatGuid:string):Subscription{
-
-    const date = this.messengerState.GetMessages(chatGuid)[0]?.date;  //,date?:Date
-    console.log('date');
-    console.log(date);
+    const date = this.messengerState.GetMessages(chatGuid)[0]?.date;
     var search;
     if(date === undefined){
       search =  { chatGuid: chatGuid, count: 20}
@@ -77,6 +70,7 @@ export class ChatComponent implements OnInit,OnDestroy {
     else{
       search =  { chatGuid: chatGuid, count: 20, date:date.toString()}
     }
+    
     return this.backendService
     .get("Message", undefined,search)
     .pipe(

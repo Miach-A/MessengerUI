@@ -1,7 +1,6 @@
 <div *ngFor="let message of GetMessages()">
-    {{message.date}} : {{message.text}}
+    {{message.contactName}} ___ {{message.date}} : {{message.text}}
 </div>
 
 <input type="text" [(ngModel)] = "text">
 <button mat-raised-button (click)="SendMessage()">send</button>
-<button mat-raised-button (click)="Get1()">send</button>
