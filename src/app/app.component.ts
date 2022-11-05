@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { MessengerStateService } from './services/messenger-state.service';
+import { SignalrService } from './services/signalr.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent {
     public authService: AuthService,
     public messengerState: MessengerStateService,
     //private backendService:BackendService,
-    //public signalrService: SignalrService,
+    public signalrService: SignalrService,
     private JwtHelper: JwtHelperService) {
 
   }
@@ -30,6 +31,9 @@ export class AppComponent {
     if (this.authService.IsAuthenticated()){
       this._subscriptions.push(this.authService.GetUserInfo().subscribe());
     }
+
+    this.signalrService.EventsOn();
+    this.signalrService.Connect();
   }
 
   ngOnDestroy():void{
