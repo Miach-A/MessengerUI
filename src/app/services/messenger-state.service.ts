@@ -155,4 +155,12 @@ export class MessengerStateService {
     return message;
   }
 
+  public GetMessages(chatGuid:string){
+    return this._messageList[chatGuid];
+  }
+
+  public SetMessages(chatGuid:string, messages:Message[]){
+    this._messageList[chatGuid] = Array.prototype.concat(messages,this._messageList[chatGuid]);
+  }
+
 }

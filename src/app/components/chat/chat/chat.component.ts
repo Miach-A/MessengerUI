@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
 import { Message } from 'src/app/models/Message';
+import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 import { SignalrService } from 'src/app/services/signalr.service';
 
@@ -20,7 +21,8 @@ export class ChatComponent implements OnInit,OnDestroy {
   constructor(
     private signalrService:SignalrService,
     private activatedRoute:ActivatedRoute,
-    private messengerState:MessengerStateService
+    private messengerState:MessengerStateService,
+    private backendService:BackendService
   ) { }
 
   ngOnInit(): void {
@@ -38,11 +40,37 @@ export class ChatComponent implements OnInit,OnDestroy {
           }));
   }
 
-  UpdateData(guid:string){
+  UpdateData(guid: string) {
     this.chat = this.messengerState.GetChat(guid);
-    if (!!this.chat){
-      this.messengerState.SetChat(this.chat);
-    }    
+    if (!this.chat) {
+      return;
+    }
+
+    this.messengerState.SetChat(this.chat);
+    if (this.messengerState.GetMessages(guid).length >= 20) {
+      return;
+    }
+    
+    this._subscriptions.push(
+      
+    );
+    
+  }
+
+  GetMessages(chatGuid:string,date:Date?):Subscription{
+    return this.backendService
+    .get("Message", undefined, { chatGuid: chatGuid, count: 20, date:date })
+    .pipe(
+      map((data: any) => {
+        const messages: Message[] = [];
+        data.forEach((message: Message) => {
+          messages.push(new Message(message));
+        });
+        return messages;
+      }))
+    .subscribe({
+      next: (data) => this.messengerState.SetMessages(guid, data)
+    })
   }
 
   SendMessage(){

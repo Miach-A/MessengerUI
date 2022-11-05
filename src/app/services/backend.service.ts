@@ -12,7 +12,7 @@ export class BackendService {
   constructor(public httpClient: HttpClient,
     @Inject(BACKEND_API_URL) private uriBase: string) { }
 
-  public get(uri: string, guid?: string, search?: { [key: string]: string }): Observable<Object> {
+  public get(uri: string, guid?: string, search?: { [key: string]: string|number|boolean }): Observable<Object> {
     var params = new HttpParams();
     if (search !== null) {
       for (const key in search) {
