@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr'
 import { SIGNALR_URL } from '../app-injection-tokens';
+import { CreateMessageDTO } from '../models/CreateMessageDTO';
 import { Message } from '../models/Message';
+import { UpdateMessageDTO } from '../models/UpdateMessageDTO';
 import { ACCES_TOKEN_KEY } from './auth.service';
 
 @Injectable({
@@ -43,11 +45,25 @@ export class SignalrService {
     return this.signalrConnect.state;
   }
 
+  SendMessage(message:UpdateMessageDTO | CreateMessageDTO) {
+    if (message instanceof CreateMessageDTO){
+      this.signalrConnect.send('SendMessage',message);
+    }
+    else{
+      this.signalrConnect.send('EditMessage',message);
+    }  
+  }
+
   EventsOn(){
     this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessage(data));
+    this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessage(data));
   }
 
   ReceiveMessage(data:Message){
+    console.log(data);  
+  }
+
+  EditMessage(data:Message){
     console.log(data);  
   }
 
