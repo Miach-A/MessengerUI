@@ -14,7 +14,7 @@ export class SignalrService {
   private signalrConnect: signalR.HubConnection =
   new signalR.HubConnectionBuilder()
     .withUrl(
-      this.signalrUri + 'Chat',{
+      this.signalrUri,{
         accessTokenFactory: () => localStorage.getItem(ACCES_TOKEN_KEY)??""
       }
     )
@@ -46,6 +46,7 @@ export class SignalrService {
   }
 
   SendMessage(message:UpdateMessageDTO | CreateMessageDTO) {
+    console.log(message);
     if (message instanceof CreateMessageDTO){
       this.signalrConnect.send('SendMessage',message);
     }

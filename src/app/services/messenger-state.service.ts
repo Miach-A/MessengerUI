@@ -71,6 +71,10 @@ export class MessengerStateService {
     return this._user?.contacts.find(x => x.name === name);
   }
 
+  public GetChat(guid:string):Chat | undefined{
+    return this._user?.chats.find(x => x.guid === guid);
+  }
+
   public SetChat(contact:Contact):void;
   public SetChat(chat:Chat):void;
   public SetChat(arg:Chat|Contact){
@@ -85,7 +89,7 @@ export class MessengerStateService {
     this._targetChat = undefined;
   }
 
-  private GetChat():Chat|undefined{
+  private GetCurrentChat():Chat|undefined{
     return this._targetChat === undefined ? this._chat : this._targetChat;
   }
 
@@ -119,7 +123,11 @@ export class MessengerStateService {
   }
 
   public GetMessageDTO(text:string):UpdateMessageDTO|CreateMessageDTO|undefined{
-    if (this.GetChat() === undefined
+    console.log('chat');
+    console.log(this.GetCurrentChat());
+    console.log('_user');
+    console.log( this._user);
+    if (this.GetCurrentChat() === undefined
       || this._user === undefined) {
       return undefined;
     } 
@@ -134,7 +142,7 @@ export class MessengerStateService {
 
   private GetUpdateMessageDTO(text:string):UpdateMessageDTO{
     const message = new UpdateMessageDTO();
-    message.chatGuid = (this.GetChat() as Chat).guid;
+    message.chatGuid = (this.GetCurrentChat() as Chat).guid;
     message.date = (this._targetMessage as Message).date;
     message.guid = (this._targetMessage as Message).guid;
     message.text = text;
@@ -143,7 +151,7 @@ export class MessengerStateService {
 
   private GetCreateMessageDTO(text:string):CreateMessageDTO{
     const message = new CreateMessageDTO();
-    message.chatGuid = (this.GetChat() as Chat).guid;
+    message.chatGuid = (this.GetCurrentChat() as Chat).guid;
     message.commentedMessageGuid = this._targetMessage?.guid;
     message.commentedMessageDate = this._targetMessage?.date;
     message.text = text;
