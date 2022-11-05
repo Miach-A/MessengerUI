@@ -70,5 +70,6 @@ export class SignalrService {
 
   EventsOff(){
     this.signalrConnect.off("ReceiveMessage");
+    this.signalrConnect.off("EditMessage");
   }
 }

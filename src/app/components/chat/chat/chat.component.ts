@@ -20,26 +20,35 @@ export class ChatComponent implements OnInit,OnDestroy {
   constructor(
     private signalrService:SignalrService,
     private activatedRoute:ActivatedRoute,
-    private messengerStateService:MessengerStateService
+    private messengerState:MessengerStateService
   ) { }
 
   ngOnInit(): void {
     this._subscriptions.push(
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
-          this.UpdateData(param.get('guid') ?? "");
+          this.UpdateData(param.get('guid') ?? "");  
         }
       }));
+
+      this._subscriptions.push(
+        this.messengerState.GetUserDataChangeEmitter()
+          .subscribe({ 
+            next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? ""); }
+          }));
   }
 
   UpdateData(guid:string){
-    this.chat = this.messengerStateService.GetChat(guid);
-    //this.messengerStateService.SetChat()
+    console.log(guid);
+    this.chat = this.messengerState.GetChat(guid);
+    console.log(this.chat);
+    if (!!this.chat){
+      this.messengerState.SetChat(this.chat);
+    }    
   }
 
   SendMessage(){
-    const newMessage = this.messengerStateService.GetMessageDTO(this.text);
-    console.log(newMessage);
+    const newMessage = this.messengerState.GetMessageDTO(this.text);
     if (newMessage == undefined){
       return;
     }
@@ -51,5 +60,7 @@ export class ChatComponent implements OnInit,OnDestroy {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
+    this.signalrService.EventsOff();
+    this.signalrService.Disconnect();
   }
 }
