@@ -8,8 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { UserInfoComponent } from './components/user/user-info/user-info.component';
-import { LoginGuardService } from './services/login-guard.service';
-import { LogoutGuardService } from './services/logout-guard.service';
+import { LoginGuardService } from './services/guards/login-guard.service';
+import { LogoutGuardService } from './services/guards/logout-guard.service';
 
 const routes: Routes = [
   {path:"",component:HomeComponent},

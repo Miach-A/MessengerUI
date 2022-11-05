@@ -16,6 +16,7 @@ export class MessengerStateService {
   private _event:ChatEvent = ChatEvent.New;
   private _targetMessage?:Message;
   private _targetChat?:Chat;
+  private _messageList:{[chatGuid:string] : Array<Message>} = {};
   private _contactSearch: EventEmitter<any> = new EventEmitter();
   private _userDataChange:EventEmitter<User> = new EventEmitter(); 
 
@@ -123,10 +124,6 @@ export class MessengerStateService {
   }
 
   public GetMessageDTO(text:string):UpdateMessageDTO|CreateMessageDTO|undefined{
-    console.log('chat');
-    console.log(this.GetTargetChat());
-    console.log('_user');
-    console.log( this._user);
     if (this.GetTargetChat() === undefined
       || this._user === undefined) {
       return undefined;

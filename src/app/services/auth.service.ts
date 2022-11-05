@@ -33,7 +33,9 @@ export class AuthService {
       );
 
       getUserInfo.subscribe({
-        next: (user) => {this.messengerState.SetUser(new User(user)); this.router.navigate(['/'])},
+        next: (user) => {
+          this.messengerState.SetUser(new User(user)); 
+          this.router.navigate(['/'])},
         error : () => {
           //alert("Unauthorized");
           //this.Logout();
