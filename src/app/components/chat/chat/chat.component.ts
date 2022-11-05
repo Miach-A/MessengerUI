@@ -47,19 +47,27 @@ export class ChatComponent implements OnInit,OnDestroy {
     }
 
     this.messengerState.SetChat(this.chat);
-    if (this.messengerState.GetMessages(guid).length >= 20) {
+    if (this.messengerState.GetMessages(guid)?.length >= 20) {
       return;
     }
     
     this._subscriptions.push(
-      
+      this.GetMessages(guid)  
     );
+    console.log(this.messengerState.GetMessages(guid));
     
   }
 
-  GetMessages(chatGuid:string,date:Date?):Subscription{
+  GetMessages(chatGuid:string,date?:Date):Subscription{
+    var search;
+    if(date === undefined){
+      search =  { chatGuid: chatGuid, count: 20}
+    }
+    else{
+      search =  { chatGuid: chatGuid, count: 20, date:date.toString()}
+    }
     return this.backendService
-    .get("Message", undefined, { chatGuid: chatGuid, count: 20, date:date })
+    .get("Message", undefined,search)
     .pipe(
       map((data: any) => {
         const messages: Message[] = [];
@@ -69,8 +77,8 @@ export class ChatComponent implements OnInit,OnDestroy {
         return messages;
       }))
     .subscribe({
-      next: (data) => this.messengerState.SetMessages(guid, data)
-    })
+      next: (data) => this.messengerState.SetMessages(chatGuid, data)
+    });
   }
 
   SendMessage(){
