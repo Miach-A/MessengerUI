@@ -165,11 +165,11 @@ export class MessengerStateService {
 
   public SetMessages(chatGuid:string, messages:Message[]){
     if (this._messageList[chatGuid] === undefined){
-      this._messageList[chatGuid] = messages;
+      this._messageList[chatGuid] = messages.reverse();
       return;
     }
-    
-    this._messageList[chatGuid] = Array.prototype.concat(messages,this._messageList[chatGuid]);
+
+    this._messageList[chatGuid] = Array.prototype.concat(messages.reverse(),this._messageList[chatGuid]);
   }
 
 }

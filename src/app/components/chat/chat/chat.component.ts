@@ -29,36 +29,47 @@ export class ChatComponent implements OnInit,OnDestroy {
     this._subscriptions.push(
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
-          this.UpdateData(param.get('guid') ?? "");  
+          this.UpdateData(param.get('guid') ?? "",1);  
         }
       }));
 
       this._subscriptions.push(
         this.messengerState.GetUserDataChangeEmitter()
           .subscribe({ 
-            next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? ""); }
+            next: () => {
+              this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? "",2); }
           }));
   }
 
-  UpdateData(guid: string) {
+  UpdateData(guid: string, number:number) {
+    console.log(number);
     this.chat = this.messengerState.GetChat(guid);
     if (!this.chat) {
       return;
     }
 
-    this.messengerState.SetChat(this.chat);
-    if (this.messengerState.GetMessages(guid)?.length >= 20) {
-      return;
-    }
-    
+    this.messengerState.SetChat(this.chat);  
     this._subscriptions.push(
-      this.GetMessages(guid)  
-    );
-    console.log(this.messengerState.GetMessages(guid));
-    
+      this.GetMessagesFromBack(guid)  
+    );    
   }
 
-  GetMessages(chatGuid:string,date?:Date):Subscription{
+  GetMessages():Message[] {
+    if (this.chat === undefined){
+      return new Array<Message>;
+    }
+    return this.messengerState.GetMessages(this.chat.guid);
+  }
+
+  Get1(){
+    console.log(this.messengerState.GetMessages(this.chat!.guid));
+  }
+
+  GetMessagesFromBack(chatGuid:string):Subscription{
+
+    const date = this.messengerState.GetMessages(chatGuid)[0]?.date;  //,date?:Date
+    console.log('date');
+    console.log(date);
     var search;
     if(date === undefined){
       search =  { chatGuid: chatGuid, count: 20}
