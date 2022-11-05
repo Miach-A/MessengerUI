@@ -39,9 +39,7 @@ export class ChatComponent implements OnInit,OnDestroy {
   }
 
   UpdateData(guid:string){
-    console.log(guid);
     this.chat = this.messengerState.GetChat(guid);
-    console.log(this.chat);
     if (!!this.chat){
       this.messengerState.SetChat(this.chat);
     }    

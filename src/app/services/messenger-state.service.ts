@@ -89,7 +89,7 @@ export class MessengerStateService {
     this._targetChat = undefined;
   }
 
-  private GetCurrentChat():Chat|undefined{
+  private GetTargetChat():Chat|undefined{
     return this._targetChat === undefined ? this._chat : this._targetChat;
   }
 
@@ -124,10 +124,10 @@ export class MessengerStateService {
 
   public GetMessageDTO(text:string):UpdateMessageDTO|CreateMessageDTO|undefined{
     console.log('chat');
-    console.log(this.GetCurrentChat());
+    console.log(this.GetTargetChat());
     console.log('_user');
     console.log( this._user);
-    if (this.GetCurrentChat() === undefined
+    if (this.GetTargetChat() === undefined
       || this._user === undefined) {
       return undefined;
     } 
@@ -142,7 +142,7 @@ export class MessengerStateService {
 
   private GetUpdateMessageDTO(text:string):UpdateMessageDTO{
     const message = new UpdateMessageDTO();
-    message.chatGuid = (this.GetCurrentChat() as Chat).guid;
+    message.chatGuid = (this.GetTargetChat() as Chat).guid;
     message.date = (this._targetMessage as Message).date;
     message.guid = (this._targetMessage as Message).guid;
     message.text = text;
@@ -151,7 +151,7 @@ export class MessengerStateService {
 
   private GetCreateMessageDTO(text:string):CreateMessageDTO{
     const message = new CreateMessageDTO();
-    message.chatGuid = (this.GetCurrentChat() as Chat).guid;
+    message.chatGuid = (this.GetTargetChat() as Chat).guid;
     message.commentedMessageGuid = this._targetMessage?.guid;
     message.commentedMessageDate = this._targetMessage?.date;
     message.text = text;
