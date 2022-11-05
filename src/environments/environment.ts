@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   backendApi:"https://localhost:7214/api/",
-  signalR:"https://localhost:7214/"
+  signalR:"https://localhost:7214/messenger/"
 };
 
 /*
