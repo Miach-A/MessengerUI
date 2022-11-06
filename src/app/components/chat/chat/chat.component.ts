@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit,OnDestroy {
     this._subscriptions.push(
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
-          this.UpdateData(param.get('guid') ?? "",1);  
+          this.UpdateData(param.get('guid') ?? "");  
         }
       }));
 
@@ -37,21 +37,22 @@ export class ChatComponent implements OnInit,OnDestroy {
         this.messengerState.GetUserDataChangeEmitter()
           .subscribe({ 
             next: () => {
-              this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? "",2); }
+              this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? ""); }
           }));
   }
 
-  UpdateData(guid: string, number:number) {
-    console.log(number);
+  UpdateData(guid: string) {
     this.chat = this.messengerState.GetChat(guid);
     if (!this.chat) {
       return;
     }
 
     this.messengerState.SetChat(this.chat);  
-    this._subscriptions.push(
-      this.GetMessagesFromBack(guid)  
-    );    
+    if (this.messengerState.GetMessages(guid).length < 20){
+      this._subscriptions.push(
+        this.GetMessagesFromBack(guid)  
+      ); 
+    }
   }
 
   GetMessages():Message[] {
@@ -99,7 +100,5 @@ export class ChatComponent implements OnInit,OnDestroy {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-    this.signalrService.EventsOff();
-    this.signalrService.Disconnect();
   }
 }

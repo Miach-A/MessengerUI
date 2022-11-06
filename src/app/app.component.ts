@@ -40,6 +40,9 @@ export class AppComponent {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
+
+    this.signalrService.EventsOff();
+    this.signalrService.Disconnect();
   }
 
   Login(name: string,password:string) {
@@ -48,7 +51,6 @@ export class AppComponent {
 
   Logout() {
     this.authService.Logout(); 
-    //this.signalrService.Disconnect();
     //this.curentGroup = null;
   }
 
