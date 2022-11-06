@@ -11,7 +11,7 @@ import { SignalrService } from './services/signalr.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit,OnDestroy {
   public title = 'MessengerUI';
   public sidenavOpened:boolean = true;
   public modeSide:boolean = false;

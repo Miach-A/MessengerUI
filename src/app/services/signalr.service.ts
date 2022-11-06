@@ -34,6 +34,7 @@ export class SignalrService {
   Connect() {
     if (this.GetState() === signalR.HubConnectionState.Disconnected) {
       this.signalrConnect.start().then( resp => {
+        
       });
 
     }
