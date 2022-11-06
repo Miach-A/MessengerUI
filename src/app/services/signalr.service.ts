@@ -32,6 +32,7 @@ export class SignalrService {
   }
 
   Connect() {
+    console.log(this.GetState());
     if (this.GetState() === signalR.HubConnectionState.Disconnected) {
       this.signalrConnect.start().then( resp => {
         
@@ -49,7 +50,6 @@ export class SignalrService {
   }
 
   SendMessage(message:UpdateMessageDTO | CreateMessageDTO) {
-    console.log(message);
     if (message instanceof CreateMessageDTO){
       this.signalrConnect.send('SendMessage',message);
     }

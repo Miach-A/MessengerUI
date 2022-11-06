@@ -6,6 +6,7 @@ import { Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { BackendService } from './backend.service';
 import { MessengerStateService } from './messenger-state.service';
+import { SignalrService } from './signalr.service';
 
 export const ACCES_TOKEN_KEY = "messenger_access_token"
 
@@ -17,6 +18,7 @@ export class AuthService {
   constructor(
     private messengerState:MessengerStateService,
     private backendService:BackendService,
+    private signalrService:SignalrService,
     private JwtHelper:JwtHelperService,
     private router:Router) {   }
 
@@ -25,7 +27,10 @@ export class AuthService {
     const getToken:Observable<Object> = this.backendService.post("Authenticate",{name: name, password:password})
     .pipe(
       tap({
-        next: (token) => localStorage.setItem(ACCES_TOKEN_KEY, (token as Token).access_token),
+        next: (token) => {
+          localStorage.setItem(ACCES_TOKEN_KEY, (token as Token).access_token);
+          this.signalrService.Connect();
+        }
         }));
 
       const getUserInfo:Observable<User> = getToken.pipe(
@@ -59,6 +64,7 @@ export class AuthService {
   Logout():void{
     localStorage.removeItem(ACCES_TOKEN_KEY);
     this.messengerState.SetUser(undefined);
+    this.signalrService.Disconnect();
     this.router.navigate(['/']);
   }
 

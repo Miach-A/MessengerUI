@@ -33,7 +33,11 @@ export class AppComponent implements OnInit,OnDestroy {
     }
 
     this.signalrService.EventsOn();
-    this.signalrService.Connect();
+
+    if (this.authService.IsAuthenticated()
+      && !this.signalrService.isConnected()){
+      this.signalrService.Connect();
+    }   
   }
 
   ngOnDestroy():void{
