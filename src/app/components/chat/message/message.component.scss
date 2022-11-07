@@ -1,3 +1,19 @@
 .full-width{
     width: 100%; 
 }
+
+.message-container{
+    display: inline-flex;
+}
+
+.contact{
+    align-self: flex-start;
+}
+
+.text{
+    align-self: flex-start;   
+}
+
+.date{
+    align-self: flex-end;
+}
