@@ -1,19 +1,33 @@
 .message-container{
     margin: 0.3rem;
-    display: inline-flex;
-    //flex-direction:row-reverse;
+    display: inline-flex;  
 }
 
-/* :host{
-    align-self: flex-end;
-} */
+:host{
+    display: flex;
+}
+
+.row-reverse{
+    flex-direction:row-reverse;
+}
 
 .contact{
     align-self: flex-start;
     font-weight: bold;
 }
 
-.text{
+.text-date{
+    min-width: 5rem;
+    border: 1px;
+    border-color: #673ab7;
+    border-style: solid;
+    margin: 0.2rem;
+    padding: 0.2rem;
+    border-radius: 0.6rem;
+}
+
+/* .text{
+    min-width: 5rem;
     border: 1px;
     border-color: #673ab7;
     border-style: solid;
@@ -21,9 +35,12 @@
     padding: 0.2rem;
     align-self: flex-start;   
     border-radius: 0.6rem;
-}
+    display: inline-flex;
+} */
 
 .date{
+    display: flex;
+    flex-direction:row-reverse;
     align-self: flex-end;
     font-size: 0.7rem;
 }

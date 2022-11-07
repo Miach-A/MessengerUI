@@ -1,12 +1,12 @@
-<div class = "message-container">
-    <div class = "contact">{{message.contactName}}</div>
-    <div class = "text">
-        {{message.text}}  
-    </div>
-<!--     <div class = "date">
-        <mat-icon>menu</mat-icon>
-    </div> -->
-    <div class = "date">
-        {{message.date | date:'MMM d HH:mm'}}
+<div class="message-container">
+    <!--  [ngClass]="{'row-reverse':my}" -->
+    <div *ngIf="!my" class="contact">{{message.contactName}}</div>
+    <div class="text-date">
+        <div class="text">
+            {{message.text}}
+        </div>
+        <div class="date">
+            {{message.date | date:'HH:mm'}}  <!-- MMM d HH:mm -->
+        </div>
     </div>
 </div>

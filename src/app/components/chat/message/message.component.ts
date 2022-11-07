@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Message } from 'src/app/models/Message';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -8,14 +8,19 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent implements OnInit {
-  @Input() message!:Message;
   public my:boolean = false;
+  @Input() message!:Message;
+  @HostBinding('style.flex-direction') messageFlexDirection:string = "row";
+  
   constructor(
     private messengerState:MessengerStateService
   ) { }
 
   ngOnInit(): void {
     this.my = this.message.contactName == this.messengerState.GetUser()?.name;
+    if (this.my){
+      this.messageFlexDirection = "row-reverse";
+    }
   }
 
 }
