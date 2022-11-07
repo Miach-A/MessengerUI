@@ -1,8 +1,8 @@
 <div class="chat-conteiner">
     <div class="chat-left"></div>
-    <div class="chat">
-        <div class="messages">
-            <div *ngFor="let message of GetMessages()">
+    <div class="chat" >
+        <div class="messages" #Messages>
+            <div *ngFor="let message of GetMessages()" #item>
                 <app-message [message]="message"></app-message>
             </div>
         </div>

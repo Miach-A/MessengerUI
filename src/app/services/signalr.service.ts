@@ -65,7 +65,6 @@ export class SignalrService {
 
   ReceiveMessage(message:Message){
     this.messengerState.AddMessage(message.chatGuid,message);
-    console.log(message);
   }
 
   EditMessage(data:Message){

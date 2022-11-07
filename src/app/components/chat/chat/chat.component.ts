@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
@@ -13,12 +13,19 @@ import { SignalrService } from 'src/app/services/signalr.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit,OnDestroy {
+export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
+  private _isNearBottom = true;
+  private _scrollContainer: any;
   private _subscriptions:Subscription[] = [];
   public text:string = "";
   public chat?:Chat;
-
-/*   @ViewChild('MessageTextInput') messageTextInput: ElementRef; */
+  
+  @ViewChild('Messages') scrollFrame : ElementRef | undefined;
+  @ViewChildren('item') itemElements: QueryList<any> | undefined;
+  @HostListener('scroll')
+  scrolled(event: any): void {
+    this._isNearBottom = this.isUserNearBottom();
+  }
 
   constructor(
     private signalrService:SignalrService,
@@ -42,6 +49,20 @@ export class ChatComponent implements OnInit,OnDestroy {
               this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? ""); }
           }));
   }
+
+  ngAfterViewInit() {
+    if (this.scrollFrame != undefined){
+    this._scrollContainer = this.scrollFrame.nativeElement;
+    }
+    if (this.itemElements != undefined){
+    this.itemElements.changes.subscribe(() =>
+    {
+      this.onItemElementsChanged();
+    });
+    }
+
+  }
+ 
 
   UpdateData(guid: string) {
     this.chat = this.messengerState.GetChat(guid);
@@ -103,6 +124,27 @@ export class ChatComponent implements OnInit,OnDestroy {
 
     this.signalrService.SendMessage(newMessage);
     this.text = "";
+  }
+
+  private onItemElementsChanged(): void {
+    if (this._isNearBottom) {
+      this.scrollToBottom();
+    }
+  }
+
+  private scrollToBottom(): void {
+    this._scrollContainer.scroll({
+      top: this._scrollContainer.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  private isUserNearBottom(): boolean {
+    const threshold = 150;
+    const position = this._scrollContainer.scrollTop + this._scrollContainer.offsetHeight;
+    const height = this._scrollContainer.scrollHeight;
+    return position > height - threshold;
   }
 
   ngOnDestroy(): void {
