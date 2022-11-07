@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
@@ -17,6 +17,8 @@ export class ChatComponent implements OnInit,OnDestroy {
   private _subscriptions:Subscription[] = [];
   public text:string = "";
   public chat?:Chat;
+
+/*   @ViewChild('MessageTextInput') messageTextInput: ElementRef; */
 
   constructor(
     private signalrService:SignalrService,
@@ -52,6 +54,12 @@ export class ChatComponent implements OnInit,OnDestroy {
       this._subscriptions.push(
         this.GetMessagesFromBack(guid)  
       ); 
+    }
+  }
+
+  SendMessageIfEnter(event:KeyboardEvent){
+    if (event.key === 'Enter' && !event.shiftKey){
+      this.SendMessage();
     }
   }
 
@@ -94,6 +102,7 @@ export class ChatComponent implements OnInit,OnDestroy {
     }
 
     this.signalrService.SendMessage(newMessage);
+    this.text = "";
   }
 
   ngOnDestroy(): void {
