@@ -3,17 +3,26 @@
 }
 
 .message-container{
+    margin: 0.3rem;
     display: inline-flex;
 }
 
 .contact{
     align-self: flex-start;
+    font-weight: bold;
 }
 
 .text{
+    border: 1px;
+    border-color: #673ab7;
+    border-style: solid;
+    margin: 0.2rem;
+    padding: 0.2rem;
     align-self: flex-start;   
+    border-radius: 0.6rem;
 }
 
 .date{
     align-self: flex-end;
+    font-size: 0.7rem;
 }

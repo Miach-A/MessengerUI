@@ -1,13 +1,7 @@
-<!-- <mat-form-field class="full-width" appearance="standard">
-    <mat-label>{{message.contactName}}</mat-label>
-    <textarea disabled  matInput>{{message.text}}</textarea>
-    <mat-hint align="end">{{message.date | date:'MMM d HH:mm'}}</mat-hint>
-</mat-form-field> -->
-
 <div class = "message-container">
     <div class = "contact">{{message.contactName}}</div>
     <div class = "text">
-        <textarea readonly  matInput>{{message.text}}</textarea>
+        {{message.text}}  
     </div>
     <div class = "date">
         {{message.date | date:'MMM d HH:mm'}}

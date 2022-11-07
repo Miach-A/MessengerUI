@@ -66,10 +66,10 @@ export class ChatComponent implements OnInit,OnDestroy {
     const date = this.messengerState.GetMessages(chatGuid)[0]?.date;
     var search;
     if(date === undefined){
-      search =  { chatGuid: chatGuid, count: 20}
+      search =  { chatGuid: chatGuid, count: 50}
     }
     else{
-      search =  { chatGuid: chatGuid, count: 20, date:date.toString()}
+      search =  { chatGuid: chatGuid, count: 50, date:date.toString()}
     }
     
     return this.backendService
