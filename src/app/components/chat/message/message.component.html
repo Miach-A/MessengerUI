@@ -1,6 +1,6 @@
 <div class="message-container">
     <!--  [ngClass]="{'row-reverse':my}" -->
-    <div *ngIf="!my" class="contact">{{message.contactName}}</div>
+    <div class="contact" *ngIf="!my">{{message.contactName}}</div> <!-- *ngIf="!my" -->
     <div>
         <div class = "text">
             {{message.text}}

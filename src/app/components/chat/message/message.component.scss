@@ -1,6 +1,6 @@
 .message-container{
     margin: 0.3rem;
-    display: inline-flex;  
+    display: inline-flex;    
 }
 
 :host{
@@ -22,8 +22,9 @@
     border-color: #673ab7;
     border-style: solid;
     margin: 0.2rem;
-    padding: 0.2rem;
+    padding: 0.4rem;
     border-radius: 0.6rem;
+   // max-width: 85%;
 }
 
 .date{

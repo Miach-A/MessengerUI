@@ -1,11 +1,39 @@
+.chat-conteiner{
+    display: flex;
+    height: 100%;
+}
+
+.chat-left{
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.chat-right{
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.text{
+    resize: none;
+    display: block;
+    width: 100%;   
+}
+
+.send{
+    width: 100%;
+}
+
 .chat{ 
+    flex: 1 1 auto;
     display: flex;
     height: 100%;
     flex-direction: column;
+    max-width: 800px;
+    min-width: 400px;
 }
 
 .messages{
-    height: 90%;
+    height: 92%;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;

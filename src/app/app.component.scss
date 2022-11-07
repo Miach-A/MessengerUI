@@ -1,27 +1,27 @@
-mat-sidenav-container{
-    top: 62px !important;
-  }
-  
-  mat-sidenav{
-    min-width: 240px;
-    max-width: 240px;
-  }
-  
-  .sidenav_button{
-    display: block;
-    width: 100%;
-    text-align: left;
-  }
+mat-sidenav-container {
+  top: 62px !important;
+}
 
-  .spacer {
-    flex: 1 0 auto;
-  }
+mat-sidenav {
+  min-width: 240px;
+  max-width: 240px;
+}
 
-  div:hover{
-    margin: 0.3rem;
-  }
+.sidenav_button {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
 
-  .search-contacts{
-    width: 100%!important;
-    text-align: center!important;
-  }
+.spacer {
+  flex: 1 0 auto;
+}
+
+div:hover {
+  margin: 0.3rem;
+}
+
+.search-contacts {
+  width: 100% !important;
+  text-align: center !important;
+}

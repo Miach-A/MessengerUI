@@ -1,12 +1,16 @@
-<div class = "chat">
-    <div class="messages">
-        <div *ngFor="let message of GetMessages()">
-            <app-message [message]="message"></app-message>
+<div class="chat-conteiner">
+    <div class="chat-left"></div>
+    <div class="chat">
+        <div class="messages">
+            <div *ngFor="let message of GetMessages()">
+                <app-message [message]="message"></app-message>
+            </div>
+        </div>
+
+        <div class="send-message">
+            <textarea rows="4" class="text" [(ngModel)]="text"> </textarea>
+            <!-- <button class="send" mat-raised-button (click)="SendMessage()">send</button> -->
         </div>
     </div>
-
-    <div class="send-message">
-        <input type="text" [(ngModel)]="text">
-        <button mat-raised-button (click)="SendMessage()">send</button>
-    </div>
+    <div class="chat-right"></div>
 </div>
