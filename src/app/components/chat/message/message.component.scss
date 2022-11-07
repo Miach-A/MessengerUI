@@ -1,11 +1,12 @@
-.full-width{
-    width: 100%; 
-}
-
 .message-container{
     margin: 0.3rem;
     display: inline-flex;
+    //flex-direction:row-reverse;
 }
+
+/* :host{
+    align-self: flex-end;
+} */
 
 .contact{
     align-self: flex-start;
