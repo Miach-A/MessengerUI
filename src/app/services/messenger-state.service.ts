@@ -4,6 +4,7 @@ import { ChatEvent } from '../models/ChatEvent';
 import { Contact } from '../models/Contact';
 import { CreateMessageDTO } from '../models/CreateMessageDTO';
 import { Message } from '../models/Message';
+import { NewMessageEvent } from '../models/MessageEvent';
 import { UpdateMessageDTO } from '../models/UpdateMessageDTO';
 import { User } from '../models/User';
 import { SignalrService } from './signalr.service';
@@ -24,7 +25,21 @@ export class MessengerStateService {
 
   constructor(
     private signalrService:SignalrService
-  ) { }
+  ) { 
+    this.signalrService.GetMessageEvent().subscribe({
+      next: (data:NewMessageEvent) => this.NewMessageHendler(data)
+    })
+  }
+
+  private NewMessageHendler(data:NewMessageEvent){
+    const event = data.GetEvent();
+    const message = data.GetMessage();
+
+    if(event === ChatEvent.New || event === ChatEvent.Comment){
+      this.AddMessage(message.chatGuid,message);
+    }
+
+  }
 
   public AddContact(contact:Contact){
     this._user?.contacts.push(contact);

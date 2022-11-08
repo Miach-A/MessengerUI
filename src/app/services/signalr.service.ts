@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr'
 import { SIGNALR_URL } from '../app-injection-tokens';
 import { CreateMessageDTO } from '../models/CreateMessageDTO';
@@ -6,12 +6,15 @@ import { Message } from '../models/Message';
 import { UpdateMessageDTO } from '../models/UpdateMessageDTO';
 import { ACCES_TOKEN_KEY } from './auth.service';
 import { MessengerStateService } from './messenger-state.service';
+import { ChatEvent } from '../models/ChatEvent';
+import { NewMessageEvent } from '../models/MessageEvent';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalrService {
 
+  private _messageEvent:EventEmitter<NewMessageEvent> = new EventEmitter();
   private signalrConnect: signalR.HubConnection =
   new signalR.HubConnectionBuilder()
     .withUrl(
@@ -26,6 +29,14 @@ export class SignalrService {
     @Inject(SIGNALR_URL) private signalrUri: string,
     private messengerState:MessengerStateService
   ) { }
+
+  public EmitMessageEvent(data:NewMessageEvent) {
+    this._messageEvent.emit(data);
+  }
+
+  public GetMessageEvent() {
+    return this._messageEvent;
+  }
 
   isConnected() {
     return this.signalrConnect.state === signalR.HubConnectionState.Connected;
@@ -64,7 +75,8 @@ export class SignalrService {
   }
 
   ReceiveMessage(message:Message){
-    this.messengerState.AddMessage(message.chatGuid,message);
+    //this.messengerState.AddMessage(message.chatGuid,message);
+    this.EmitMessageEvent(new NewMessageEvent(message,ChatEvent.New) );
   }
 
   EditMessage(data:Message){

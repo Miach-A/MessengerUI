@@ -1,5 +1,7 @@
 export enum ChatEvent{
     New,
     Comment,
-    Update
+    Update,
+    Delete,
+    DeleteForSelf
 }
