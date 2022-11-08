@@ -56,7 +56,6 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   }
 
   UpdateChatAfterEventChange(chatEvent: ChatEvent){
-    console.log(chatEvent);
     if (chatEvent === ChatEvent.Update){
       this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
     }
