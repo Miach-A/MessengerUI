@@ -9,20 +9,12 @@
     display: flex;   
 }
 
-/* .message-menu{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-} */
-
 .row-reverse{
     flex-direction:row-reverse;
 }
 
 .contact{
     align-self: flex-start;
-    font-weight: bold;
 }
 
 .text{

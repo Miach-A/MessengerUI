@@ -1,6 +1,7 @@
 <div class="message-container">
     <!--  [ngClass]="{'row-reverse':my}" -->
-    <div class="contact" *ngIf="!my">{{message.contactName}}</div> <!-- *ngIf="!my" -->
+    <button class="contact" mat-button color="primary" *ngIf="!my">{{message.contactName}}</button>
+    <!-- <div class="contact" *ngIf="!my">{{message.contactName}}</div> --> <!-- *ngIf="!my" -->
     <div>
         <div class="text" (contextmenu)="MessageOptions($event)" (click)="MessageOptions($event)" [matMenuTriggerFor]="messageOptions">
             {{message.text}}
@@ -12,7 +13,7 @@
     </div>
     <span>&nbsp;</span>
     <mat-menu #messageOptions="matMenu">
-        <button mat-menu-item *ngIf="my"><mat-icon>edit</mat-icon>edit</button> <!-- mat-menu-item  -->
+        <button mat-menu-item *ngIf="my" (click)="StartEdit()"><mat-icon>edit</mat-icon>edit</button> <!-- mat-menu-item  -->
         <button mat-menu-item><mat-icon>comment</mat-icon>comment</button>
         <button mat-menu-item><mat-icon>send</mat-icon>send</button>
         <button mat-menu-item *ngIf="my"><mat-icon>delete</mat-icon>delete</button>

@@ -27,7 +27,10 @@ export class MessageComponent implements OnInit {
   MessageOptions(event:Event){
     event.preventDefault();
     this.openOptions = !this.openOptions;
-    console.log(event);
+  }
+
+  StartEdit(){
+    this.messengerState.StartUpdate(this.message); 
   }
 
 }
