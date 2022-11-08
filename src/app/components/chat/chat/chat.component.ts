@@ -22,10 +22,10 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   
   @ViewChild('messages') scrollFrame : ElementRef | undefined;
   @ViewChildren('message') messageView: QueryList<any> | undefined;
-  @HostListener('scroll')
-  scrolled(event: any): void {
+ /*  @HostListener('scroll')
+  scrolled(event: Event): void {
     this._isNearBottom = this.isUserNearBottom();
-  }
+  } */
 
   constructor(
     private signalrService:SignalrService,
@@ -63,18 +63,17 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     }
   }
  
-  UpdateData(guid: string) {
-    this.chat = this.messengerState.GetChat(guid);
+  UpdateData(chatGuid: string) {
+    this.chat = this.messengerState.GetChat(chatGuid);
     if (!this.chat) {
       return;
     }
 
     this.messengerState.SetChat(this.chat);  
-    if (this.messengerState.GetMessages(guid).length < 20){
-/*       this._subscriptions.push(
-        this.GetMessagesFromBack(guid)
-      ); */ 
-      this.GetMessagesFromBack(guid);
+    if (this.messengerState.GetMessages(chatGuid).length < 20){
+      this.GetMessagesFromBack(chatGuid).subscribe({
+        next: (messages) => this.messengerState.SetMessages(chatGuid, messages)
+      });
     }
   }
 
@@ -91,7 +90,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     return this.messengerState.GetMessages(this.chat.guid);
   }
 
-  GetMessagesFromBack(chatGuid:string){
+  GetMessagesFromBack(chatGuid:string):Observable<Message[]> {
     const date = this.messengerState.GetMessages(chatGuid)[0]?.date;
     var search;
     if(date === undefined){
@@ -101,8 +100,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
       search =  { chatGuid: chatGuid, count: 20, date:date.toString()}
     }
     
-    this._subscriptions.push(
-      this.backendService
+    return this.backendService
         .get("Message", undefined, search)
         .pipe(
           map((data: any) => {
@@ -111,11 +109,10 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
               messages.push(new Message(message));
             });
             return messages;
-          }))
-        .subscribe({
+          }));
+/*         .subscribe({
           next: (data) => this.messengerState.SetMessages(chatGuid, data)
-        })
-    );
+        }) */
   }
 
   SendMessage(){
@@ -150,15 +147,25 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   }
 
   scrollMessages(event:Event){
-    console.log(this._scrollContainer.scroll);
+  /*   console.log(this._scrollContainer.scroll);
     console.log(this._scrollContainer.scrollHeight);
     console.log(this._scrollContainer.scrollToBottom);
     console.log(this._scrollContainer.scrollTop);
-    console.log(this._scrollContainer.offsetHeight);
+    console.log(this._scrollContainer.offsetHeight); */
+    this._isNearBottom = this.isUserNearBottom();
     if (this._scrollContainer.scrollTop === 0
       && this.chat != undefined) {
-      console.log("get");
-      this.GetMessagesFromBack(this.chat.guid);
+      const chatGuid = this.chat.guid; 
+      this.GetMessagesFromBack(chatGuid).subscribe({
+        next : (messages) => {  
+          this.messengerState.SetMessages(chatGuid, messages);
+          this._scrollContainer.scroll({
+            top: 5,
+            left: 0,
+          });
+        }
+      });
+      
     }
   }
 
