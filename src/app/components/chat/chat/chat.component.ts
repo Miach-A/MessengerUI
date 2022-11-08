@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit, Vie
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
+import { ChatEvent } from 'src/app/models/ChatEvent';
 import { Message } from 'src/app/models/Message';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
@@ -18,14 +19,9 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   private _scrollContainer: any;
   private _subscriptions:Subscription[] = [];
   public text:string = "";
-  public chat?:Chat;
-  
+  public chat?:Chat;  
   @ViewChild('messages') scrollFrame : ElementRef | undefined;
   @ViewChildren('message') messageView: QueryList<any> | undefined;
- /*  @HostListener('scroll')
-  scrolled(event: Event): void {
-    this._isNearBottom = this.isUserNearBottom();
-  } */
 
   constructor(
     private signalrService:SignalrService,
@@ -38,16 +34,31 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     this._subscriptions.push(
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
-          this.UpdateData(param.get('guid') ?? "");  
+          this.UpdateData(param.get('guid') ?? "");
         }
       }));
 
-      this._subscriptions.push(
-        this.messengerState.GetUserDataChangeEmitter()
-          .subscribe({ 
-            next: () => {
-              this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? ""); }
-          }));
+    this._subscriptions.push(
+      this.messengerState.GetUserDataChangeEmitter()
+        .subscribe({
+          next: () => {
+            this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? "");
+          }
+        }));
+
+    this._subscriptions.push(
+      this.messengerState.GetChatEventEmitter()
+        .subscribe({
+          next: (chatEvent: ChatEvent) => {
+            this.UpdateChatAfterEventChange(chatEvent)
+          }
+        }));
+  }
+
+  UpdateChatAfterEventChange(chatEvent: ChatEvent){
+    if (chatEvent === ChatEvent.Update){
+      this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
+    }
   }
 
   ngAfterViewInit() {
@@ -110,18 +121,16 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
             });
             return messages;
           }));
-/*         .subscribe({
-          next: (data) => this.messengerState.SetMessages(chatGuid, data)
-        }) */
   }
 
   SendMessage(){
-    const newMessage = this.messengerState.GetMessageDTO(this.text);
+/*     const newMessage = this.messengerState.GetMessageDTO(this.text);
     if (newMessage == undefined){
       return;
     }
 
-    this.signalrService.SendMessage(newMessage);
+    this.signalrService.SendMessage(newMessage); */
+    this.messengerState.SendMessage(this.text);
     this.text = "";
   }
 
@@ -147,11 +156,6 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   }
 
   scrollMessages(event:Event){
-  /*   console.log(this._scrollContainer.scroll);
-    console.log(this._scrollContainer.scrollHeight);
-    console.log(this._scrollContainer.scrollToBottom);
-    console.log(this._scrollContainer.scrollTop);
-    console.log(this._scrollContainer.offsetHeight); */
     this._isNearBottom = this.isUserNearBottom();
     if (this._scrollContainer.scrollTop === 0
       && this.chat != undefined) {

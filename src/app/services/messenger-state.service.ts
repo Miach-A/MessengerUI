@@ -6,6 +6,7 @@ import { CreateMessageDTO } from '../models/CreateMessageDTO';
 import { Message } from '../models/Message';
 import { UpdateMessageDTO } from '../models/UpdateMessageDTO';
 import { User } from '../models/User';
+import { SignalrService } from './signalr.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,11 @@ export class MessengerStateService {
   private _messageList:{[chatGuid:string] : Array<Message>} = {};
   private _contactSearch: EventEmitter<any> = new EventEmitter();
   private _userDataChange:EventEmitter<User> = new EventEmitter(); 
+  private _chatEventChange:EventEmitter<ChatEvent> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private signalrService:SignalrService
+  ) { }
 
   public AddContact(contact:Contact){
     this._user?.contacts.push(contact);
@@ -53,6 +57,18 @@ export class MessengerStateService {
 
   public EmitUserDataChangeEvent() {
     this._userDataChange.emit();
+  }
+
+  public GetChatEventEmitter() {
+    return this._chatEventChange;
+  }
+
+  public EmitChatEventChange() {
+    this._chatEventChange.emit();
+  }
+
+  public GetTargetMessage():Message|undefined{
+    return this._targetMessage;
   }
 
   public SetUser(user?:User){
@@ -94,23 +110,23 @@ export class MessengerStateService {
     return this._targetChat === undefined ? this._chat : this._targetChat;
   }
 
-  public StartComment(message:Message,targetChat?:Chat):boolean{
-    if (this._event != ChatEvent.New){
+  public StartComment(message:Message,targetChat?:Chat){
+/*     if (this._event != ChatEvent.New){
       return false;
-    }
+    } */
     this._event = ChatEvent.Comment;
     this._targetMessage = message;
     this._targetChat = targetChat;
-    return true;
+    //return true;
   }
 
-  public StartUpdate(message:Message):boolean{
-    if (this._event != ChatEvent.New){
+  public StartUpdate(message:Message){
+/*     if (this._event != ChatEvent.New){
       return false;
-    }
+    } */
     this._event = ChatEvent.Update;
     this._targetMessage = message;
-    return false;
+    //return false;
   }
 
   public CancelChatEvent(){
@@ -181,6 +197,15 @@ export class MessengerStateService {
     }
 
     this._messageList[chatGuid].push(message);
+  }
+
+  public SendMessage(text:string){
+    const newMessage = this.GetMessageDTO(text);
+    if (newMessage == undefined){
+      return;
+    }
+
+    this.signalrService.SendMessage(newMessage);
   }
 
 }

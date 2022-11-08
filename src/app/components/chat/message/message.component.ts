@@ -1,4 +1,6 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChatEvent } from 'src/app/models/ChatEvent';
 import { Message } from 'src/app/models/Message';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -8,6 +10,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent implements OnInit {
+  private _subscriptions:Subscription[] = [];
   public my:boolean = false;
   public openOptions:boolean = false;
   @Input() message!:Message;
