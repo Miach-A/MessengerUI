@@ -20,8 +20,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   public text:string = "";
   public chat?:Chat;
   
-  @ViewChild('Messages') scrollFrame : ElementRef | undefined;
-  @ViewChildren('item') itemElements: QueryList<any> | undefined;
+  @ViewChild('messages') scrollFrame : ElementRef | undefined;
+  @ViewChildren('message') messageView: QueryList<any> | undefined;
   @HostListener('scroll')
   scrolled(event: any): void {
     this._isNearBottom = this.isUserNearBottom();
@@ -51,19 +51,18 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    if (this.scrollFrame != undefined){
-    this._scrollContainer = this.scrollFrame.nativeElement;
+    if (this.scrollFrame != undefined) {
+      this._scrollContainer = this.scrollFrame.nativeElement;
     }
-    if (this.itemElements != undefined){
-    this.itemElements.changes.subscribe(() =>
-    {
-      this.onItemElementsChanged();
-    });
+    if (this.messageView != undefined) {
+      this._subscriptions.push(
+        this.messageView.changes.subscribe(() => {
+          this.onItemElementsChanged();
+        })
+      );
     }
-
   }
  
-
   UpdateData(guid: string) {
     this.chat = this.messengerState.GetChat(guid);
     if (!this.chat) {
@@ -72,9 +71,10 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
 
     this.messengerState.SetChat(this.chat);  
     if (this.messengerState.GetMessages(guid).length < 20){
-      this._subscriptions.push(
-        this.GetMessagesFromBack(guid)  
-      ); 
+/*       this._subscriptions.push(
+        this.GetMessagesFromBack(guid)
+      ); */ 
+      this.GetMessagesFromBack(guid);
     }
   }
 
@@ -91,29 +91,31 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     return this.messengerState.GetMessages(this.chat.guid);
   }
 
-  GetMessagesFromBack(chatGuid:string):Subscription{
+  GetMessagesFromBack(chatGuid:string){
     const date = this.messengerState.GetMessages(chatGuid)[0]?.date;
     var search;
     if(date === undefined){
-      search =  { chatGuid: chatGuid, count: 50}
+      search =  { chatGuid: chatGuid, count: 20}
     }
     else{
-      search =  { chatGuid: chatGuid, count: 50, date:date.toString()}
+      search =  { chatGuid: chatGuid, count: 20, date:date.toString()}
     }
     
-    return this.backendService
-    .get("Message", undefined,search)
-    .pipe(
-      map((data: any) => {
-        const messages: Message[] = [];
-        data.forEach((message: Message) => {
-          messages.push(new Message(message));
-        });
-        return messages;
-      }))
-    .subscribe({
-      next: (data) => this.messengerState.SetMessages(chatGuid, data)
-    });
+    this._subscriptions.push(
+      this.backendService
+        .get("Message", undefined, search)
+        .pipe(
+          map((data: any) => {
+            const messages: Message[] = [];
+            data.forEach((message: Message) => {
+              messages.push(new Message(message));
+            });
+            return messages;
+          }))
+        .subscribe({
+          next: (data) => this.messengerState.SetMessages(chatGuid, data)
+        })
+    );
   }
 
   SendMessage(){
@@ -145,6 +147,19 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     const position = this._scrollContainer.scrollTop + this._scrollContainer.offsetHeight;
     const height = this._scrollContainer.scrollHeight;
     return position > height - threshold;
+  }
+
+  scrollMessages(event:Event){
+    console.log(this._scrollContainer.scroll);
+    console.log(this._scrollContainer.scrollHeight);
+    console.log(this._scrollContainer.scrollToBottom);
+    console.log(this._scrollContainer.scrollTop);
+    console.log(this._scrollContainer.offsetHeight);
+    if (this._scrollContainer.scrollTop === 0
+      && this.chat != undefined) {
+      console.log("get");
+      this.GetMessagesFromBack(this.chat.guid);
+    }
   }
 
   ngOnDestroy(): void {

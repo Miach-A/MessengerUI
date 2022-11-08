@@ -1,15 +1,14 @@
 <div class="chat-conteiner">
     <div class="chat-left"></div>
     <div class="chat" >
-        <div class="messages" #Messages>
-            <div *ngFor="let message of GetMessages()" #item>
+        <div class="messages" #messages (scroll)="scrollMessages($event)">
+            <div *ngFor="let message of GetMessages()" #message>
                 <app-message [message]="message"></app-message>
             </div>
         </div>
 
         <div class="send-message">
-            <textarea rows="4" class="text" [(ngModel)]="text" (keyup)="SendMessageIfEnter($event)" #MessageTextInput> </textarea>
-            <!-- <button class="send" mat-raised-button (click)="SendMessage()">send</button> -->
+            <textarea rows="4" class="text" [(ngModel)]="text" (keyup)="SendMessageIfEnter($event)"> </textarea> <!-- #MessageTextInput -->
         </div>
     </div>
     <div class="chat-right"></div>
