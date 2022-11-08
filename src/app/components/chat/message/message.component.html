@@ -2,11 +2,29 @@
     <!--  [ngClass]="{'row-reverse':my}" -->
     <div class="contact" *ngIf="!my">{{message.contactName}}</div> <!-- *ngIf="!my" -->
     <div>
-        <div class = "text">
+        <div class="text" (contextmenu)="MessageOptions($event)" (click)="MessageOptions($event)" [matMenuTriggerFor]="messageOptions">
             {{message.text}}
         </div>
         <div class="date">
-            {{message.date | date:'HH:mm'}}  <!-- MMM d HH:mm -->
+            {{message.date | date:'HH:mm'}}
+            <!-- MMM d HH:mm -->
         </div>
     </div>
+    <span>&nbsp;</span>
+    <mat-menu #messageOptions="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+        <button mat-menu-item>Item 3</button>
+        <button mat-menu-item>Item 4</button>
+        <button mat-menu-item>Item 5</button>
+        <button mat-menu-item>Item 6</button>
+    </mat-menu>
+<!--     <div class="message-menu" *ngIf="openOptions" >
+        <div>111</div>
+        <div>222</div>
+        <div>333</div>
+        <div>444</div>
+        <div>555</div>
+        <div>666</div>
+    </div> -->
 </div>

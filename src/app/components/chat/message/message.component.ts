@@ -9,6 +9,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 })
 export class MessageComponent implements OnInit {
   public my:boolean = false;
+  public openOptions:boolean = false;
   @Input() message!:Message;
   @HostBinding('style.flex-direction') messageFlexDirection:string = "row";
   
@@ -21,6 +22,12 @@ export class MessageComponent implements OnInit {
     if (this.my){
       this.messageFlexDirection = "row-reverse";
     }
+  }
+
+  MessageOptions(event:Event){
+    event.preventDefault();
+    this.openOptions = !this.openOptions;
+    console.log(event);
   }
 
 }
