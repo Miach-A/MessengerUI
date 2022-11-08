@@ -56,6 +56,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   }
 
   UpdateChatAfterEventChange(chatEvent: ChatEvent){
+    console.log(chatEvent);
     if (chatEvent === ChatEvent.Update){
       this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
     }
@@ -130,7 +131,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     }
 
     this.signalrService.SendMessage(newMessage); */
-    this.messengerState.SendMessage(this.text);
+    this.messengerState.SendMessage(this.text.slice(0, -1));
     this.text = "";
   }
 

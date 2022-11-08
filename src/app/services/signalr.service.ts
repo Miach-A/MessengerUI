@@ -26,8 +26,7 @@ export class SignalrService {
     .build();
 
   constructor(
-    @Inject(SIGNALR_URL) private signalrUri: string,
-    private messengerState:MessengerStateService
+    @Inject(SIGNALR_URL) private signalrUri: string
   ) { }
 
   public EmitMessageEvent(data:NewMessageEvent) {

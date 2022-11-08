@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChatEvent } from 'src/app/models/ChatEvent';
 import { Message } from 'src/app/models/Message';
@@ -15,10 +15,12 @@ export class MessageComponent implements OnInit {
   public openOptions:boolean = false;
   @Input() message!:Message;
   @HostBinding('style.flex-direction') messageFlexDirection:string = "row";
-  
+
   constructor(
+    private _ngZone: NgZone,
     private messengerState:MessengerStateService
   ) { }
+
 
   ngOnInit(): void {
     this.my = this.message.contactName == this.messengerState.GetUser()?.name;

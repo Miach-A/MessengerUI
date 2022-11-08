@@ -79,7 +79,7 @@ export class MessengerStateService {
   }
 
   public EmitChatEventChange() {
-    this._chatEventChange.emit();
+    this._chatEventChange.emit(this._event);
   }
 
   public GetTargetMessage():Message|undefined{
@@ -132,6 +132,7 @@ export class MessengerStateService {
     this._event = ChatEvent.Comment;
     this._targetMessage = message;
     this._targetChat = targetChat;
+    this.EmitChatEventChange();
     //return true;
   }
 
@@ -141,6 +142,7 @@ export class MessengerStateService {
     } */
     this._event = ChatEvent.Update;
     this._targetMessage = message;
+    this.EmitChatEventChange();
     //return false;
   }
 
@@ -148,6 +150,7 @@ export class MessengerStateService {
     this._event != ChatEvent.New;
     this._targetChat = undefined;
     this._targetMessage = undefined;
+    this.EmitChatEventChange();
   }
 
   public GetEvent():ChatEvent{
