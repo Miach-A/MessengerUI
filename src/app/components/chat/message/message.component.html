@@ -12,12 +12,11 @@
     </div>
     <span>&nbsp;</span>
     <mat-menu #messageOptions="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-        <button mat-menu-item>Item 3</button>
-        <button mat-menu-item>Item 4</button>
-        <button mat-menu-item>Item 5</button>
-        <button mat-menu-item>Item 6</button>
+        <button mat-menu-item *ngIf="my"><mat-icon>edit</mat-icon>edit</button> <!-- mat-menu-item  -->
+        <button mat-menu-item><mat-icon>comment</mat-icon>comment</button>
+        <button mat-menu-item><mat-icon>send</mat-icon>send</button>
+        <button mat-menu-item *ngIf="my"><mat-icon>delete</mat-icon>delete</button>
+        <button mat-menu-item><mat-icon>delete_outline</mat-icon>delete for me</button>
     </mat-menu>
 <!--     <div class="message-menu" *ngIf="openOptions" >
         <div>111</div>
