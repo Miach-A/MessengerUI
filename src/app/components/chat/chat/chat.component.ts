@@ -91,6 +91,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
 
   SendMessageIfEnter(event:KeyboardEvent){
     if (event.key === 'Enter' && !event.shiftKey){
+      event.preventDefault();
       this.SendMessage();
     }
   }
@@ -125,13 +126,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   }
 
   SendMessage(){
-/*     const newMessage = this.messengerState.GetMessageDTO(this.text);
-    if (newMessage == undefined){
-      return;
-    }
-
-    this.signalrService.SendMessage(newMessage); */
-    this.messengerState.SendMessage(this.text.slice(0, -1));
+    this.messengerState.SendMessage(this.text);
     this.text = "";
   }
 

@@ -70,16 +70,16 @@ export class SignalrService {
 
   EventsOn(){
     this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessage(new Message(data)));
-    this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessage(data));
+    this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessage(new Message(data)));
   }
 
   ReceiveMessage(message:Message){
-    //this.messengerState.AddMessage(message.chatGuid,message);
     this.EmitMessageEvent(new NewMessageEvent(message,ChatEvent.New) );
   }
 
-  EditMessage(data:Message){
-    console.log(data);  
+  EditMessage(message:Message){
+    //console.log(data);  
+    this.EmitMessageEvent(new NewMessageEvent(message,ChatEvent.Update));
   }
 
   EventsOff(){

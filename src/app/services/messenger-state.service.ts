@@ -29,7 +29,7 @@ export class MessengerStateService {
     this.signalrService.GetMessageEvent().subscribe({
       next: (data:NewMessageEvent) => this.NewMessageHendler(data)
     })
-  }
+  }   
 
   private NewMessageHendler(data:NewMessageEvent){
     const event = data.GetEvent();
@@ -37,6 +37,9 @@ export class MessengerStateService {
 
     if(event === ChatEvent.New || event === ChatEvent.Comment){
       this.AddMessage(message.chatGuid,message);
+    }
+    else if(event === ChatEvent.Update){
+      this.UpdateMessage(message.chatGuid,message);
     }
 
   }
@@ -215,6 +218,20 @@ export class MessengerStateService {
     }
 
     this._messageList[chatGuid].push(message);
+  }
+
+  public UpdateMessage(chatGuid:string,message:Message){
+    if (this._messageList[chatGuid] === undefined){
+      const newArray = new Array<Message>;
+      newArray.push(message);
+      this._messageList[chatGuid] = newArray;
+      return;
+    }
+
+    const editmessage = this._messageList[chatGuid].find(x => x.guid === message.guid);
+    if (editmessage != undefined){
+      editmessage.text = message.text;
+    }
   }
 
   public SendMessage(text:string){
