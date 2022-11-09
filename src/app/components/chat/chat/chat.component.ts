@@ -62,13 +62,13 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     }
 
     this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment;
-    console.log(this.messengerState.GetEvent());
-    console.log(this.canCancel);
+/*     this._isNearBottom = this.isUserNearBottom();
+    this.scrollToBottom(); */
   }
 
   CanselEvent(){
     this.messengerState.CancelChatEvent();
-    this.text = "";   
+    this.text = "";
   }
 
   ngAfterViewInit() {
