@@ -150,7 +150,7 @@ export class MessengerStateService {
   }
 
   public CancelChatEvent(){
-    this._event != ChatEvent.New;
+    this._event = ChatEvent.New;
     this._targetChat = undefined;
     this._targetMessage = undefined;
     this.EmitChatEventChange();

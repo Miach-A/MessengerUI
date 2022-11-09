@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   private _isNearBottom = true;
   private _scrollContainer: any;
   private _subscriptions:Subscription[] = [];
+  public canCancel:boolean = false;
   public text:string = "";
   public chat?:Chat;  
   @ViewChild('messages') scrollFrame : ElementRef | undefined;
@@ -59,6 +60,15 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     if (chatEvent === ChatEvent.Update){
       this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
     }
+
+    this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment;
+    console.log(this.messengerState.GetEvent());
+    console.log(this.canCancel);
+  }
+
+  CanselEvent(){
+    this.messengerState.CancelChatEvent();
+    this.text = "";   
   }
 
   ngAfterViewInit() {
