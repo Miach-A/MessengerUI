@@ -69,6 +69,10 @@ textarea {
     display: flex;
 }
 
+.chat-event-type{
+    flex: 1 1 auto;
+}
+
 .messages::-webkit-scrollbar {
     width: 6px;
     height: 6px;
