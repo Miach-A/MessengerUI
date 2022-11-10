@@ -77,26 +77,3 @@ textarea {
 .chat-event-type{
     flex: 1 1 auto;
 }
-
-.messages::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-.messages::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.messages::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.messages::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.messages::-webkit-scrollbar-thumb:active {
-    background: rgba(0, 0, 0, .9);
-}
