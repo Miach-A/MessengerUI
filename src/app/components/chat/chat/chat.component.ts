@@ -19,6 +19,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   private _scrollContainer: any;
   private _subscriptions:Subscription[] = [];
   public canCancel:boolean = false;
+  public edit:boolean = false;
+  public comment:boolean = false;
   public text:string = "";
   public chat?:Chat;  
   @ViewChild('messages') scrollFrame : ElementRef | undefined;
@@ -61,6 +63,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
       this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
     }
 
+    this.edit =  chatEvent === ChatEvent.Update;
+    this.comment =  chatEvent === ChatEvent.Comment;
     this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment;
   }
 

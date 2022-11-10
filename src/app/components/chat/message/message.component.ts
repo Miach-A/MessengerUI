@@ -38,4 +38,12 @@ export class MessageComponent implements OnInit {
     this.messengerState.StartUpdate(this.message); 
   }
 
+  StartComment(){
+    this.messengerState.StartComment(this.message);   
+  }
+  
+  Delete(){
+    
+  }
+
 }

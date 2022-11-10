@@ -28,7 +28,11 @@ export class MessengerStateService {
   ) { 
     this.signalrService.GetMessageEvent().subscribe({
       next: (data:NewMessageEvent) => this.NewMessageHendler(data)
-    })
+    });
+
+    this.signalrService.GetDeleteMessageEvent().subscribe({
+      next: (data:UpdateMessageDTO) => this.DeleteMessageHendler(data)
+    });
   }   
 
   private NewMessageHendler(data:NewMessageEvent){
@@ -41,8 +45,18 @@ export class MessengerStateService {
     else if(event === ChatEvent.Update){
       this.UpdateMessage(message.chatGuid,message);
     }
-
   }
+
+  private DeleteMessageHendler(data:UpdateMessageDTO){
+    if (this._messageList[data.chatGuid] === undefined){
+      return;
+    }
+
+    const deletemessage = this._messageList[data.chatGuid].find(x => x.guid === data.guid);
+    if (deletemessage != undefined){
+      this._messageList[data.chatGuid] = this._messageList[data.chatGuid].slice(this._messageList[data.chatGuid].indexOf(deletemessage),1);
+    } 
+  } 
 
   public AddContact(contact:Contact){
     this._user?.contacts.push(contact);
@@ -242,6 +256,10 @@ export class MessengerStateService {
 
     this.CancelChatEvent();
     this.signalrService.SendMessage(newMessage);
+  }
+
+  public Delete(){
+
   }
 
 }

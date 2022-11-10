@@ -15,6 +15,7 @@ import { NewMessageEvent } from '../models/MessageEvent';
 export class SignalrService {
 
   private _messageEvent:EventEmitter<NewMessageEvent> = new EventEmitter();
+  private _messageDelteEvent:EventEmitter<UpdateMessageDTO> = new EventEmitter();
   private signalrConnect: signalR.HubConnection =
   new signalR.HubConnectionBuilder()
     .withUrl(
@@ -35,6 +36,14 @@ export class SignalrService {
 
   public GetMessageEvent() {
     return this._messageEvent;
+  }
+
+  public EmitDeleteMessageEvent(data:UpdateMessageDTO) {
+    this._messageDelteEvent.emit(data);
+  }
+
+  public GetDeleteMessageEvent() {
+    return this._messageDelteEvent;
   }
 
   isConnected() {
@@ -71,6 +80,7 @@ export class SignalrService {
   EventsOn(){
     this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessage(new Message(data)));
     this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessage(new Message(data)));
+    this.signalrConnect.on("DeleteMessage",(data:UpdateMessageDTO) => this.DeleteMessage(new UpdateMessageDTO(data)));  
   }
 
   ReceiveMessage(message:Message){
@@ -78,12 +88,17 @@ export class SignalrService {
   }
 
   EditMessage(message:Message){
-    //console.log(data);  
     this.EmitMessageEvent(new NewMessageEvent(message,ChatEvent.Update));
   }
+
+  DeleteMessage(message:UpdateMessageDTO){
+    this.EmitDeleteMessageEvent(message);
+  }
+
 
   EventsOff(){
     this.signalrConnect.off("ReceiveMessage");
     this.signalrConnect.off("EditMessage");
+    this.signalrConnect.off("DeleteMessage");
   }
 }
