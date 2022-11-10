@@ -17,7 +17,7 @@ export class MessageComponent implements OnInit {
   @HostBinding('style.flex-direction') messageFlexDirection:string = "row";
 
   constructor(
-    private _ngZone: NgZone,
+    private _ngZone: NgZone, 
     private messengerState:MessengerStateService
   ) { }
 

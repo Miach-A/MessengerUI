@@ -7,6 +7,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { AngularMaterialModule } from 'src/app/modules/angular-material.module';
 import { MessageComponent } from './message/message.component';
 import { FormsModule } from '@angular/forms';
+import { CommentedMessageComponent } from './commented-message/commented-message.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     ChatComponent,
     ChatInfoComponent,
     ChatIconComponent,
-    MessageComponent
+    MessageComponent,
+    CommentedMessageComponent
   ],
   imports: [
     CommonModule,
