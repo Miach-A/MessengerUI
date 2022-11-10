@@ -43,7 +43,10 @@ export class MessageComponent implements OnInit {
   }
   
   Delete(){
-    this.messengerState.Delete(this.message);
+    this.messengerState.DeleteMessage(this.message);
   }
 
+  DeleteForMe(){
+    this.messengerState.DeleteMessageForMe(this.message);
+  }
 }

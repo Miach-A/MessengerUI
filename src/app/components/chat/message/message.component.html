@@ -27,7 +27,7 @@
         <button mat-menu-item *ngIf="my" (click)="Delete()">
             <mat-icon>delete</mat-icon>delete
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="DeleteForMe()">
             <mat-icon>delete_outline</mat-icon>delete for me
         </button>
     </mat-menu>

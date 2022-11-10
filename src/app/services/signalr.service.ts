@@ -81,10 +81,15 @@ export class SignalrService {
     this.signalrConnect.send('DeleteMessage',message);
   }
 
+  public DeleteMessageForMe(message:UpdateMessageDTO){
+    this.signalrConnect.send('DeleteMessageForMe',message);
+  }
+
   EventsOn(){
     this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessageResult(new Message(data)));
     this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessageResult(new Message(data)));
     this.signalrConnect.on("DeleteMessage",(data:UpdateMessageDTO) => this.DeleteMessageResult(new UpdateMessageDTO(data)));  
+    this.signalrConnect.on("DeleteMessageForMe",(data:UpdateMessageDTO) => this.DeleteMessageResult(new UpdateMessageDTO(data)));
   }
 
   ReceiveMessageResult(message:Message){
