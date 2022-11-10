@@ -43,7 +43,7 @@ export class MessageComponent implements OnInit {
   }
   
   Delete(){
-    
+    this.messengerState.Delete(this.message);
   }
 
 }

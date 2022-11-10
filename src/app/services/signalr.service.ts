@@ -51,7 +51,7 @@ export class SignalrService {
   }
 
   Connect() {
-    console.log(this.GetState());
+    //console.log(this.GetState());
     if (this.GetState() === signalR.HubConnectionState.Disconnected) {
       this.signalrConnect.start().then( resp => {
         
@@ -77,21 +77,25 @@ export class SignalrService {
     }  
   }
 
-  EventsOn(){
-    this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessage(new Message(data)));
-    this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessage(new Message(data)));
-    this.signalrConnect.on("DeleteMessage",(data:UpdateMessageDTO) => this.DeleteMessage(new UpdateMessageDTO(data)));  
+  DeleteMessage(message:UpdateMessageDTO){
+    this.signalrConnect.send('DeleteMessage',message);
   }
 
-  ReceiveMessage(message:Message){
+  EventsOn(){
+    this.signalrConnect.on("ReceiveMessage",(data:Message) => this.ReceiveMessageResult(new Message(data)));
+    this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessageResult(new Message(data)));
+    this.signalrConnect.on("DeleteMessage",(data:UpdateMessageDTO) => this.DeleteMessageResult(new UpdateMessageDTO(data)));  
+  }
+
+  ReceiveMessageResult(message:Message){
     this.EmitMessageEvent(new NewMessageEvent(message,ChatEvent.New) );
   }
 
-  EditMessage(message:Message){
+  EditMessageResult(message:Message){
     this.EmitMessageEvent(new NewMessageEvent(message,ChatEvent.Update));
   }
 
-  DeleteMessage(message:UpdateMessageDTO){
+  DeleteMessageResult(message:UpdateMessageDTO){
     this.EmitDeleteMessageEvent(message);
   }
 

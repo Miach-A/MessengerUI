@@ -258,8 +258,10 @@ export class MessengerStateService {
     this.signalrService.SendMessage(newMessage);
   }
 
-  public Delete(){
-
+  public Delete(message:Message){
+    this._event = ChatEvent.Update;
+    this._targetMessage = message;
+    this.signalrService.DeleteMessage(new UpdateMessageDTO(message));
   }
 
 }
