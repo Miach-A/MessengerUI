@@ -22,7 +22,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   public edit:boolean = false;
   public comment:boolean = false;
   public text:string = "";
-  public chat?:Chat;  
+  public chat?:Chat;
+  public targetMessage?:Message;
   @ViewChild('messages') scrollFrame : ElementRef | undefined;
   @ViewChildren('message') messageView: QueryList<any> | undefined;
 
@@ -63,6 +64,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
       this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
     }
 
+    this.targetMessage = this.messengerState.GetTargetMessage();
     this.edit =  chatEvent === ChatEvent.Update;
     this.comment =  chatEvent === ChatEvent.Comment;
     this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment;

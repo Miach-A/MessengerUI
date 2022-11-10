@@ -62,6 +62,16 @@ textarea {
 
 .chat-event{
     display: flex;
+    border-radius: 0.6rem;
+    background-color: $primary100;
+    width: 99%;
+    padding-top: 0.3rem;
+}
+
+.chat-event-message-info{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .chat-event-type{

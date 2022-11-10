@@ -8,9 +8,12 @@
         </div>
 
         <div *ngIf="canCancel" class="chat-event">
+            <span>&nbsp;&nbsp;</span>
             <div *ngIf="edit" class="chat-event-type"><mat-icon>edit</mat-icon></div>
             <div *ngIf="comment" class="chat-event-type"><mat-icon>comment</mat-icon></div>
+            <div class="chat-event-message-info"><span>&nbsp;&nbsp;</span>{{targetMessage?.contactName}}<span>&nbsp;&nbsp;</span>:<span>&nbsp;&nbsp;</span>{{targetMessage?.text}}</div>
             <button class="cancel-event" (click)="CanselEvent()"><mat-icon>close</mat-icon></button>
+            <span>&nbsp;&nbsp;</span>
         </div>
         <div class="send-message">
             <textarea rows="4" class="text" [(ngModel)]="text" (keypress)="SendMessageIfEnter($event)"> </textarea>     
