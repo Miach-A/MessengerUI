@@ -1,13 +1,15 @@
+@import "/src/assets/styles/variables";
+
 .message-container{
-    margin: 0.3rem;
+    margin-right: 1.5rem;
     display: inline-flex;   
-    max-width: 95%; 
+    max-width: 100%; 
     cursor:pointer;
-    //position: relative;
 }
 
 :host{
     display: flex;   
+    margin-bottom: 0.2rem;
 }
 
 .row-reverse{
@@ -18,33 +20,24 @@
     align-self: flex-start;
 }
 
+.text-box{
+    width: 100%;
+    flex: 1 1 auto;
+}
+
 .text,.text:focus {
     cursor:pointer;
     outline: none !important;
     resize: none;
-    //width: 96%; 
-    width: 15rem;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);   
-    //min-width: 3rem;
+    //width: 15rem;
+    //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);   
     border: 1px;
-    border-color: #673ab7;
+    border-color: $primary500;
     border-style: solid;
     margin: 0.2rem;
     padding: 0.4rem;
     border-radius: 0.6rem;
 }
-
-/* .text-box{
-    //box-shadow: 0 4px 8px 0 #673ab7, 0 6px 20px 0 #673ab7;  //rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.19)
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);   
-    min-width: 3rem;
-    border: 1px;
-    border-color: #673ab7;
-    border-style: solid;
-    margin: 0.2rem;
-    padding: 0.4rem;
-    border-radius: 0.6rem;
-} */
 
 .date{
     display: flex;

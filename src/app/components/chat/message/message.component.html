@@ -2,8 +2,7 @@
     <!--  [ngClass]="{'row-reverse':my}" -->
     <button class="contact" mat-button color="primary" *ngIf="!my">{{message.contactName}}</button>
     <!-- <div class="contact" *ngIf="!my">{{message.contactName}}</div> --> <!-- *ngIf="!my" -->
-    <div style="width: 100%;">
-        <!-- <div class="text-box" > -->
+    <div class="text-box">
             <textarea 
             (contextmenu)="MessageOptions($event)" (click)="MessageOptions($event)" [matMenuTriggerFor]="messageOptions"
             readonly 
@@ -11,10 +10,8 @@
             matInput
             cdkTextareaAutosize
             cdkAutosizeMinRows="1"  
-            [value]="message.text"></textarea> <!--  cdkAutosizeMaxRows="5" #autosize="cdkTextareaAutosize" -->
-            <!--  <textarea readonly class="text" [value]="message.text"> </textarea> -->
-            <!-- {{message.text}} -->
-        <!-- </div> -->
+            [value]="message.text"></textarea>
+
         <div class="date">
             {{message.date | date:'HH:mm'}}
             <!-- MMM d HH:mm -->

@@ -240,6 +240,7 @@ export class MessengerStateService {
       return;
     }
 
+    this.CancelChatEvent();
     this.signalrService.SendMessage(newMessage);
   }
 

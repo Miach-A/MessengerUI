@@ -62,8 +62,6 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     }
 
     this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment;
-/*     this._isNearBottom = this.isUserNearBottom();
-    this.scrollToBottom(); */
   }
 
   CanselEvent(){
