@@ -1,47 +1,48 @@
 @import "/src/assets/styles/variables";
 
-.message-container{
+.message-container {
     margin-right: 1.5rem;
-    display: inline-flex;   
-    max-width: 100%; 
-    cursor:pointer;
+    display: inline-flex;
+    max-width: 70%;
+    cursor: pointer;
 }
 
-:host{
-    display: flex;   
+:host {
+    display: flex;
     margin-bottom: 0.2rem;
 }
 
-.row-reverse{
-    flex-direction:row-reverse;
+.row-reverse {
+    flex-direction: row-reverse;
 }
 
-.contact{
+.contact {
     align-self: flex-start;
 }
 
-.text-box{
+.text-box {
     width: 100%;
     flex: 1 1 auto;
 }
 
-.text,.text:focus {
-    cursor:pointer;
+.text
+ {
+    cursor: pointer;
     outline: none !important;
     resize: none;
-    //width: 15rem;
-    //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);   
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);   
     border: 1px;
     border-color: $primary500;
     border-style: solid;
     margin: 0.2rem;
     padding: 0.4rem;
     border-radius: 0.6rem;
+    word-break: break-word;
 }
 
-.date{
+.date {
     display: flex;
-    flex-direction:row-reverse;
+    flex-direction: row-reverse;
     align-self: flex-end;
     font-size: 0.7rem;
 }

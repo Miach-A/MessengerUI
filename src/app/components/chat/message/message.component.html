@@ -1,33 +1,34 @@
-<div class="message-container" >  <!-- [ngClass]="{'commented-message':message.commentedMessage != undefined}" -->
-    <!--  [ngClass]="{'row-reverse':my}" -->
+<div class="message-container">
     <button class="contact" mat-button color="primary" *ngIf="!my">{{message.contactName}}</button>
     <div class="text-box">
-            
-            <div class="text"> 
-                <app-commented-message [message]="message.commentedMessage" *ngIf="message.commentedMessage != undefined"></app-commented-message>
-                <textarea 
-            (contextmenu)="MessageOptions($event)" (click)="MessageOptions($event)" [matMenuTriggerFor]="messageOptions"
-            readonly  
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="1"  
-            [value]="message.text">
-            
-            </textarea>
 
-        <div class="date">
-            {{message.date | date:'HH:mm'}}
-            <!-- MMM d HH:mm -->
-        </div>
+        <div class="text">
+            <app-commented-message [message]="message.commentedMessage" *ngIf="message.commentedMessage != undefined">
+            </app-commented-message>
+            <div (contextmenu)="MessageOptions($event)" (click)="MessageOptions($event)"
+                [matMenuTriggerFor]="messageOptions">{{message.text}}</div>
+
+            <div class="date">
+                {{message.date | date:'HH:mm'}}
+                <!-- MMM d HH:mm -->
             </div>
-            
+        </div>
+
     </div>
     <span>&nbsp;</span>
     <mat-menu #messageOptions="matMenu">
-        <button mat-menu-item *ngIf="my" (click)="StartEdit()"><mat-icon>edit</mat-icon>edit</button> <!-- mat-menu-item  -->
-        <button mat-menu-item (click)="StartComment()"><mat-icon>comment</mat-icon>comment</button>
+        <button mat-menu-item *ngIf="my" (click)="StartEdit()">
+            <mat-icon>edit</mat-icon>edit
+        </button> <!-- mat-menu-item  -->
+        <button mat-menu-item (click)="StartComment()">
+            <mat-icon>comment</mat-icon>comment
+        </button>
         <!-- <button mat-menu-item><mat-icon>send</mat-icon>send</button> -->
-        <button mat-menu-item *ngIf="my"(click)="Delete()"><mat-icon>delete</mat-icon>delete</button>
-        <button mat-menu-item><mat-icon>delete_outline</mat-icon>delete for me</button>
+        <button mat-menu-item *ngIf="my" (click)="Delete()">
+            <mat-icon>delete</mat-icon>delete
+        </button>
+        <button mat-menu-item>
+            <mat-icon>delete_outline</mat-icon>delete for me
+        </button>
     </mat-menu>
 </div>

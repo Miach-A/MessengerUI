@@ -1,17 +1,6 @@
-<div class="message-container" >
-    <button class="contact" mat-button color="primary">{{message.contactName}}</button>
+<div class="message-container">
+    <button class="contact" mat-button color="primary">{{message.contactName}}</button> <!-- color="primary" -->
     <div class="text-box">
-        <textarea 
-        readonly 
-        class="text"
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"  
-        [value]="message.text"></textarea>
-
-    <div class="date">
-        {{message.date | date:'HH:mm'}}
-        <!-- MMM d HH:mm -->
+        <div class="text">{{message.text}}</div>
     </div>
-</div>
 </div>
