@@ -1,8 +1,8 @@
 import { Component, HostBinding, Input, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ChatEvent } from 'src/app/models/ChatEvent';
 import { Message } from 'src/app/models/Message';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
+
 
 @Component({
   selector: 'app-message',
@@ -17,7 +17,7 @@ export class MessageComponent implements OnInit {
   @HostBinding('style.flex-direction') messageFlexDirection:string = "row";
 
   constructor(
-    private _ngZone: NgZone, 
+    private _ngZone: NgZone,
     private messengerState:MessengerStateService
   ) { }
 
@@ -29,19 +29,23 @@ export class MessageComponent implements OnInit {
     }
   }
 
+  SelectContacts(){
+    this.messengerState.SelectContacts();
+
+  }
   MessageOptions(event:Event){
     event.preventDefault();
     this.openOptions = !this.openOptions;
   }
 
   StartEdit(){
-    this.messengerState.StartUpdate(this.message); 
+    this.messengerState.StartUpdate(this.message);
   }
 
   StartComment(){
-    this.messengerState.StartComment(this.message);   
+    this.messengerState.StartComment(this.message);
   }
-  
+
   Delete(){
     this.messengerState.DeleteMessage(this.message);
   }

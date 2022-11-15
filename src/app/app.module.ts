@@ -19,6 +19,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ChatModule } from './components/chat/chat.module';
 import { ContactModule } from './components/contact/contact.module';
 import { UserModule } from './components/user/user.module';
+import { ContactSelectionComponent } from './components/contact/contact-selection/contact-selection.component';
 
 
 
@@ -32,6 +33,7 @@ export function tokenGetter(){
     LoginComponent,
     RegistrationComponent
   ],
+  entryComponents:[ContactSelectionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

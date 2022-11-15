@@ -27,4 +27,8 @@ export class ContactSelectionComponent implements OnInit {
     }
   }
 
+  Ok(): void {
+    this.dialogRef.close();
+  }
+
 }

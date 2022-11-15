@@ -1,4 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactSelectionComponent } from '../components/contact/contact-selection/contact-selection.component';
 import { Chat } from '../models/Chat';
 import { ChatEvent } from '../models/ChatEvent';
 import { Contact } from '../models/Contact';
@@ -24,7 +26,8 @@ export class MessengerStateService {
   private _chatEventChange:EventEmitter<ChatEvent> = new EventEmitter();
 
   constructor(
-    private signalrService:SignalrService
+    private signalrService:SignalrService,
+    private selectContactsDialog: MatDialog
   ) {
     this.signalrService.GetMessageEvent().subscribe({
       next: (data:NewMessageEvent) => this.NewMessageHendler(data)
@@ -36,6 +39,18 @@ export class MessengerStateService {
 
     this.signalrService.GetNewChatEvent().subscribe({
       next: (chat:Chat) => this.AddChat(new Chat(chat))
+    });
+  }
+
+  SelectContacts(): void {
+    const dialogRef = this.selectContactsDialog.open(ContactSelectionComponent, {
+      width: '250px',
+      //data: {name: this.name, animal: this.animal},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
     });
   }
 
