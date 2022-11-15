@@ -6,6 +6,7 @@ import { Contact } from 'src/app/models/Contact';
 import { CreateChatDTO } from 'src/app/models/CreateChatDTO';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
+import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-saved-contact-info',
@@ -17,13 +18,14 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   public contact?:Contact;
 
   constructor(
+    private _signalrService:SignalrService,
     private messengerState:MessengerStateService,
     private activatedRoute:ActivatedRoute,
     private backendService:BackendService,
     private route:Router) {
 
    }
-   
+
   ngOnInit(): void {
     this._subscriptions.push(
       this.activatedRoute.paramMap.subscribe({
@@ -34,7 +36,7 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
     this._subscriptions.push(
       this.messengerState.GetUserDataChangeEmitter()
-        .subscribe({ 
+        .subscribe({
           next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
         }));
   }
@@ -70,11 +72,12 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   }
 
   CreateChat(){
-    this._subscriptions.push(  
-      this.backendService.post("PostChat",new CreateChatDTO(this.contact?.name ?? "")).subscribe({ 
+    this._subscriptions.push(
+      this.backendService.post("PostChat",new CreateChatDTO(this.contact?.name ?? "")).subscribe({
         next: (chat) => {
           const newChat = new Chat(chat as Chat);
           this.messengerState.AddChat(newChat);
+          this._signalrService.SendNewChat(newChat.guid);
           this.route.navigate(['chat',newChat.guid]);
         }
       }));
