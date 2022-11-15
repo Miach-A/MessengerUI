@@ -21,7 +21,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
 
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.ContactSaved();
   }
 
@@ -30,13 +30,13 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     if (user === undefined){
       this.saved = false;
       return;
-    } 
+    }
 
     if (!!user.contacts.find(x => x.name === this.contact.name) || user.name === this.contact.name){
       this.saved = true;
       return;
     }
-    
+
     this.saved = false;
   }
 

@@ -90,6 +90,10 @@ export class SignalrService {
     this.signalrConnect.send('NewChat',chatGuid);
   }
 
+  RegistrationInNewChat(chatGuid:string){
+    this.signalrConnect.send('RegistrationInNewChat',chatGuid);
+  }
+
   DeleteMessage(message:UpdateMessageDTO){
     this.signalrConnect.send('DeleteMessage',message);
   }
@@ -103,11 +107,12 @@ export class SignalrService {
     this.signalrConnect.on("EditMessage",(data:Message) => this.EditMessageResult(new Message(data)));
     this.signalrConnect.on("DeleteMessage",(data:UpdateMessageDTO) => this.DeleteMessageResult(new UpdateMessageDTO(data)));
     this.signalrConnect.on("DeleteMessageForMe",(data:UpdateMessageDTO) => this.DeleteMessageResult(new UpdateMessageDTO(data)));
-    this.signalrConnect.on("ReceiveNewChat",(chatGuid:string) => this.ReceiveNewChatResult(chatGuid));
+    this.signalrConnect.on("ReceiveNewChat",(chat:Chat) => this.ReceiveNewChatResult(chat));
   }
 
-  ReceiveNewChatResult(chatGuid:string){
-    //this.EmitNewChatEvent(chat);
+  ReceiveNewChatResult(chat:Chat){
+    this.EmitNewChatEvent(chat);
+    this.RegistrationInNewChat(chat.guid);
   }
 
   ReceiveMessageResult(message:Message){
