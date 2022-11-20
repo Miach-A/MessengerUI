@@ -44,7 +44,7 @@ export class MessengerStateService {
 
   SelectContacts(): void {
     const dialogRef = this.selectContactsDialog.open(ContactSelectionComponent, {
-      width: '250px',
+      //width: '250px',
       //data: {name: this.name, animal: this.animal},
     });
 
