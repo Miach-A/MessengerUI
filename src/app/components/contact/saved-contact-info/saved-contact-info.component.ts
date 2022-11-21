@@ -1,12 +1,10 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { concat, Subscription } from 'rxjs';
-import { Chat } from 'src/app/models/Chat';
+import { Subscription } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
-import { CreateChatDTO } from 'src/app/models/CreateChatDTO';
 import { BackendService } from 'src/app/services/backend.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
-import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-saved-contact-info',
@@ -18,11 +16,11 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   public contact?:Contact;
 
   constructor(
-    private _signalrService:SignalrService,
     private messengerState:MessengerStateService,
     private activatedRoute:ActivatedRoute,
     private backendService:BackendService,
-    private route:Router) {
+    private route:Router,
+    private chatService:ChatService) {
 
    }
 
@@ -64,28 +62,11 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
     const chat = user.chats.find(x => x.users.length === 2 && x.users.find(y => y.name === this.contact!.name));
     if (!chat){
-      this.CreateChat();
+      this.chatService.CreateChat(this.contact?.name ?? "");
       return;
     }
 
     this.route.navigate(['chat',chat.guid]);
-  }
-
-  CreateChat(){
-    const contactName = this.contact?.name ?? ""; 
-    this._subscriptions.push(
-      this.backendService.post("PostChat",
-        new CreateChatDTO(
-          contactName,
-          this.messengerState.GetUser()?.name + "-" + contactName,
-          false)).subscribe({
-            next: (chat) => {
-              const newChat = new Chat(chat as Chat);
-              this.messengerState.AddChat(newChat);
-              this._signalrService.SendNewChat(newChat.guid);
-              this.route.navigate(['chat', newChat.guid]);
-            }
-          }));
   }
 
   SavedContact(){

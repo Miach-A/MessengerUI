@@ -61,11 +61,13 @@ export class AppComponent implements OnInit,OnDestroy {
 
   CreatePublicChat(){
     const dialogRef = this.inputStringDialog.open(StringInputDialogComponent, {
-      /* width: '250px', */
       data: new InputStringDialog("Input chat name"),
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result === undefined){
+        return;
+      }
       console.log(result);
     });
   }
