@@ -1,7 +1,15 @@
 
 export class CreateChatDTO{
-    constructor(contactName:string) {
-        this.contactName = contactName;        
+    public contactName:string[] = [];
+    public public:boolean = false;
+    public name:string = "";
+
+    constructor(contactName?:string, name:string = "", isPublic:boolean = false) {
+        if (contactName !== undefined){
+            this.contactName.push(contactName);        
+        } 
+        this.name = name;
+        this.public = isPublic;     
     }
-    contactName:string = "";
+
 }

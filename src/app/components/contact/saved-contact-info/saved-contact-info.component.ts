@@ -1,6 +1,6 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { concat, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
 import { Contact } from 'src/app/models/Contact';
 import { CreateChatDTO } from 'src/app/models/CreateChatDTO';
@@ -70,14 +70,19 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   }
 
   CreateChat(){
-    this._subscriptions.push(  
-      this.backendService.post("PostChat",new CreateChatDTO(this.contact?.name ?? "")).subscribe({ 
-        next: (chat) => {
-          const newChat = new Chat(chat as Chat);
-          this.messengerState.AddChat(newChat);
-          this.route.navigate(['chat',newChat.guid]);
-        }
-      }));
+    const contactName = this.contact?.name ?? ""; 
+    this._subscriptions.push(
+      this.backendService.post("PostChat",
+        new CreateChatDTO(
+          contactName,
+          this.messengerState.GetUser()?.name + "-" + contactName,
+          false)).subscribe({
+            next: (chat) => {
+              const newChat = new Chat(chat as Chat);
+              this.messengerState.AddChat(newChat);
+              this.route.navigate(['chat', newChat.guid]);
+            }
+          }));
   }
 
   SavedContact(){

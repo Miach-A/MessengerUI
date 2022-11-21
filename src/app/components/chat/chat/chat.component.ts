@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, HostListener } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
@@ -6,7 +6,6 @@ import { ChatEvent } from 'src/app/models/ChatEvent';
 import { Message } from 'src/app/models/Message';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
-import { SignalrService } from 'src/app/services/signalr.service';
 
 
 @Component({
@@ -28,7 +27,6 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   @ViewChildren('message') messageView: QueryList<any> | undefined;
 
   constructor(
-    private signalrService:SignalrService,
     private activatedRoute:ActivatedRoute,
     private messengerState:MessengerStateService,
     private backendService:BackendService
@@ -82,6 +80,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     if (this.messageView != undefined) {
       this._subscriptions.push(
         this.messageView.changes.subscribe(() => {
+          //this._isNearBottom = this.isUserNearBottom();
           this.onItemElementsChanged();
         })
       );
