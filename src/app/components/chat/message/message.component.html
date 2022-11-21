@@ -23,7 +23,7 @@
         <button mat-menu-item (click)="StartComment()">
             <mat-icon>comment</mat-icon>comment
         </button>
-        <!-- <button mat-menu-item><mat-icon>send</mat-icon>send</button> -->
+        <button mat-menu-item (click)="SelectContacts()" ><mat-icon>send</mat-icon>send</button>
         <button mat-menu-item *ngIf="my" (click)="Delete()">
             <mat-icon>delete</mat-icon>delete
         </button>

@@ -1,4 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactSelectionComponent } from '../components/contact/contact-selection/contact-selection.component';
 import { Chat } from '../models/Chat';
 import { ChatEvent } from '../models/ChatEvent';
 import { Contact } from '../models/Contact';
@@ -20,12 +22,13 @@ export class MessengerStateService {
   private _targetChat?:Chat;
   private _messageList:{[chatGuid:string] : Array<Message>} = {};
   private _contactSearch: EventEmitter<any> = new EventEmitter();
-  private _userDataChange:EventEmitter<User> = new EventEmitter(); 
+  private _userDataChange:EventEmitter<User> = new EventEmitter();
   private _chatEventChange:EventEmitter<ChatEvent> = new EventEmitter();
 
   constructor(
-    private signalrService:SignalrService
-  ) { 
+    private signalrService:SignalrService,
+    private selectContactsDialog: MatDialog
+  ) {
     this.signalrService.GetMessageEvent().subscribe({
       next: (data:NewMessageEvent) => this.NewMessageHendler(data)
     });
@@ -33,7 +36,23 @@ export class MessengerStateService {
     this.signalrService.GetDeleteMessageEvent().subscribe({
       next: (data:UpdateMessageDTO) => this.DeleteMessageHendler(data)
     });
-  }   
+
+    this.signalrService.GetNewChatEvent().subscribe({
+      next: (chat:Chat) => this.AddChat(new Chat(chat))
+    });
+  }
+
+  SelectContacts(): void {
+    const dialogRef = this.selectContactsDialog.open(ContactSelectionComponent, {
+      //width: '250px',
+      //data: {name: this.name, animal: this.animal},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+  }
 
   private NewMessageHendler(data:NewMessageEvent){
     const event = data.GetEvent();
@@ -55,8 +74,8 @@ export class MessengerStateService {
     const deletemessage = this._messageList[data.chatGuid].find(x => x.guid === data.guid);
     if (deletemessage != undefined){
       this._messageList[data.chatGuid] = this._messageList[data.chatGuid].slice(this._messageList[data.chatGuid].indexOf(deletemessage),1);
-    } 
-  } 
+    }
+  }
 
   public AddContact(contact:Contact){
     this._user?.contacts.push(contact);
@@ -104,7 +123,7 @@ export class MessengerStateService {
   }
 
   public SetUser(user?:User){
-    this._user = user; 
+    this._user = user;
     this._chat = undefined;
     this._event = ChatEvent.New;
     this._targetMessage = undefined;
@@ -178,11 +197,11 @@ export class MessengerStateService {
     if (this.GetTargetChat() === undefined
       || this._user === undefined) {
       return undefined;
-    } 
+    }
 
     if (this._event === ChatEvent.Update){
       return this.GetUpdateMessageDTO(text);
-    } 
+    }
     else{
       return this.GetCreateMessageDTO(text);
     }
