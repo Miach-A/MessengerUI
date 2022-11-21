@@ -36,6 +36,8 @@
             Chats
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <button mat-button (click)="CreatePublicChat()">Create public chat</button>
+        <!-- <a mat-button routerLinkActive="active" routerLink="/newpublicchat/">Create public chat</a> -->
         <app-chat-icon [chat]="chat"  *ngFor="let chat of this.messengerState.GetUser()?.chats"></app-chat-icon>
       </mat-expansion-panel>
     </mat-accordion>

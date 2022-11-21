@@ -20,6 +20,7 @@ import { ChatModule } from './components/chat/chat.module';
 import { ContactModule } from './components/contact/contact.module';
 import { UserModule } from './components/user/user.module';
 import { ContactSelectionComponent } from './components/contact/contact-selection/contact-selection.component';
+import { UtilitiesModule } from './components/utilities/utilities.module';
 
 
 
@@ -43,6 +44,7 @@ export function tokenGetter(){
     ChatModule,
     ContactModule,
     UserModule,
+    UtilitiesModule,
     HttpClientModule,
     JwtModule . forRoot ({
       config : {

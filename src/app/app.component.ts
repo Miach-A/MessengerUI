@@ -1,7 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { StringInputDialogComponent } from './components/utilities/string-input-dialog/string-input-dialog.component';
+import { InputStringDialog } from './models/InputStringDialog';
 import { AuthService } from './services/auth.service';
 import { MessengerStateService } from './services/messenger-state.service';
 import { SignalrService } from './services/signalr.service';
@@ -13,6 +15,7 @@ import { SignalrService } from './services/signalr.service';
 })
 export class AppComponent implements OnInit,OnDestroy {
   public title = 'MessengerUI';
+  public inputString = "";
   public sidenavOpened:boolean = true;
   public modeSide:boolean = false;
   private _subscriptions: Subscription[] = [];
@@ -20,9 +23,8 @@ export class AppComponent implements OnInit,OnDestroy {
   constructor(private breakpointObserver:BreakpointObserver,
     public authService: AuthService,
     public messengerState: MessengerStateService,
-    //private backendService:BackendService,
     public signalrService: SignalrService,
-    private JwtHelper: JwtHelperService) {
+    public inputStringDialog: MatDialog) {
 
   }
 
@@ -55,7 +57,17 @@ export class AppComponent implements OnInit,OnDestroy {
 
   Logout() {
     this.authService.Logout(); 
-    //this.curentGroup = null;
+  }
+
+  CreatePublicChat(){
+    const dialogRef = this.inputStringDialog.open(StringInputDialogComponent, {
+      /* width: '250px', */
+      data: new InputStringDialog("Input chat name"),
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
 }
