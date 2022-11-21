@@ -82,6 +82,11 @@ export class MessengerStateService {
   }
 
   public AddChat(chat:Chat){
+
+    if (this._user?.chats.find(x => x.guid === chat.guid)){
+      return;
+    }
+
     this._user?.chats.push(chat);
   }
 

@@ -99,7 +99,6 @@ export class SignalrService {
   }
 
   DeleteMessageForMe(message:UpdateMessageDTO){
-    console.log(message);
     this.signalrConnect.send('DeleteMessageForMe',message);
   }
 
@@ -134,5 +133,6 @@ export class SignalrService {
     this.signalrConnect.off("EditMessage");
     this.signalrConnect.off("DeleteMessage");
     this.signalrConnect.off("DeleteMessageForMe");
+    this.signalrConnect.off("ReceiveNewChat");
   }
 }
