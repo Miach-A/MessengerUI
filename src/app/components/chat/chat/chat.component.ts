@@ -17,6 +17,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   private _isNearBottom = true;
   private _scrollContainer: any;
   private _subscriptions:Subscription[] = [];
+  public openChatInfo = false;
   public canCancel:boolean = false;
   public edit:boolean = false;
   public comment:boolean = false;

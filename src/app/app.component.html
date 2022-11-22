@@ -40,7 +40,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <button style="width: 100%;" mat-raised-button color="primary" (click)="CreatePublicChat()">
-          <mat-icon>add</mat-icon><span>&nbsp;</span> Create public chat
+          <mat-icon>add</mat-icon><span>&nbsp;</span>
         </button>
         <app-chat-icon [chat]="chat" *ngFor="let chat of this.messengerState.GetUser()?.chats"></app-chat-icon>
       </mat-expansion-panel>

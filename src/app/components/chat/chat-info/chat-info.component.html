@@ -1,7 +1,14 @@
-<p>chat-info works!</p>
-
-<div *ngIf="chat !== undefined">
-    <div *ngFor="let contact of chat.users">
-        {{contact.name}}
-    </div>
-</div>
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Members
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngIf="chat !== undefined">
+            <div *ngFor="let contact of chat.users">
+                {{contact.name}}
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

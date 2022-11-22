@@ -1,5 +1,9 @@
 @import "/src/assets/styles/variables";
 
+.spacer {
+    flex: 1 1 auto;
+  }
+
 .chat-conteiner{
     display: flex;
     height: 100%;
@@ -19,11 +23,11 @@
     outline: none !important;
     resize: none;
     display: block;
-    width: 98%; 
-    border-radius: 0.5rem; 
-    border: 1px;
-    border-color: $primary500;
-    border-style: solid;
+    width: 100%; 
+    border-style: none;
+    border-top: 1px;
+    border-top-style: solid;
+    border-top-color: $primary500;
 }
 
 .send-message{
@@ -45,6 +49,10 @@
     flex-direction: column;
     width: 20rem;
     overflow-x: hidden;
+    border: 1px;
+    border-style: solid;
+    border-color: $primary500;
+    border-radius: 0.5rem;
 }
 
 textarea {

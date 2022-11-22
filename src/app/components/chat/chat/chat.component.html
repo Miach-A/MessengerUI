@@ -1,8 +1,15 @@
 <div class="chat-conteiner">
     <div class="chat-left">
-        <app-chat-info [chat]="chat" ></app-chat-info>
+        <app-chat-info *ngIf="openChatInfo" [chat]="chat" ></app-chat-info>
     </div>
     <div class="chat">
+        <mat-toolbar>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="openChatInfo = !openChatInfo">
+              <mat-icon>menu</mat-icon>
+            </button>     
+          </mat-toolbar>
+
         <div class="messages" #messages (scroll)="scrollMessages($event)">
             <div *ngFor="let message of GetMessages()" #message>
                 <app-message [message]="message"></app-message>
