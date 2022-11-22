@@ -20,7 +20,7 @@ export class ChatService implements OnDestroy {
     private route:Router
   ) { }
 
-  CreateChat(contactName?:string[],chatName?:string,isPublic = false){
+  CreateChat(contactName?:string[], chatName?:string, isPublic = false){
 
     if (chatName === undefined){
       chatName = this.messengerState.GetUser()?.name + "-" + contactName; 

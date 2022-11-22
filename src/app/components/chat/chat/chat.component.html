@@ -1,5 +1,7 @@
 <div class="chat-conteiner">
-    <div class="chat-left"></div>
+    <div class="chat-left">
+        <app-chat-info [chat]="chat" ></app-chat-info>
+    </div>
     <div class="chat">
         <div class="messages" #messages (scroll)="scrollMessages($event)">
             <div *ngFor="let message of GetMessages()" #message>
