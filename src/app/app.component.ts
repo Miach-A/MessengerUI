@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { StringInputDialogComponent } from './components/utilities/string-input-dialog/string-input-dialog.component';
 import { InputStringDialog } from './models/InputStringDialog';
 import { AuthService } from './services/auth.service';
+import { ChatService } from './services/chat.service';
 import { MessengerStateService } from './services/messenger-state.service';
 import { SignalrService } from './services/signalr.service';
 
@@ -21,9 +22,10 @@ export class AppComponent implements OnInit,OnDestroy {
   private _subscriptions: Subscription[] = [];
 
   constructor(private breakpointObserver:BreakpointObserver,
+    private signalrService: SignalrService,
+    private chatService:ChatService,
     public authService: AuthService,
     public messengerState: MessengerStateService,
-    public signalrService: SignalrService,
     public inputStringDialog: MatDialog) {
 
   }
@@ -68,7 +70,7 @@ export class AppComponent implements OnInit,OnDestroy {
       if (result === undefined){
         return;
       }
-      console.log(result);
+      this.chatService.CreateChat(undefined,result,true);
     });
   }
 

@@ -20,13 +20,18 @@ export class ChatService implements OnDestroy {
     private route:Router
   ) { }
 
-  CreateChat(contactName:string){
+  CreateChat(contactName?:string[],chatName?:string,isPublic = false){
+
+    if (chatName === undefined){
+      chatName = this.messengerState.GetUser()?.name + "-" + contactName; 
+    }
+
     this._subscriptions.push(
       this.backendService.post("PostChat",
         new CreateChatDTO(
           contactName,
-          this.messengerState.GetUser()?.name + "-" + contactName,
-          false)).subscribe({
+          chatName,
+          isPublic)).subscribe({
             next: (chat) => {
               const newChat = new Chat(chat as Chat);
               this.messengerState.AddChat(newChat);

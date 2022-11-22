@@ -62,7 +62,11 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
     const chat = user.chats.find(x => x.users.length === 2 && x.users.find(y => y.name === this.contact!.name));
     if (!chat){
-      this.chatService.CreateChat(this.contact?.name ?? "");
+      const contacts = new Array<string>();
+      if (this.contact?.name !== undefined){
+        contacts.push(this.contact?.name);
+      }
+      this.chatService.CreateChat(contacts);
       return;
     }
 
