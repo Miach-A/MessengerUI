@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Chat } from 'src/app/models/Chat';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat-icon',
@@ -8,10 +9,14 @@ import { Chat } from 'src/app/models/Chat';
 })
 export class ChatIconComponent implements OnInit {
   @Input()
-  chat!:Chat;
-  constructor() { }
+  public chat!:Chat;
+  public chanName:string = "";
+  constructor(
+    private chatService:ChatService
+  ) { }
 
   ngOnInit(): void {
+    this.chanName = this.chatService.GetChatName(this.chat);
   }
 
 }

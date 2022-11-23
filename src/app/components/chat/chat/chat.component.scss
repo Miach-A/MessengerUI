@@ -5,6 +5,7 @@
   }
 
 .chat-conteiner{
+    padding: 0.2rem;
     display: flex;
     height: 100%;
 }
@@ -45,7 +46,7 @@
 .chat{ 
     flex: 1 0 auto;
     display: flex;
-    height: 98%;
+    height: 99%;
     flex-direction: column;
     width: 20rem;
     overflow-x: hidden;

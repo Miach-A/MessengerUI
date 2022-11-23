@@ -41,6 +41,14 @@ export class ChatService implements OnDestroy {
           }));
   }
 
+  GetChatName(chat:Chat):string{
+    if (chat.public === true){
+      return chat.name;
+    }
+
+    return chat.users.filter(x => x.name != this.messengerState.GetUser()?.name)[0].name;
+  }
+
   ngOnDestroy(): void {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
