@@ -1,2 +1,11 @@
-<div *ngFor="let item of contactSelects">{{item.GetContact().name}}</div>
-<button mat-raised-button [mat-dialog-close]="contacts" (click)="Ok()"></button>
+<h3 mat-dialog-title>Select contacts</h3>
+<div mat-dialog-content>
+    <div class="contact-list">
+        <div *ngFor="let item of contactSelects">
+            <mat-checkbox (change)="Switch(item)">{{item.GetContact().name}}</mat-checkbox>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="contacts" cdkFocusInitial>Ok</button>
+</div>

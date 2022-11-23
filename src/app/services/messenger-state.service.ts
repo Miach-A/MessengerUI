@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { ContactSelectionComponent } from '../components/utilities/contact-selection/contact-selection.component';
 import { Chat } from '../models/Chat';
 import { ChatEvent } from '../models/ChatEvent';
@@ -42,16 +43,11 @@ export class MessengerStateService {
     });
   }
 
-  SelectContacts(): void {
+  SelectContacts(): Observable<Contact[]> {
     const dialogRef = this.selectContactsDialog.open(ContactSelectionComponent, {
-      //width: '250px',
-      //data: {name: this.name, animal: this.animal},
+      height: '400px',
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      //this.animal = result;
-    });
+    return dialogRef.afterClosed();
   }
 
   private NewMessageHendler(data:NewMessageEvent){

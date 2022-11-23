@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Contact } from 'src/app/models/Contact';
 import { ContactSelect } from 'src/app/models/ContactSelect';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
@@ -11,14 +11,13 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./contact-selection.component.scss']
 })
 export class ContactSelectionComponent implements OnInit {
-
-  public contacts:Contact[] = [];
+  //public contacts:Contact[] = [];
   public contactSelects:Array<ContactSelect> = [];
   
-
   constructor(
     public dialogRef: MatDialogRef<ContactSelectionComponent>,
-    private messengerStateService:MessengerStateService
+    private messengerStateService:MessengerStateService,
+    @Inject(MAT_DIALOG_DATA) public contacts: Contact[],
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +29,20 @@ export class ContactSelectionComponent implements OnInit {
     }
   }
 
+  Switch(item:ContactSelect){
+    item.Switch();
+    this.contacts = this.contactSelects.filter(x => x.Selected() === true).map(x => x.GetContact()); 
+  }
+
   Ok(): void {
+    this.contacts = this.contactSelects.filter(x => x.Selected() === true).map(x => x.GetContact());
+    console.log('dialog start');
+    console.log(this.contacts);
+    console.log('dialog end');
+    this.dialogRef.close();
+  }
+
+  onNoClick(): void {
     this.dialogRef.close();
   }
 
