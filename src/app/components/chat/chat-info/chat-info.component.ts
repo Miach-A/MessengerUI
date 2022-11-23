@@ -4,6 +4,7 @@ import { AddChatUserDTO } from 'src/app/models/AddChatUserDTO';
 import { Chat } from 'src/app/models/Chat';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
+import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-chat-info',
@@ -16,7 +17,8 @@ export class ChatInfoComponent implements OnInit {
   chat:Chat|undefined;
 
   constructor(private messengerState:MessengerStateService,
-    private backendService:BackendService) { }
+    private backendService:BackendService,
+    private signalrService:SignalrService) { }
 
   ngOnInit(): void {
   }
@@ -24,8 +26,6 @@ export class ChatInfoComponent implements OnInit {
   public AddMembers() {
     this.messengerState.SelectContacts().pipe(
       concatMap((contacts) => {
-        console.log('contacts');
-        console.log(contacts);
         if (contacts === undefined || contacts.length === 0){
           return of(false);
         }
@@ -34,7 +34,11 @@ export class ChatInfoComponent implements OnInit {
       }
       )
     ).subscribe({
-      next: (result) => console.log(result)
+      next: (result) => {
+        if (result === true){
+          this.signalrService.SendNewChat(this.chat?.guid ?? "");
+        }
+      }
     });
   }
 }
