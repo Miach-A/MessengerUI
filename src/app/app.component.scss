@@ -2,6 +2,10 @@ mat-sidenav-container {
   top: 62px !important;
 }
 
+.mat-drawer-content{
+  overflow-y: hidden;
+}
+
 mat-sidenav {
   min-width: 240px;
   max-width: 240px;

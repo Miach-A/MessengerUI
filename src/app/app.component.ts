@@ -67,7 +67,7 @@ export class AppComponent implements OnInit,OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === undefined){
+      if (result === undefined || result === ""){
         return;
       }
       this.chatService.CreateChat(undefined,result,true);

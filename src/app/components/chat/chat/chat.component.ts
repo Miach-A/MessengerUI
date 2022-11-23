@@ -5,6 +5,7 @@ import { Chat } from 'src/app/models/Chat';
 import { ChatEvent } from 'src/app/models/ChatEvent';
 import { Message } from 'src/app/models/Message';
 import { BackendService } from 'src/app/services/backend.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
 
@@ -17,6 +18,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   private _isNearBottom = true;
   private _scrollContainer: any;
   private _subscriptions:Subscription[] = [];
+  public chatName:string = "";
   public openChatInfo = false;
   public canCancel:boolean = false;
   public edit:boolean = false;
@@ -30,7 +32,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   constructor(
     private activatedRoute:ActivatedRoute,
     private messengerState:MessengerStateService,
-    private backendService:BackendService
+    private backendService:BackendService,
+    private chatService:ChatService
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +96,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     if (!this.chat) {
       return;
     }
+
+    this.chatName = this.chatService.GetChatName(this.chat);
 
     this.messengerState.SetChat(this.chat);  
     if (this.messengerState.GetMessages(chatGuid).length < 20){
