@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Contact } from 'src/app/models/Contact';
 import { ContactSelect } from 'src/app/models/ContactSelect';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 
@@ -11,7 +12,9 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 })
 export class ContactSelectionComponent implements OnInit {
 
+  public contacts:Contact[] = [];
   public contactSelects:Array<ContactSelect> = [];
+  
 
   constructor(
     public dialogRef: MatDialogRef<ContactSelectionComponent>,

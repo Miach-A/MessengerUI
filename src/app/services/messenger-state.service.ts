@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ContactSelectionComponent } from '../components/contact/contact-selection/contact-selection.component';
+import { ContactSelectionComponent } from '../components/utilities/contact-selection/contact-selection.component';
 import { Chat } from '../models/Chat';
 import { ChatEvent } from '../models/ChatEvent';
 import { Contact } from '../models/Contact';

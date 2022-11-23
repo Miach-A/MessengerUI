@@ -31,8 +31,8 @@ export class MessageComponent implements OnInit {
 
   SelectContacts(){
     this.messengerState.SelectContacts();
-
   }
+  
   MessageOptions(event:Event){
     event.preventDefault();
     this.openOptions = !this.openOptions;

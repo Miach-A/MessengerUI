@@ -4,10 +4,14 @@ import { StringInputDialogComponent } from './string-input-dialog/string-input-d
 import { AngularMaterialModule } from 'src/app/modules/angular-material.module';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ContactSelectionComponent } from './contact-selection/contact-selection.component';
 
 
 @NgModule({
-  declarations: [StringInputDialogComponent],
+  declarations: [
+    StringInputDialogComponent, 
+    ContactSelectionComponent
+  ],
   imports: [
     CommonModule,
     AngularMaterialModule,

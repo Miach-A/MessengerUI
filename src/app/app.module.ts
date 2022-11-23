@@ -19,7 +19,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ChatModule } from './components/chat/chat.module';
 import { ContactModule } from './components/contact/contact.module';
 import { UserModule } from './components/user/user.module';
-import { ContactSelectionComponent } from './components/contact/contact-selection/contact-selection.component';
+import { ContactSelectionComponent } from './components/utilities/contact-selection/contact-selection.component';
 import { UtilitiesModule } from './components/utilities/utilities.module';
 
 

@@ -4,8 +4,9 @@
             <mat-panel-title>
                 Members
             </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngIf="chat !== undefined">
+        </mat-expansion-panel-header>        
+        <div *ngIf="chat !== undefined">           
+            <button *ngIf="chat.public" style="width: 100%;" mat-raised-button color="primary" (click)="AddMembers()"><mat-icon>add</mat-icon></button>
             <div *ngFor="let contact of chat.users">
                 {{contact.name}}
             </div>
