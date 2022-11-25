@@ -77,15 +77,13 @@ export class MessengerStateService {
     this._user?.contacts.push(contact);
   }
 
-  public UpdateChat(chat:Chat){
+  public UpdateChat(chat: Chat) {
 
-    let existingChat = this._user?.chats.find(x => x.guid === chat.guid); 
-    if (existingChat){
-/*       existingChat.users = [];
-      chat.users.forEach(contact => {
-        existingChat.users.push(new Contact(contact));  
-      }); */
-      existingChat = chat;
+    const existingChatIndex = this._user?.chats.findIndex(x => x.guid === chat.guid);
+    if (existingChatIndex) {
+
+      this._user!.chats[existingChatIndex] = chat;
+      console.log(this._user!.chats[existingChatIndex]);
       return;
     }
 
