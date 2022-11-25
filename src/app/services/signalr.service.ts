@@ -112,7 +112,7 @@ export class SignalrService {
 
   ReceiveNewChatResult(chat:Chat){
     this.EmitNewChatEvent(chat);
-    this.RegistrationInNewChat(chat.guid);
+    //this.RegistrationInNewChat(chat.guid);
   }
 
   ReceiveMessageResult(message:Message){

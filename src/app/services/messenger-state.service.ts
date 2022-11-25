@@ -39,7 +39,7 @@ export class MessengerStateService {
     });
 
     this.signalrService.GetNewChatEvent().subscribe({
-      next: (chat:Chat) => this.AddChat(new Chat(chat))
+      next: (chat:Chat) => this.UpdateChat(new Chat(chat))
     });
   }
 
@@ -77,13 +77,20 @@ export class MessengerStateService {
     this._user?.contacts.push(contact);
   }
 
-  public AddChat(chat:Chat){
+  public UpdateChat(chat:Chat){
 
-    if (this._user?.chats.find(x => x.guid === chat.guid)){
+    let existingChat = this._user?.chats.find(x => x.guid === chat.guid); 
+    if (existingChat){
+/*       existingChat.users = [];
+      chat.users.forEach(contact => {
+        existingChat.users.push(new Contact(contact));  
+      }); */
+      existingChat = chat;
       return;
     }
 
     this._user?.chats.push(chat);
+    this.signalrService.RegistrationInNewChat(chat.guid);
   }
 
   public DeleteContact(contact: Contact) {
