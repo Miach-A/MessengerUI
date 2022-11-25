@@ -25,6 +25,7 @@ export class MessengerStateService {
   private _contactSearch: EventEmitter<any> = new EventEmitter();
   private _userDataChange:EventEmitter<User> = new EventEmitter();
   private _chatEventChange:EventEmitter<ChatEvent> = new EventEmitter();
+  private _chatDataChange:EventEmitter<Chat> = new EventEmitter();
 
   constructor(
     private signalrService:SignalrService,
@@ -78,12 +79,10 @@ export class MessengerStateService {
   }
 
   public UpdateChat(chat: Chat) {
-
     const existingChatIndex = this._user?.chats.findIndex(x => x.guid === chat.guid);
     if (existingChatIndex) {
-
       this._user!.chats[existingChatIndex] = chat;
-      console.log(this._user!.chats[existingChatIndex]);
+      this.EmitChatDataChangeEvent(chat);
       return;
     }
 
@@ -106,6 +105,14 @@ export class MessengerStateService {
 
   public GetContactSearchEmitter() {
     return this._contactSearch;
+  }
+  
+  public GetChatDataChangeEmitter() {
+    return this._chatDataChange;
+  }
+
+  public EmitChatDataChangeEvent(chat:Chat) {
+    this._chatDataChange.emit(chat);
   }
 
   public GetUserDataChangeEmitter() {
