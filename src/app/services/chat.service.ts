@@ -34,7 +34,7 @@ export class ChatService implements OnDestroy {
           isPublic)).subscribe({
             next: (chat) => {
               const newChat = new Chat(chat as Chat);
-              this.messengerState.AddChat(newChat);
+              this.messengerState.UpdateChat(newChat);
               this.signalrService.SendNewChat(newChat.guid);
               this.route.navigate(['chat', newChat.guid]);
             }
