@@ -79,16 +79,13 @@ export class MessengerStateService {
   }
 
   public UpdateChat(chat: Chat) {
-    console.log('update chat');
     const existingChatIndex = this._user?.chats.findIndex(x => x.guid === chat.guid);
-    console.log(existingChatIndex);
     if (existingChatIndex != -1 && existingChatIndex != undefined) {
       this._user!.chats[existingChatIndex] = chat;
       this.EmitChatDataChangeEvent(chat);
       return;
     }
 
-    console.log('new chat');
     this._user?.chats.push(chat);
     this.EmitChatDataChangeEvent(chat);
     this.signalrService.RegistrationInNewChat(chat.guid);

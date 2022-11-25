@@ -26,7 +26,7 @@ export class ChatInfoComponent implements OnInit,OnDestroy {
     this._subscriptions.push(
       this.messengerStateService.GetChatDataChangeEmitter().subscribe({
         next: (chat: Chat) => {
-          if (chat.guid === this.chat?.guid) {
+          if (chat.guid === this.chat?.guid) {     
             this.chat = chat;
           }
         }
