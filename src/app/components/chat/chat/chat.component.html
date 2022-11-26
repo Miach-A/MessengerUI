@@ -39,6 +39,8 @@
         <app-chat-info *ngIf="openChatInfo" [chat]="chat"></app-chat-info>
     </div>
 
-    <div class="chat-right"></div>
+    <div class="chat-right">
+        <router-outlet name='contactinfo'></router-outlet>
+    </div>
 
 </div>

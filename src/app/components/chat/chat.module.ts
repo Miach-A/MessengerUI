@@ -8,6 +8,8 @@ import { AngularMaterialModule } from 'src/app/modules/angular-material.module';
 import { MessageComponent } from './message/message.component';
 import { FormsModule } from '@angular/forms';
 import { CommentedMessageComponent } from './commented-message/commented-message.component';
+import { ContactModule } from '../contact/contact.module';
+
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { CommentedMessageComponent } from './commented-message/commented-message
     RouterModule,
     RouterLink,
     FormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ContactModule
   ],
   exports:[ChatIconComponent]
 })

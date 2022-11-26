@@ -8,7 +8,7 @@
         <div *ngIf="chat !== undefined">           
             <button *ngIf="chat.public" style="width: 100%;" mat-raised-button color="primary" (click)="AddMembers()"><mat-icon>add</mat-icon></button>
             <div *ngFor="let contact of chat.users">
-                {{contact.name}}
+                <button mat-button style="width: 100%; text-align: left;" (click)="ShowContactInfo(contact)">{{contact.name}}</button>
             </div>
         </div>
     </mat-expansion-panel>

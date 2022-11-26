@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { concatMap, of, Subscription, switchMap } from 'rxjs';
 import { AddChatUserDTO } from 'src/app/models/AddChatUserDTO';
 import { Chat } from 'src/app/models/Chat';
+import { Contact } from 'src/app/models/Contact';
 import { BackendService } from 'src/app/services/backend.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
 import { SignalrService } from 'src/app/services/signalr.service';
@@ -50,6 +51,10 @@ export class ChatInfoComponent implements OnInit,OnDestroy {
         }
       }
     });
+  }
+
+  ShowContactInfo(contact:Contact){
+    
   }
 
   ngOnDestroy():void{

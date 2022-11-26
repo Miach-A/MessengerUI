@@ -28,14 +28,14 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     this._subscriptions.push(
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
-          this.UpdateData(param.get('name') ?? "");
+          this.UpdateData(param.get('contactname') ?? "");
         }
       }));
 
     this._subscriptions.push(
       this.messengerState.GetUserDataChangeEmitter()
         .subscribe({
-          next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('name') ?? ""); }
+          next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('contactname') ?? ""); }
         }));
   }
 

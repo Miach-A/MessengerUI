@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ContactSearchResultComponent } from './contact-search-result/contact-search-result.component';
 import { SavedContactInfoComponent } from './saved-contact-info/saved-contact-info.component';
 
-
 @NgModule({
   declarations: [
     ContactIconComponent,
@@ -17,6 +16,7 @@ import { SavedContactInfoComponent } from './saved-contact-info/saved-contact-in
     ContactsSearchComponent,
     ContactSearchResultComponent,
     SavedContactInfoComponent,
+
   ],
   imports: [
     CommonModule,

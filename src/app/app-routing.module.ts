@@ -17,7 +17,7 @@ const routes: Routes = [
   {path:"registration",component:RegistrationComponent,canActivate: [LogoutGuardService]},
   {path:"user", component:UserInfoComponent,canActivate: [LoginGuardService]},
   {path:"contactsearchresult",component:ContactSearchResultComponent,canActivate: [LoginGuardService]},
-  {path:"contactinfo/:name",component:SavedContactInfoComponent,canActivate: [LoginGuardService]},
+  {path:"contactinfo/:contactname",component:SavedContactInfoComponent,canActivate: [LoginGuardService]},
   {path:"chat/:guid",component:ChatComponent,canActivate: [LoginGuardService]}
 ];
 

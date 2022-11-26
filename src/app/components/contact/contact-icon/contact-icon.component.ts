@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Chat } from 'src/app/models/Chat';
 import { Contact } from 'src/app/models/Contact';
 
 @Component({
@@ -10,6 +11,7 @@ export class ContactIconComponent implements OnInit {
 
   @Input()
   contact!:Contact;
+
   constructor() { }
 
   ngOnInit(): void {
