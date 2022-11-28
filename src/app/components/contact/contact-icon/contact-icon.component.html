@@ -1,5 +1,7 @@
-<a *ngIf="chat === undefined; else elseBlock" mat-button routerLinkActive="active" routerLink="/contactinfo/{{contact.name}}">{{contact.name}}</a>
+<a *ngIf="chat === undefined; else elseBlock" mat-button routerLinkActive="active"
+    routerLink="/contactinfo/{{contact.name}}">{{contact.name}}</a>
 
 <ng-template #elseBlock>
-    <a mat-button routerLinkActive="active" routerLink="/chat/{{chat!.guid}}/contactinfo/{{contact.name}}">{{contact.name}}</a>
+    <a mat-button routerLinkActive="active"
+        routerLink="/chat/{{chat!.guid}}/contactinfo/{{contact.name}}">{{contact.name}}</a>
 </ng-template>

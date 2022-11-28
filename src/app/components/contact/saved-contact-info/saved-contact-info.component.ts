@@ -27,24 +27,23 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
    }
 
   ngOnInit(): void {
-    this._subscriptions.push(
+    this._subscriptions.push(      
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
           this.UpdateData(param.get('contactname') ?? "");
-          this.ContactSaved();
         }
       }));
 
     this._subscriptions.push(
       this.messengerState.GetUserDataChangeEmitter()
         .subscribe({
-          next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('contactname') ?? ""); }
+          next: () => {
+            const routeSnapShot = this.activatedRoute.snapshot;
+            this.UpdateData(routeSnapShot.paramMap.get('contactname') ?? ""); }
         }));
   }
 
   ContactSaved(){
-
-
     const user = this.messengerState.GetUser();
     if (user === undefined){
       this.saved = false;
@@ -57,10 +56,10 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     }
 
     this.saved = false;
+    console.log(this.saved);
   }
 
   SaveContact() {
-
     if (this.contact === undefined){
       return;
     }
@@ -75,6 +74,15 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
   UpdateData(name:string){
     this.contact = this.messengerState.GetContact(name);
+
+    if (this.contact === undefined){
+      const chat = this.messengerState.GetCurrentChat();
+      if (chat != undefined){
+        this.contact = this.messengerState.GetContact(name,chat.guid);
+      } 
+    }
+
+    this.ContactSaved();
   }
 
   DeleteContact(){
@@ -84,6 +92,7 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
         .subscribe({
           next: () => {
             this.messengerState.DeleteContact(this.contact as Contact);
+            this.UpdateData(this.contact?.name ?? "");
           }
         }));
   }

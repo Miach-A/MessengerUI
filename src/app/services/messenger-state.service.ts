@@ -149,9 +149,15 @@ export class MessengerStateService {
     return this._user;
   }
 
-  public GetContact(name:string):Contact | undefined{
+  public GetContact(name:string, chatGuid?:string):Contact | undefined{
+    if (chatGuid != undefined){ 
+      return this._user?.chats.find(x => x.guid === chatGuid)?.users.find(x => x.name === name);
+    }
+
     return this._user?.contacts.find(x => x.name === name);
   }
+
+
 
   public GetChat(guid:string):Chat | undefined{
     return this._user?.chats.find(x => x.guid === guid);
@@ -169,6 +175,10 @@ export class MessengerStateService {
     this._event = ChatEvent.New;
     this._targetMessage = undefined;
     this._targetChat = undefined;
+  }
+
+  public GetCurrentChat():Chat | undefined{
+    return this._chat;
   }
 
   private GetTargetChat():Chat|undefined{
