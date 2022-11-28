@@ -2,6 +2,7 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
+import { CreateContactDTO } from 'src/app/models/CreateContactDTO';
 import { BackendService } from 'src/app/services/backend.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { MessengerStateService } from 'src/app/services/messenger-state.service';
@@ -14,6 +15,7 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
 export class SavedContactInfoComponent implements OnInit,OnDestroy {
   private _subscriptions:Subscription[] = [];
   public contact?:Contact;
+  public saved:boolean = false;
 
   constructor(
     private messengerState:MessengerStateService,
@@ -29,6 +31,7 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
       this.activatedRoute.paramMap.subscribe({
         next: (param) => {
           this.UpdateData(param.get('contactname') ?? "");
+          this.ContactSaved();
         }
       }));
 
@@ -36,6 +39,37 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
       this.messengerState.GetUserDataChangeEmitter()
         .subscribe({
           next: () => {this.UpdateData(this.activatedRoute.snapshot.paramMap.get('contactname') ?? ""); }
+        }));
+  }
+
+  ContactSaved(){
+
+
+    const user = this.messengerState.GetUser();
+    if (user === undefined){
+      this.saved = false;
+      return;
+    }
+
+    if (!!user.contacts.find(x => x.name === this.contact?.name) || user.name === this.contact?.name){
+      this.saved = true;
+      return;
+    }
+
+    this.saved = false;
+  }
+
+  SaveContact() {
+
+    if (this.contact === undefined){
+      return;
+    }
+
+    this._subscriptions.push(
+      this.backendService
+        .post("PostContact", new CreateContactDTO(this.contact.name ))
+        .subscribe({
+          next: (contact) => { this.messengerState.AddContact(new Contact(contact as Contact)); this.saved = true; }
         }));
   }
 
