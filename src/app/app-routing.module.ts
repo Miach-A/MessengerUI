@@ -12,13 +12,17 @@ import { LoginGuardService } from './services/guards/login-guard.service';
 import { LogoutGuardService } from './services/guards/logout-guard.service';
 
 const routes: Routes = [
-  {path:"",component:HomeComponent},
-  {path:"login",component:LoginComponent, canActivate: [LogoutGuardService] },
-  {path:"registration",component:RegistrationComponent,canActivate: [LogoutGuardService]},
-  {path:"user", component:UserInfoComponent,canActivate: [LoginGuardService]},
-  {path:"contactsearchresult",component:ContactSearchResultComponent,canActivate: [LoginGuardService]},
-  {path:"contactinfo/:contactname",component:SavedContactInfoComponent,canActivate: [LoginGuardService]},
-  {path:"chat/:guid",component:ChatComponent,canActivate: [LoginGuardService]}
+  { path: "", component: HomeComponent },
+  { path: "login", component: LoginComponent, canActivate: [LogoutGuardService] },
+  { path: "registration", component: RegistrationComponent, canActivate: [LogoutGuardService] },
+  { path: "user", component: UserInfoComponent, canActivate: [LoginGuardService] },
+  { path: "contactsearchresult", component: ContactSearchResultComponent, canActivate: [LoginGuardService] },
+  { path: "contactinfo/:contactname", component: SavedContactInfoComponent, canActivate: [LoginGuardService] },
+  {
+    path: "chat/:guid", component: ChatComponent, canActivate: [LoginGuardService], children: [
+      { path: "contactinfo/:contactname", component: SavedContactInfoComponent }
+    ]
+  }
 ];
 
 @NgModule({

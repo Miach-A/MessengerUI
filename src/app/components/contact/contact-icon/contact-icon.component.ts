@@ -12,6 +12,9 @@ export class ContactIconComponent implements OnInit {
   @Input()
   contact!:Contact;
 
+  @Input()
+  chat?:Chat;
+
   constructor() { }
 
   ngOnInit(): void {
