@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, Subscription } from 'rxjs';
 import { Chat } from 'src/app/models/Chat';
 import { ChatEvent } from 'src/app/models/ChatEvent';
@@ -33,7 +33,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     private activatedRoute:ActivatedRoute,
     private messengerState:MessengerStateService,
     private backendService:BackendService,
-    private chatService:ChatService
+    private chatService:ChatService,
+    private route:Router,
   ) { }
 
   ngOnInit(): void {
@@ -150,6 +151,9 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
 
   OpenCloseChatInfo(){
     this.openChatInfo = !this.openChatInfo;
+    if (!this.openChatInfo) {
+      this.route.navigate(['./'], { relativeTo: this.activatedRoute});
+    }
   }
 
   private onItemElementsChanged(): void {
