@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, of, Subscription, switchMap } from 'rxjs';
 import { AddChatUserDTO } from 'src/app/models/AddChatUserDTO';
 import { Chat } from 'src/app/models/Chat';
@@ -21,7 +22,9 @@ export class ChatInfoComponent implements OnInit,OnDestroy {
   constructor(private messengerState:MessengerStateService,
     private backendService:BackendService,
     private signalrService:SignalrService,
-    private messengerStateService:MessengerStateService) { }
+    private messengerStateService:MessengerStateService,
+    private route:Router,
+    private activatedRoute:ActivatedRoute,) { }
 
   ngOnInit(): void {
     this._subscriptions.push(
@@ -53,8 +56,19 @@ export class ChatInfoComponent implements OnInit,OnDestroy {
     });
   }
 
-  ShowContactInfo(contact:Contact){
-    
+  LeaveChat(){
+    if (this.chat === undefined){
+      return;
+    }
+
+    this.backendService.post("LeavePublicChat", {guid:this.chat.guid}).subscribe({
+      next: (result) => {
+        if (result === true){
+          this.messengerState.DeleteChat(this.chat!.guid);
+          this.route.navigate(['./'],{relativeTo:this.activatedRoute.parent});
+        }
+      }
+    })
   }
 
   ngOnDestroy():void{

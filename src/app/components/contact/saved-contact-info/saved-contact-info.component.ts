@@ -105,7 +105,8 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
         .subscribe({
           next: () => {
             this.messengerState.DeleteContact(this.contact as Contact);
-            this.UpdateData(this.contact?.name ?? "");
+            //this.UpdateData(this.contact?.name ?? "");
+            this.route.navigate(['./'],{relativeTo:this.activatedRoute.parent});
           }
         }));
   }

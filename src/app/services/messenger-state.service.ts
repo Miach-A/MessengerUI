@@ -93,11 +93,20 @@ export class MessengerStateService {
 
   public DeleteContact(contact: Contact) {
     const index = this._user?.contacts.indexOf(contact);
-    if (index === undefined) {
+    if (index === undefined || index === -1) {
       return;
     }
 
     this._user?.contacts.splice(index, 1);
+  }
+
+  public DeleteChat(guid:string){
+    const index = this._user?.chats.findIndex(x => x.guid === guid);
+    if (index === undefined || index === -1) {
+      return;
+    }
+
+    const aa = this._user?.chats.splice(index,1);
   }
 
   public EmitContactSearchEvent(data:any) {

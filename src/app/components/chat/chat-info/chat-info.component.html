@@ -14,3 +14,5 @@
         </div>
     </mat-expansion-panel>
 </mat-accordion>
+
+<button *ngIf="chat?.public === true" mat-raised-button color="warm" (click)="LeaveChat()">Leave group</button>
