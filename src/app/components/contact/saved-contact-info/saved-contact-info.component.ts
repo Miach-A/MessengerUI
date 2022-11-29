@@ -16,6 +16,7 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
   private _subscriptions:Subscription[] = [];
   public contact?:Contact;
   public saved:boolean = false;
+  public isMe:boolean = false;
 
   constructor(
     private messengerState:MessengerStateService,
@@ -56,7 +57,6 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     }
 
     this.saved = false;
-    console.log(this.saved);
   }
 
   SaveContact() {
@@ -83,6 +83,14 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
     }
 
     this.ContactSaved();
+    this.IsMe();
+  }
+
+  IsMe(){
+    this.isMe = false;
+    if(this.contact?.name === this.messengerState.GetUser()?.name){
+      this.isMe = true;
+    }
   }
 
   DeleteContact(){
@@ -118,6 +126,10 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
   SavedContact(){
     return !!this.messengerState.GetUser()?.contacts.find(x => x === this.contact);
+  }
+
+  ParentRoute(){
+    this.route.navigate(['./'],{relativeTo:this.activatedRoute.parent});
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,10 @@
-mat-card{
+.mat-card{
     margin: 0.3rem;
+    position: relative;
+}
+
+.close-form{
+    position: absolute;
+    top: 0;
+    right: 0;
 }

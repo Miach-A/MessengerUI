@@ -1,4 +1,4 @@
-<mat-card> <!--  *ngIf="SavedContact()" -->
+<mat-card *ngIf="!isMe"> <!--  *ngIf="SavedContact()" -->
   <mat-card-title>{{contact?.name}}</mat-card-title>
   <mat-card-subtitle>Full name:<span>&nbsp;&nbsp;</span>{{contact?.firstName}} {{contact?.lastName}}</mat-card-subtitle>
   <mat-card-subtitle>Phone number: <span>&nbsp;&nbsp;</span>{{contact?.phoneNumber}}</mat-card-subtitle>
@@ -8,5 +8,6 @@
       <button mat-raised-button color="primary" (click)="OpenChat()">Open chat</button>
       <button mat-raised-button color="warn" (click)="DeleteContact()" >Delete contact</button> 
     </ng-container>
+    <button class="close-form" mat-raised-button color="accent" (click)="ParentRoute()" ><mat-icon>close</mat-icon></button> 
   </mat-card-actions>
 </mat-card>
