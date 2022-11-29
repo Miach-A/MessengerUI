@@ -74,15 +74,20 @@ export class SavedContactInfoComponent implements OnInit,OnDestroy {
 
   UpdateData(name:string){
     this.contact = this.messengerState.GetContact(name);
-
-    if (this.contact === undefined){
+    
+    if (this.contact != undefined){
+      this.saved = true;
+    }
+    else
+    {
+      this.saved = false;
       const chat = this.messengerState.GetCurrentChat();
       if (chat != undefined){
         this.contact = this.messengerState.GetContact(name,chat.guid);
       } 
     }
 
-    this.ContactSaved();
+    //this.ContactSaved();
     this.IsMe();
   }
 

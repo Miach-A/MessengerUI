@@ -3,7 +3,7 @@
         <mat-toolbar color="primary">
             <span>{{chatName}}</span>
             <span class="spacer"></span>
-            <button mat-icon-button (click)="openChatInfo = !openChatInfo">
+            <button mat-icon-button (click)="OpenCloseChatInfo()">
                 <mat-icon>menu</mat-icon>
             </button>
         </mat-toolbar>
@@ -35,12 +35,12 @@
         </div>
     </div>
 
-    <div class="chat-left">
+    <div class="chat-left">   
         <app-chat-info *ngIf="openChatInfo" [chat]="chat"></app-chat-info>
     </div>
 
-    <div class="chat-right">
-        <router-outlet></router-outlet>
+    <div class="chat-right">  
+        <router-outlet></router-outlet>      
     </div>
 
 </div>

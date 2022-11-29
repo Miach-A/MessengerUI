@@ -148,6 +148,10 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     this.text = "";
   }
 
+  OpenCloseChatInfo(){
+    this.openChatInfo = !this.openChatInfo;
+  }
+
   private onItemElementsChanged(): void {
     if (this._isNearBottom) {
       this.scrollToBottom();
