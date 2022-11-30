@@ -211,8 +211,6 @@ export class MessengerStateService {
   }
 
   public StartForward(message: Message) {
-    const contacts = this.SelectContacts();
-
     this.SelectContacts().subscribe({
       next: (contacts) => {
         if (this._user === undefined) {
