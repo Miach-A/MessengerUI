@@ -257,6 +257,7 @@ export class MessengerStateService {
       message.commentedMessageGuid = this._targetMessage?.guid;
       message.commentedMessageDate = this._targetMessage?.date;
       message.text = text;
+      messages.push(message);
     });
 
     return messages;
