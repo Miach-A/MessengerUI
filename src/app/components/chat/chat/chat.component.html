@@ -22,6 +22,9 @@
             <div *ngIf="comment" class="chat-event-type">
                 <mat-icon>comment</mat-icon>
             </div>
+            <div *ngIf="forward" class="chat-event-type">
+                <mat-icon>send</mat-icon>
+            </div>
             <div class="chat-event-message-info">
                 <span>&nbsp;&nbsp;</span>{{targetMessage?.contactName}}<span>&nbsp;&nbsp;</span>:<span>&nbsp;&nbsp;</span>{{targetMessage?.text}}
             </div>

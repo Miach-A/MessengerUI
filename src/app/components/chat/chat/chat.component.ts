@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
   public openChatInfo = false;
   public canCancel:boolean = false;
   public edit:boolean = false;
+  public forward:boolean = false;
   public comment:boolean = false;
   public text:string = "";
   public chat?:Chat;
@@ -70,7 +71,8 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     this.targetMessage = this.messengerState.GetTargetMessage();
     this.edit =  chatEvent === ChatEvent.Update;
     this.comment =  chatEvent === ChatEvent.Comment;
-    this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment;
+    this.forward = chatEvent === ChatEvent.Forward;
+    this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment || chatEvent === ChatEvent.Forward;
   }
 
   CanselEvent(){
