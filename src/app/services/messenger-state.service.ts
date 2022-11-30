@@ -192,7 +192,7 @@ export class MessengerStateService {
 
   private GetTargetChat():(Chat)[]{
     const curentChat = this._chat === undefined ? [] : [this._chat];
-    return this._targetChat.length === 0 ? mainChat : this._targetChat;
+    return this._targetChat.length === 0 ? curentChat : this._targetChat;
   }
 
   public StartComment(message:Message,targetChat?:Chat){
@@ -221,7 +221,7 @@ export class MessengerStateService {
     return this._event;
   }
 
-  public GetMessageDTO(text:string):UpdateMessageDTO|CreateMessageDTO|undefined{
+  public GetMessageDTO(text:string):UpdateMessageDTO[]|CreateMessageDTO[]|undefined{
     if (this.GetTargetChat().length === 0
       || this._user === undefined) {
       return undefined;
@@ -236,7 +236,6 @@ export class MessengerStateService {
   }
 
   private GetUpdateMessageDTO(text:string):UpdateMessageDTO[]{
-
     const messages:UpdateMessageDTO[] = [];
     this.GetTargetChat().forEach(chat => {
       const message = new UpdateMessageDTO();
@@ -251,7 +250,6 @@ export class MessengerStateService {
   }
 
   private GetCreateMessageDTO(text:string):CreateMessageDTO[]{
-
     const messages:CreateMessageDTO[] = [];
     this.GetTargetChat().forEach(chat => {
       const message = new CreateMessageDTO();
@@ -307,13 +305,15 @@ export class MessengerStateService {
   }
 
   public SendMessage(text:string){
-    const newMessage = this.GetMessageDTO(text);
-    if (newMessage == undefined){
+    const newMessages = this.GetMessageDTO(text);
+    if (newMessages == undefined){
       return;
     }
 
     this.CancelChatEvent();
-    this.signalrService.SendMessage(newMessage);
+    newMessages.forEach(newMessage => {
+      this.signalrService.SendMessage(newMessage);  
+    });  
   }
 
   public DeleteMessage(message:Message){
