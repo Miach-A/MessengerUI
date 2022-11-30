@@ -29,12 +29,13 @@ export class MessageComponent implements OnInit {
     }
   }
 
-  SelectContacts(){
+/*   SelectContacts(){
     this.messengerState.SelectContacts();
-  }
+  } */
 
-  ForwardMessage(){
-    
+  StartForward(){
+
+    this.messengerState.StartForward(this.message);
   }
   
   MessageOptions(event:Event){

@@ -210,6 +210,22 @@ export class MessengerStateService {
     this.EmitChatEventChange();
   }
 
+  public StartForward(message: Message) {
+    const contacts = this.SelectContacts();
+
+    this.SelectContacts().subscribe({
+      next: (contacts) => {
+        if (this._user === undefined) {
+          return;
+        }
+        this._targetChat = this._user.chats.filter(x => x.users.filter(y => contacts.find(k => k.name === y.name)).length > 0);
+        this._event = ChatEvent.Forward;
+        this._targetMessage = message;
+        this.EmitChatEventChange();
+      }
+    });
+  }
+
   public CancelChatEvent(){
     this._event = ChatEvent.New;
     this._targetChat = [];
