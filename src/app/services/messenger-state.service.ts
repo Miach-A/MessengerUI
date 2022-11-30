@@ -236,22 +236,32 @@ export class MessengerStateService {
   }
 
   private GetUpdateMessageDTO(text:string):UpdateMessageDTO[]{
-    
-    const message = new UpdateMessageDTO();
-    message.chatGuid = (this.GetTargetChat() as Chat).guid;
-    message.date = (this._targetMessage as Message).date;
-    message.guid = (this._targetMessage as Message).guid;
-    message.text = text;
-    return message;
+
+    const messages:UpdateMessageDTO[] = [];
+    this.GetTargetChat().forEach(chat => {
+      const message = new UpdateMessageDTO();
+      message.chatGuid = chat.guid;
+      message.date = (this._targetMessage as Message).date;
+      message.guid = (this._targetMessage as Message).guid;
+      message.text = text;
+      messages.push(message);
+   });
+
+    return messages;
   }
 
   private GetCreateMessageDTO(text:string):CreateMessageDTO[]{
-    const message = new CreateMessageDTO();
-    message.chatGuid = (this.GetTargetChat() as Chat).guid;
-    message.commentedMessageGuid = this._targetMessage?.guid;
-    message.commentedMessageDate = this._targetMessage?.date;
-    message.text = text;
-    return message;
+
+    const messages:CreateMessageDTO[] = [];
+    this.GetTargetChat().forEach(chat => {
+      const message = new CreateMessageDTO();
+      message.chatGuid = chat.guid;
+      message.commentedMessageGuid = this._targetMessage?.guid;
+      message.commentedMessageDate = this._targetMessage?.date;
+      message.text = text;
+    });
+
+    return messages;
   }
 
   public GetMessages(chatGuid:string){
