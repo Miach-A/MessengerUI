@@ -34,7 +34,7 @@
             <textarea rows="4" class="text" [(ngModel)]="text" (keypress)="SendMessageIfEnter($event)"> </textarea>
         </div>
     </div>
-
+    
     <div class="chat-left">   
         <app-chat-info *ngIf="openChatInfo" [chat]="chat"></app-chat-info>
     </div>

@@ -1,18 +1,29 @@
-<mat-accordion>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Members
-            </mat-panel-title>
-        </mat-expansion-panel-header>        
-        <div *ngIf="chat !== undefined">           
-            <button *ngIf="chat.public" style="width: 100%;" mat-raised-button color="primary" (click)="AddMembers()"><mat-icon>add</mat-icon></button>
-            <div *ngFor="let contact of chat.users">
-                <!-- <button mat-button style="width: 100%; text-align: left;" (click)="ShowContactInfo(contact)">{{contact.name}}</button> -->
-                <app-contact-icon [contact]="contact" [chat]="chat"></app-contact-icon>
-            </div>
-        </div>
-    </mat-expansion-panel>
-</mat-accordion>
+<mat-card>
+    <mat-card-content>
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Members
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div *ngIf="chat !== undefined">
+                    <button *ngIf="chat.public" style="width: 100%;" mat-raised-button color="primary"
+                        (click)="AddMembers()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <div *ngFor="let contact of chat.users">
+                        <!-- <button mat-button style="width: 100%; text-align: left;" (click)="ShowContactInfo(contact)">{{contact.name}}</button> -->
+                        <app-contact-icon [contact]="contact" [chat]="chat"></app-contact-icon>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-content>
 
-<button *ngIf="chat?.public === true" mat-raised-button color="warm" (click)="LeaveChat()">Leave group</button>
+    <mat-card-actions align="end">
+        <button  *ngIf="chat?.public === true" mat-raised-button color="warn"
+            (click)="LeaveChat()">Leave
+            chat</button>
+    </mat-card-actions>
+</mat-card>
