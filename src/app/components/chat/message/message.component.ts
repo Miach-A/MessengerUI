@@ -32,6 +32,10 @@ export class MessageComponent implements OnInit {
   SelectContacts(){
     this.messengerState.SelectContacts();
   }
+
+  ForwardMessage(){
+    
+  }
   
   MessageOptions(event:Event){
     event.preventDefault();

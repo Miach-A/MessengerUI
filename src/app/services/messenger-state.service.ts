@@ -20,7 +20,7 @@ export class MessengerStateService {
   private _chat?:Chat;
   private _event:ChatEvent = ChatEvent.New;
   private _targetMessage?:Message;
-  private _targetChat?:Chat;
+  private _targetChat:Chat[] = [];
   private _messageList:{[chatGuid:string] : Array<Message>} = {};
   private _contactSearch: EventEmitter<any> = new EventEmitter();
   private _userDataChange:EventEmitter<User> = new EventEmitter();
@@ -150,7 +150,7 @@ export class MessengerStateService {
     this._chat = undefined;
     this._event = ChatEvent.New;
     this._targetMessage = undefined;
-    this._targetChat = undefined;
+    this._targetChat = [];
     this.EmitUserDataChangeEvent();
   }
 
@@ -183,41 +183,36 @@ export class MessengerStateService {
     }
     this._event = ChatEvent.New;
     this._targetMessage = undefined;
-    this._targetChat = undefined;
+    this._targetChat = [];
   }
 
   public GetCurrentChat():Chat | undefined{
     return this._chat;
   }
 
-  private GetTargetChat():Chat|undefined{
-    return this._targetChat === undefined ? this._chat : this._targetChat;
+  private GetTargetChat():(Chat)[]{
+    const curentChat = this._chat === undefined ? [] : [this._chat];
+    return this._targetChat.length === 0 ? mainChat : this._targetChat;
   }
 
   public StartComment(message:Message,targetChat?:Chat){
-/*     if (this._event != ChatEvent.New){
-      return false;
-    } */
     this._event = ChatEvent.Comment;
     this._targetMessage = message;
-    this._targetChat = targetChat;
+    if (targetChat != undefined){
+      this._targetChat = [targetChat];
+    }
     this.EmitChatEventChange();
-    //return true;
   }
 
   public StartUpdate(message:Message){
-/*     if (this._event != ChatEvent.New){
-      return false;
-    } */
     this._event = ChatEvent.Update;
     this._targetMessage = message;
     this.EmitChatEventChange();
-    //return false;
   }
 
   public CancelChatEvent(){
     this._event = ChatEvent.New;
-    this._targetChat = undefined;
+    this._targetChat = [];
     this._targetMessage = undefined;
     this.EmitChatEventChange();
   }
@@ -227,7 +222,7 @@ export class MessengerStateService {
   }
 
   public GetMessageDTO(text:string):UpdateMessageDTO|CreateMessageDTO|undefined{
-    if (this.GetTargetChat() === undefined
+    if (this.GetTargetChat().length === 0
       || this._user === undefined) {
       return undefined;
     }
@@ -240,7 +235,8 @@ export class MessengerStateService {
     }
   }
 
-  private GetUpdateMessageDTO(text:string):UpdateMessageDTO{
+  private GetUpdateMessageDTO(text:string):UpdateMessageDTO[]{
+    
     const message = new UpdateMessageDTO();
     message.chatGuid = (this.GetTargetChat() as Chat).guid;
     message.date = (this._targetMessage as Message).date;
@@ -249,7 +245,7 @@ export class MessengerStateService {
     return message;
   }
 
-  private GetCreateMessageDTO(text:string):CreateMessageDTO{
+  private GetCreateMessageDTO(text:string):CreateMessageDTO[]{
     const message = new CreateMessageDTO();
     message.chatGuid = (this.GetTargetChat() as Chat).guid;
     message.commentedMessageGuid = this._targetMessage?.guid;
