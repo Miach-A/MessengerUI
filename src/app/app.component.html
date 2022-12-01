@@ -4,12 +4,12 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <mat-chip-list>
+    <mat-chip-listbox>
       <mat-chip color="accent" routerLink="user" *ngIf="authService.IsAuthenticated()">
         <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" />
         {{messengerState.GetUser()?.name}}
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-listbox>
     <span>&nbsp;&nbsp;</span>
     <button *ngIf="authService.IsAuthenticated()" mat-raised-button color="accent" (click)="Logout()">Logout</button>
     <button *ngIf="!authService.IsAuthenticated()" routerLink="login" mat-raised-button color="accent">Login</button>

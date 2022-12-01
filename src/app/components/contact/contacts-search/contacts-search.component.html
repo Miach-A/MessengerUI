@@ -1,6 +1,6 @@
 <form [formGroup]="contactSearchForm">
     <div class="flex-conteiner">
-        <mat-form-field class="search-input" appearance="standard">
+        <mat-form-field class="search-input" appearance="fill">
             <mat-label>Search new</mat-label>
             <input class="search-input" matInput placeholder="min 3 char" formControlName="name" (input)="NavigateSearchResult()" #searchInput>
         </mat-form-field>

@@ -21,6 +21,7 @@ import { ContactModule } from './components/contact/contact.module';
 import { UserModule } from './components/user/user.module';
 import { ContactSelectionComponent } from './components/utilities/contact-selection/contact-selection.component';
 import { UtilitiesModule } from './components/utilities/utilities.module';
+//import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -32,13 +33,14 @@ export function tokenGetter(){
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
   ],
   entryComponents:[ContactSelectionComponent],
   imports: [
+  //  MatChipsModule,
+    AngularMaterialModule,
     BrowserModule,
     AppRoutingModule,
-    AngularMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ChatModule,
