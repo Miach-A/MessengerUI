@@ -2,6 +2,11 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.button-text-align-start{
+    display: flex !important;
+    justify-content: flex-start !important; 
+  }
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;

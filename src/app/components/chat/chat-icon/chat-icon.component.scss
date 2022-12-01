@@ -4,9 +4,10 @@ a{
     width: 100%;  
 }
 
-.mdc-button__label{
-    text-align: left;
-}
+/* .mdc-button{
+    display: flex;
+    justify-content: flex-start; 
+} */
 
 :host{
     display: block;
