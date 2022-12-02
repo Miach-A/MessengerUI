@@ -31,9 +31,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.trySubmit = false;
 
-    this.authService.LogIn(this.loginForm.value.name, this.loginForm.value.password);
-    this.trySubmit = true;
+    this.authService.LogIn(this.loginForm.value.name, this.loginForm.value.password).subscribe({
+      next: (user) => this.trySubmit = true,
+      error: (error) => this.trySubmit = true
+    });
+    //this.trySubmit = true;
   }
 
 }

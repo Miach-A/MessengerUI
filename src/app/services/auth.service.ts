@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/User';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Token } from '../models/Token';
-import { Observable, Subscription, switchMap, tap } from 'rxjs';
+import { map, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { BackendService } from './backend.service';
 import { MessengerStateService } from './messenger-state.service';
@@ -22,7 +22,7 @@ export class AuthService {
     private JwtHelper:JwtHelperService,
     private router:Router) {   }
 
-  LogIn(name:string, password:string){
+  LogIn(name:string, password:string):Observable<User>{
 
     const getToken:Observable<Object> = this.backendService.post("Authenticate",{name: name, password:password})
     .pipe(
@@ -37,16 +37,26 @@ export class AuthService {
         switchMap(() => this.backendService.get("User") as Observable<User>)
       );
 
-      getUserInfo.subscribe({
+/*       getUserInfo.subscribe({
         next: (user) => {
           this.messengerState.SetUser(new User(user)); 
-          this.router.navigate(['/'])},
+          this.router.navigate(['/'])
+          },
         error : () => {
           //alert("Unauthorized");
           //this.Logout();
         }
-      });
+      }); */
 
+      return getUserInfo.pipe(
+        tap({
+          next: (user) => {
+            this.messengerState.SetUser(new User(user)); 
+            this.router.navigate(['/']) 
+          }
+        })        
+        );     
+    
   }
 
   GetUserInfo():Observable<User>{
