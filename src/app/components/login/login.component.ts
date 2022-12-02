@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
       next: (user) => this.trySubmit = true,
       error: (error) => this.trySubmit = true
     });
-    //this.trySubmit = true;
   }
 
 }
