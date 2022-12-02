@@ -12,7 +12,8 @@
             </div>
         </div>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
           <input matInput placeholder="Name" formControlName = "name">
         </mat-form-field>
         <mat-error *ngIf="this.registrationForm.controls['name'].hasError('minlength')">
@@ -25,10 +26,12 @@
           Only alphabet and numbers
         </mat-error>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
           <input matInput type="password" placeholder="Password" formControlName = "password">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password confirm</mat-label>
          <input matInput type="password" placeholder="Password confirm" formControlName = "passwordConfirm">
           </mat-form-field>
         <mat-error *ngIf="this.registrationForm.hasError('passwordMismatch')">

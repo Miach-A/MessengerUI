@@ -7,13 +7,16 @@
     <br>
     <mat-card-content>
      
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
           <input matInput placeholder="First name" formControlName="firstName"> <!-- value = {{this.GetFirstName()}} -->
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
           <input matInput placeholder="Last name" formControlName="lastName" ><!-- value = {{this.user?.lastName}} -->
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone number</mat-label>
           <input matInput placeholder="Phone number" formControlName="phoneNumber" > <!-- value = {{this.user?.phoneNumber}} -->
         </mat-form-field> 
 
