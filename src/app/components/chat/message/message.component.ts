@@ -10,47 +10,47 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent implements OnInit {
-  private _subscriptions:Subscription[] = [];
-  public my:boolean = false;
-  public openOptions:boolean = false;
-  @Input() message!:Message;
-  @HostBinding('style.flex-direction') messageFlexDirection:string = "row";
+  private _subscriptions: Subscription[] = [];
+  public my: boolean = false;
+  public openOptions: boolean = false;
+  @Input() message!: Message;
+  @HostBinding('style.flex-direction') messageFlexDirection: string = "row";
 
   constructor(
-    private _ngZone: NgZone,
-    private messengerState:MessengerStateService
+    //private _ngZone: NgZone,
+    private _messengerState: MessengerStateService
   ) { }
 
 
   ngOnInit(): void {
-    this.my = this.message.contactName == this.messengerState.GetUser()?.name;
-    if (this.my){
+    this.my = this.message.contactName == this._messengerState.GetUser()?.name;
+    if (this.my) {
       this.messageFlexDirection = "row-reverse";
     }
   }
 
-  StartForward(){
-    this.messengerState.StartForward(this.message);
+  StartForward() {
+    this._messengerState.StartForward(this.message);
   }
-  
-  MessageOptions(event:Event){
+
+  MessageOptions(event: Event) {
     event.preventDefault();
     this.openOptions = !this.openOptions;
   }
 
-  StartEdit(){
-    this.messengerState.StartUpdate(this.message);
+  StartEdit() {
+    this._messengerState.StartUpdate(this.message);
   }
 
-  StartComment(){
-    this.messengerState.StartComment(this.message);
+  StartComment() {
+    this._messengerState.StartComment(this.message);
   }
 
-  Delete(){
-    this.messengerState.DeleteMessage(this.message);
+  Delete() {
+    this._messengerState.DeleteMessage(this.message);
   }
 
-  DeleteForMe(){
-    this.messengerState.DeleteMessageForMe(this.message);
+  DeleteForMe() {
+    this._messengerState.DeleteMessageForMe(this.message);
   }
 }

@@ -10,25 +10,25 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./contacts-search.component.scss']
 })
 export class ContactsSearchComponent implements OnInit, AfterViewInit {
-  private _subscriptions:Subscription[] = [];
-  public contactSearchForm!:FormGroup;
-  @ViewChild('searchInput') searchInput!:ElementRef;
+  private _subscriptions: Subscription[] = [];
+  public contactSearchForm!: FormGroup;
+  @ViewChild('searchInput') searchInput!: ElementRef;
 
   constructor(
-    private messengerState:MessengerStateService,
-    private router:Router
+    private _messengerState: MessengerStateService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
     this.contactSearchForm = new FormGroup({
       name: new FormControl(),
-      orderby:new FormControl(0),
-      pageindex:new FormControl(0),
-      pagesize:new FormControl(25),
+      orderby: new FormControl(0),
+      pageindex: new FormControl(0),
+      pagesize: new FormControl(25),
     });
   }
 
-  ngAfterViewInit(){ 
+  ngAfterViewInit() {
     this._subscriptions.push(
       (fromEvent(this.searchInput.nativeElement, 'input') as Observable<Event>)
         .pipe(
@@ -41,14 +41,14 @@ export class ContactsSearchComponent implements OnInit, AfterViewInit {
         ).subscribe({
           next: (value) => {
             if (value !== '') {
-              this.messengerState.EmitContactSearchEvent(this.contactSearchForm.value);
+              this._messengerState.EmitContactSearchEvent(this.contactSearchForm.value);
             }
           }
         })
     );
   }
 
-  NavigateSearchResult(){
-    this.router.navigate(['/contactsearchresult']);
+  NavigateSearchResult() {
+    this._router.navigate(['/contactsearchresult']);
   }
 }

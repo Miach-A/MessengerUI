@@ -19,34 +19,34 @@ export class SavedContactInfoComponent implements OnInit, OnDestroy {
   public isMe: boolean = false;
 
   constructor(
-    private messengerState: MessengerStateService,
-    private activatedRoute: ActivatedRoute,
-    private backendService: BackendService,
-    private route: Router,
-    private chatService: ChatService) {
+    private _messengerState: MessengerStateService,
+    private _activatedRoute: ActivatedRoute,
+    private _backendService: BackendService,
+    private _route: Router,
+    private _chatService: ChatService) {
 
   }
 
   ngOnInit(): void {
     this._subscriptions.push(
-      this.activatedRoute.paramMap.subscribe({
+      this._activatedRoute.paramMap.subscribe({
         next: (param) => {
           this.UpdateData(param.get('contactname') ?? "");
         }
       }));
 
     this._subscriptions.push(
-      this.messengerState.GetUserDataChangeEmitter()
+      this._messengerState.GetUserDataChangeEmitter()
         .subscribe({
           next: () => {
-            const routeSnapShot = this.activatedRoute.snapshot;
+            const routeSnapShot = this._activatedRoute.snapshot;
             this.UpdateData(routeSnapShot.paramMap.get('contactname') ?? "");
           }
         }));
   }
 
   ContactSaved() {
-    const user = this.messengerState.GetUser();
+    const user = this._messengerState.GetUser();
     if (user === undefined) {
       this.saved = false;
       return;
@@ -66,27 +66,27 @@ export class SavedContactInfoComponent implements OnInit, OnDestroy {
     }
 
     this._subscriptions.push(
-      this.backendService
+      this._backendService
         .post("PostContact", new CreateContactDTO(this.contact.name))
         .subscribe({
           next: (contact) => { 
             this.contact = new Contact(contact as Contact);
-            this.messengerState.AddContact(this.contact); 
+            this._messengerState.AddContact(this.contact); 
             this.saved = true; }
         }));
   }
 
   UpdateData(name: string) {
-    this.contact = this.messengerState.GetContact(name);
+    this.contact = this._messengerState.GetContact(name);
 
     if (this.contact != undefined) {
       this.saved = true;
     }
     else {
       this.saved = false;
-      const chat = this.messengerState.GetCurrentChat();
+      const chat = this._messengerState.GetCurrentChat();
       if (chat != undefined) {
-        this.contact = this.messengerState.GetContact(name, chat.guid);
+        this.contact = this._messengerState.GetContact(name, chat.guid);
       }
     }
 
@@ -95,26 +95,25 @@ export class SavedContactInfoComponent implements OnInit, OnDestroy {
 
   IsMe() {
     this.isMe = false;
-    if (this.contact?.name === this.messengerState.GetUser()?.name) {
+    if (this.contact?.name === this._messengerState.GetUser()?.name) {
       this.isMe = true;
     }
   }
 
   DeleteContact() {
     this._subscriptions.push(
-      this.backendService
+      this._backendService
         .delete("DeleteContact", this.contact?.name)
         .subscribe({
           next: () => {
-            this.messengerState.DeleteContact(this.contact as Contact);
-            //this.UpdateData(this.contact?.name ?? "");
-            this.route.navigate(['./'], { relativeTo: this.activatedRoute.parent });
+            this._messengerState.DeleteContact(this.contact as Contact);
+            this._route.navigate(['./'], { relativeTo: this._activatedRoute.parent });
           }
         }));
   }
 
   OpenChat() {
-    const user = this.messengerState.GetUser();
+    const user = this._messengerState.GetUser();
     if (!user || !this.contact) {
       return;
     }
@@ -125,19 +124,19 @@ export class SavedContactInfoComponent implements OnInit, OnDestroy {
       if (this.contact?.name !== undefined) {
         contacts.push(this.contact?.name);
       }
-      this.chatService.CreateChat(contacts);
+      this._chatService.CreateChat(contacts);
       return;
     }
 
-    this.route.navigate(['chat', chat.guid]);
+    this._route.navigate(['chat', chat.guid]);
   }
 
   SavedContact() {
-    return !!this.messengerState.GetUser()?.contacts.find(x => x === this.contact);
+    return !!this._messengerState.GetUser()?.contacts.find(x => x === this.contact);
   }
 
   ParentRoute() {
-    this.route.navigate(['./'], { relativeTo: this.activatedRoute.parent });
+    this._route.navigate(['./'], { relativeTo: this._activatedRoute.parent });
   }
 
   ngOnDestroy(): void {

@@ -11,46 +11,47 @@ import { ValidateService } from 'src/app/services/validate.service';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
-  private _subscriptions:Subscription[] = [];
-  public registrationForm!:FormGroup;
-  public hasErrors:boolean = false;
-  public errors:any;
+  private _subscriptions: Subscription[] = [];
+  public registrationForm!: FormGroup;
+  public hasErrors: boolean = false;
+  public errors: any;
 
   constructor(
-    private validateService:ValidateService,
-    private backend:BackendService,
-    private router:Router
+    private _validateService: ValidateService,
+    private _backendService: BackendService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(18),Validators.pattern("^[a-zA-Z0-9]+$")]),
-      password: new FormControl('',[Validators.required]),
-      passwordConfirm: new FormControl('',[Validators.required])
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(18), Validators.pattern("^[a-zA-Z0-9]+$")]),
+      password: new FormControl('', [Validators.required]),
+      passwordConfirm: new FormControl('', [Validators.required])
     },
-    this.validateService.passwordMatch('password', 'passwordConfirm')
+      this._validateService.passwordMatch('password', 'passwordConfirm')
     );
   }
 
-  Submit(){
-    if (this.registrationForm.invalid){
+  Submit() {
+    if (this.registrationForm.invalid) {
       return;
     }
-    
+
     this._subscriptions.push(
-      this.backend.post('user',{name:this.registrationForm.value.name,password:this.registrationForm.value.name}).subscribe({
-      next: (user) => {
-        this.errors = undefined; 
-        this.hasErrors = false;
-        this.router.navigate(['/login'])},
-      error: (responce) => {this.errors =  Object.entries((responce.error.errors as object));this.hasErrors = true;}
-    }));
+      this._backendService.post('user', { name: this.registrationForm.value.name, password: this.registrationForm.value.name }).subscribe({
+        next: (user) => {
+          this.errors = undefined;
+          this.hasErrors = false;
+          this._router.navigate(['/login'])
+        },
+        error: (responce) => { this.errors = Object.entries((responce.error.errors as object)); this.hasErrors = true; }
+      }));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
   }
-  
+
 }

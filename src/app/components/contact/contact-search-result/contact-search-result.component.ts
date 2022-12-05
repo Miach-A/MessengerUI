@@ -10,22 +10,22 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./contact-search-result.component.scss']
 })
 export class ContactSearchResultComponent implements OnInit, OnDestroy {
-  private _subscriptions:Subscription[] = [];
-  public _searchForm:any;
+  private _subscriptions:Subscription[] = [];  
   private _totalCount:number = 0;
+  public searchForm:any;
   public contacts:Contact[] = [];
   public page:number = 0;
   public pageCount:number = 0;
   
   constructor(
-    private messengerState: MessengerStateService,
-    private backendService: BackendService
+    private _messengerState: MessengerStateService,
+    private _backendService: BackendService
   ) {
     this._subscriptions.push(
-      this.messengerState.GetContactSearchEmitter()
+      this._messengerState.GetContactSearchEmitter()
         .pipe(
           tap((data: any) => {
-            this._searchForm = data;
+            this.searchForm = data;
           }),
           switchMap(() => this.SearchData())
         ).subscribe({
@@ -38,32 +38,32 @@ export class ContactSearchResultComponent implements OnInit, OnDestroy {
   }
 
   SearchData():Observable<Object>{
-    return this.backendService.get("GetUsers", undefined, this._searchForm);
+    return this._backendService.get("GetUsers", undefined, this.searchForm);
   }
 
   SetPageCount(){
-    if (this._searchForm === undefined){
+    if (this.searchForm === undefined){
       this.pageCount = 0;
     }
 
-    this.pageCount = Math.floor(this._totalCount / this._searchForm.pagesize)  + 1;
+    this.pageCount = Math.floor(this._totalCount / this.searchForm.pagesize)  + 1;
   }
 
   NextPage(){
-    if (this._searchForm.pageindex + 1 === this.pageCount){
+    if (this.searchForm.pageindex + 1 === this.pageCount){
       return;
     }
 
-    this._searchForm.pageindex += 1;
+    this.searchForm.pageindex += 1;
     this.GetData();
   }
 
   PreviousPage(){
-    if (this._searchForm.pageindex === 0){
+    if (this.searchForm.pageindex === 0){
       return;
     }
 
-    this._searchForm.pageindex -= 1; 
+    this.searchForm.pageindex -= 1; 
     this.GetData();
   }
 

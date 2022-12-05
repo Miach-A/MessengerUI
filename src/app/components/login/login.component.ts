@@ -9,11 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  private trySubmit:boolean = false;
+  private _trySubmit:boolean = false;
   public loginForm!:FormGroup;
 
   constructor(
-    private authService:AuthService
+    private _authService:AuthService
   ) { }
 
   ngOnInit(): void {
@@ -24,18 +24,18 @@ export class LoginComponent implements OnInit {
   }
 
   LoginValid():boolean{
-    return !this.trySubmit || this.authService.IsAuthenticated();
+    return !this._trySubmit || this._authService.IsAuthenticated();
   }
 
   Submit(){
     if (this.loginForm.invalid) {
       return;
     }
-    this.trySubmit = false;
+    this._trySubmit = false;
 
-    this.authService.LogIn(this.loginForm.value.name, this.loginForm.value.password).subscribe({
-      next: (user) => this.trySubmit = true,
-      error: (error) => this.trySubmit = true
+    this._authService.LogIn(this.loginForm.value.name, this.loginForm.value.password).subscribe({
+      next: (user) => this._trySubmit = true,
+      error: (error) => this._trySubmit = true
     });
   }
 

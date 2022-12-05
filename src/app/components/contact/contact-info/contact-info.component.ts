@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/app/models/Contact';
 import { CreateContactDTO } from 'src/app/models/CreateContactDTO';
@@ -11,13 +11,13 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   styleUrls: ['./contact-info.component.scss']
 })
 export class ContactInfoComponent implements OnInit, OnDestroy {
-  private _subscriptions:Subscription[] = [];
-  public saved:boolean = false;
-  @Input() contact!:Contact;
+  private _subscriptions: Subscription[] = [];
+  public saved: boolean = false;
+  @Input() contact!: Contact;
 
   constructor(
-    private backendService:BackendService,
-    private messengerState:MessengerStateService
+    private _backendService: BackendService,
+    private _messengerState: MessengerStateService
 
   ) { }
 
@@ -25,14 +25,14 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     this.ContactSaved();
   }
 
-  ContactSaved(){
-    const user = this.messengerState.GetUser();
-    if (user === undefined){
+  ContactSaved() {
+    const user = this._messengerState.GetUser();
+    if (user === undefined) {
       this.saved = false;
       return;
     }
 
-    if (!!user.contacts.find(x => x.name === this.contact.name) || user.name === this.contact.name){
+    if (!!user.contacts.find(x => x.name === this.contact.name) || user.name === this.contact.name) {
       this.saved = true;
       return;
     }
@@ -42,14 +42,17 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
 
   Submit() {
     this._subscriptions.push(
-      this.backendService
-        .post("PostContact", new CreateContactDTO(this.contact.name ))
+      this._backendService
+        .post("PostContact", new CreateContactDTO(this.contact.name))
         .subscribe({
-          next: (contact) => { this.messengerState.AddContact(new Contact(contact as Contact)); this.saved = true; }
+          next: (contact) => {
+            this._messengerState.AddContact(new Contact(contact as Contact));
+            this.saved = true;
+          }
         }));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this._subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });

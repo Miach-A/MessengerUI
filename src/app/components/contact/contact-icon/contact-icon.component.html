@@ -1,7 +1,11 @@
-<a class = "mat-body button-text-align-start" *ngIf="chat === undefined; else elseBlock" mat-button routerLinkActive="active"
-    routerLink="/contactinfo/{{contact.name}}">{{contact.name}}</a>
+<a class="mat-body button-text-align-start" *ngIf="chat === undefined; else elseBlock" mat-button
+    routerLinkActive="active" routerLink="/contactinfo/{{contact.name}}">
+    {{contact.name}}
+</a>
 
 <ng-template #elseBlock>
-    <a class = "mat-body button-text-align-start" mat-button routerLinkActive="active"
-        routerLink="/chat/{{chat!.guid}}/contactinfo/{{contact.name}}">{{contact.name}}</a>
+    <a class="mat-body button-text-align-start" mat-button routerLinkActive="active"
+        routerLink="/chat/{{chat!.guid}}/contactinfo/{{contact.name}}">
+        {{contact.name}}
+    </a>
 </ng-template>

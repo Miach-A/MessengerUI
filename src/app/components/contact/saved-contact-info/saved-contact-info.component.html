@@ -1,14 +1,26 @@
-<mat-card *ngIf="!isMe"> <!--  *ngIf="SavedContact()" -->
+<mat-card *ngIf="!isMe">
   <mat-card-title>{{contact?.name}}</mat-card-title>
-  <mat-card-subtitle>Full name:<span>&nbsp;&nbsp;</span>{{contact?.firstName}} {{contact?.lastName}}</mat-card-subtitle>
-  <mat-card-subtitle>Phone number: <span>&nbsp;&nbsp;</span>{{contact?.phoneNumber}}</mat-card-subtitle>
-  <mat-card-actions> 
-    <button *ngIf="!saved" mat-raised-button color="primary" (click)="SaveContact()">Save</button>
+  <mat-card-subtitle>
+    Full name:<span>&nbsp;&nbsp;</span>{{contact?.firstName}} {{contact?.lastName}}
+  </mat-card-subtitle>
+  <mat-card-subtitle>
+    Phone number: <span>&nbsp;&nbsp;</span>{{contact?.phoneNumber}}
+  </mat-card-subtitle>
+  <mat-card-actions>
+    <button *ngIf="!saved" mat-raised-button color="primary" (click)="SaveContact()">
+      Save
+    </button>
     <ng-container *ngIf="saved">
-      <button mat-raised-button color="primary" (click)="OpenChat()">Open chat</button>
+      <button mat-raised-button color="primary" (click)="OpenChat()">
+        Open chat
+      </button>
       <span>&nbsp;</span>
-      <button mat-raised-button color="warn" (click)="DeleteContact()" >Delete contact</button> 
+      <button mat-raised-button color="warn" (click)="DeleteContact()">
+        Delete contact
+      </button>
     </ng-container>
-    <button class="close-form" (click)="ParentRoute()" ><mat-icon>close</mat-icon></button> 
+    <button class="close-form" (click)="ParentRoute()">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

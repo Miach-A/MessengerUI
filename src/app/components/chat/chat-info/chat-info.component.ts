@@ -19,15 +19,15 @@ export class ChatInfoComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[] = [];
 
   constructor(private messengerState: MessengerStateService,
-    private backendService: BackendService,
-    private signalrService: SignalrService,
-    private messengerStateService: MessengerStateService,
-    private route: Router,
-    private activatedRoute: ActivatedRoute,) { }
+    private _backendService: BackendService,
+    private _signalrService: SignalrService,
+    private _messengerState: MessengerStateService,
+    private _route: Router,
+    private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this._subscriptions.push(
-      this.messengerStateService.GetChatDataChangeEmitter().subscribe({
+      this._messengerState.GetChatDataChangeEmitter().subscribe({
         next: (chat: Chat) => {
           if (chat.guid === this.chat?.guid) {
             this.chat = chat;
@@ -43,14 +43,14 @@ export class ChatInfoComponent implements OnInit, OnDestroy {
           if (contacts === undefined || contacts.length === 0) {
             return of(false);
           }
-          return this.backendService.post("PostChatUser",
+          return this._backendService.post("PostChatUser",
             new AddChatUserDTO(this.chat?.guid ?? "", contacts.map(x => x.name)))
         }
         )
       ).subscribe({
         next: (result) => {
           if (result === true) {
-            this.signalrService.SendNewChat(this.chat?.guid ?? "");
+            this._signalrService.SendNewChat(this.chat?.guid ?? "");
           }
         }
       })
@@ -62,12 +62,12 @@ export class ChatInfoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.backendService.post("LeavePublicChat", { guid: this.chat.guid }).subscribe({
+    this._backendService.post("LeavePublicChat", { guid: this.chat.guid }).subscribe({
       next: (result) => {
         if (result === true) {
           this.messengerState.DeleteChat(this.chat!.guid);
-          this.signalrService.SendNewChat(this.chat?.guid ?? "");
-          this.route.navigate(['./'], { relativeTo: this.activatedRoute.parent });
+          this._signalrService.SendNewChat(this.chat?.guid ?? "");
+          this._route.navigate(['./'], { relativeTo: this._activatedRoute.parent });
         }
       }
     })

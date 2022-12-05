@@ -17,11 +17,11 @@ export class UserInfoComponent implements OnInit, OnDestroy{
   private _subscriptions:Subscription[] = [];
 
   constructor(
-    private messengerState:MessengerStateService,
-    private authService:AuthService,
-    private backendService:BackendService,
+    private _messengerState:MessengerStateService,
+    private _authService:AuthService,
+    private _backendService:BackendService,
   ) { 
-    this.user = messengerState.GetUser();
+    this.user = _messengerState.GetUser();
   }
 
   ngOnInit(): void {
@@ -33,9 +33,9 @@ export class UserInfoComponent implements OnInit, OnDestroy{
 
     if (this.user === undefined) {
       this._subscriptions.push(
-        this.authService.GetUserInfo().subscribe({
+        this._authService.GetUserInfo().subscribe({
         next: () => {
-          this.user = this.messengerState.GetUser();
+          this.user = this._messengerState.GetUser();
           this.SetUserFormValue();} 
       }));   
     }
@@ -53,7 +53,7 @@ export class UserInfoComponent implements OnInit, OnDestroy{
   }
 
   public Submit(){
-    this._subscriptions.push(this.backendService.put('user',this.userForm.value).subscribe());
+    this._subscriptions.push(this._backendService.put('user',this.userForm.value).subscribe());
   }
 
   ngOnDestroy(){

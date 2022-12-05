@@ -14,48 +14,48 @@ import { MessengerStateService } from 'src/app/services/messenger-state.service'
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   private _isNearBottom = true;
   private _scrollContainer: any;
-  private _subscriptions:Subscription[] = [];
-  public chatName:string = "";
+  private _subscriptions: Subscription[] = [];
+  public chatName: string = "";
   public openChatInfo = false;
-  public canCancel:boolean = false;
-  public edit:boolean = false;
-  public forward:boolean = false;
-  public comment:boolean = false;
-  public text:string = "";
-  public chat?:Chat;
-  public targetMessage?:Message;
-  @ViewChild('messages') scrollFrame : ElementRef | undefined;
+  public canCancel: boolean = false;
+  public edit: boolean = false;
+  public forward: boolean = false;
+  public comment: boolean = false;
+  public text: string = "";
+  public chat?: Chat;
+  public targetMessage?: Message;
+  @ViewChild('messages') scrollFrame: ElementRef | undefined;
   @ViewChildren('message') messageView: QueryList<any> | undefined;
 
   constructor(
-    private activatedRoute:ActivatedRoute,
-    private messengerState:MessengerStateService,
-    private backendService:BackendService,
-    private chatService:ChatService,
-    private route:Router,
+    private _activatedRoute: ActivatedRoute,
+    private _messengerState: MessengerStateService,
+    private _backendService: BackendService,
+    private _chatService: ChatService,
+    private _route: Router,
   ) { }
 
   ngOnInit(): void {
     this._subscriptions.push(
-      this.activatedRoute.paramMap.subscribe({
+      this._activatedRoute.paramMap.subscribe({
         next: (param) => {
           this.UpdateData(param.get('guid') ?? "");
         }
       }));
 
     this._subscriptions.push(
-      this.messengerState.GetUserDataChangeEmitter()
+      this._messengerState.GetUserDataChangeEmitter()
         .subscribe({
           next: () => {
-            this.UpdateData(this.activatedRoute.snapshot.paramMap.get('guid') ?? "");
+            this.UpdateData(this._activatedRoute.snapshot.paramMap.get('guid') ?? "");
           }
         }));
 
     this._subscriptions.push(
-      this.messengerState.GetChatEventEmitter()
+      this._messengerState.GetChatEventEmitter()
         .subscribe({
           next: (chatEvent: ChatEvent) => {
             this.UpdateChatAfterEventChange(chatEvent)
@@ -63,20 +63,20 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
         }));
   }
 
-  UpdateChatAfterEventChange(chatEvent: ChatEvent){
-    if (chatEvent === ChatEvent.Update){
-      this.text = this.messengerState.GetTargetMessage()?.text ?? ""; 
+  UpdateChatAfterEventChange(chatEvent: ChatEvent) {
+    if (chatEvent === ChatEvent.Update) {
+      this.text = this._messengerState.GetTargetMessage()?.text ?? "";
     }
 
-    this.targetMessage = this.messengerState.GetTargetMessage();
-    this.edit =  chatEvent === ChatEvent.Update;
-    this.comment =  chatEvent === ChatEvent.Comment;
+    this.targetMessage = this._messengerState.GetTargetMessage();
+    this.edit = chatEvent === ChatEvent.Update;
+    this.comment = chatEvent === ChatEvent.Comment;
     this.forward = chatEvent === ChatEvent.Forward;
     this.canCancel = chatEvent === ChatEvent.Update || chatEvent === ChatEvent.Comment || chatEvent === ChatEvent.Forward;
   }
 
-  CanselEvent(){
-    this.messengerState.CancelChatEvent();
+  CanselEvent() {
+    this._messengerState.CancelChatEvent();
     this.text = "";
   }
 
@@ -87,74 +87,73 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     if (this.messageView != undefined) {
       this._subscriptions.push(
         this.messageView.changes.subscribe(() => {
-          //this._isNearBottom = this.isUserNearBottom();
           this.onItemElementsChanged();
         })
       );
     }
   }
- 
+
   UpdateData(chatGuid: string) {
-    this.chat = this.messengerState.GetChat(chatGuid);
+    this.chat = this._messengerState.GetChat(chatGuid);
     if (!this.chat) {
       return;
     }
 
-    this.chatName = this.chatService.GetChatName(this.chat);
+    this.chatName = this._chatService.GetChatName(this.chat);
 
-    this.messengerState.SetChat(this.chat);  
-    if (this.messengerState.GetMessages(chatGuid).length < 20){
+    this._messengerState.SetChat(this.chat);
+    if (this._messengerState.GetMessages(chatGuid).length < 20) {
       this.GetMessagesFromBack(chatGuid).subscribe({
-        next: (messages) => this.messengerState.SetMessages(chatGuid, messages)
+        next: (messages) => this._messengerState.SetMessages(chatGuid, messages)
       });
     }
   }
 
-  SendMessageIfEnter(event:KeyboardEvent){
-    if (event.key === 'Enter' && !event.shiftKey){
+  SendMessageIfEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.SendMessage();
     }
   }
 
-  GetMessages():Message[] {
-    if (this.chat === undefined){
+  GetMessages(): Message[] {
+    if (this.chat === undefined) {
       return new Array<Message>;
     }
-    return this.messengerState.GetMessages(this.chat.guid);
+    return this._messengerState.GetMessages(this.chat.guid);
   }
 
-  GetMessagesFromBack(chatGuid:string):Observable<Message[]> {
-    const date = this.messengerState.GetMessages(chatGuid)[0]?.date;
+  GetMessagesFromBack(chatGuid: string): Observable<Message[]> {
+    const date = this._messengerState.GetMessages(chatGuid)[0]?.date;
     var search;
-    if(date === undefined){
-      search =  { chatGuid: chatGuid, count: 20}
+    if (date === undefined) {
+      search = { chatGuid: chatGuid, count: 20 }
     }
-    else{
-      search =  { chatGuid: chatGuid, count: 20, date:date.toString()}
+    else {
+      search = { chatGuid: chatGuid, count: 20, date: date.toString() }
     }
-    
-    return this.backendService
-        .get("Message", undefined, search)
-        .pipe(
-          map((data: any) => {
-            const messages: Message[] = [];
-            data.forEach((message: Message) => {
-              messages.push(new Message(message));
-            });
-            return messages;
-          }));
+
+    return this._backendService
+      .get("Message", undefined, search)
+      .pipe(
+        map((data: any) => {
+          const messages: Message[] = [];
+          data.forEach((message: Message) => {
+            messages.push(new Message(message));
+          });
+          return messages;
+        }));
   }
 
-  SendMessage(){
-    this.messengerState.SendMessage(this.text);
+  SendMessage() {
+    this._messengerState.SendMessage(this.text);
     this.text = "";
   }
 
-  OpenCloseChatInfo(){
+  OpenCloseChatInfo() {
     this.openChatInfo = !this.openChatInfo;
     if (!this.openChatInfo) {
-      this.route.navigate(['./'], { relativeTo: this.activatedRoute});
+      this._route.navigate(['./'], { relativeTo: this._activatedRoute });
     }
   }
 
@@ -179,21 +178,21 @@ export class ChatComponent implements OnInit,OnDestroy, AfterViewInit{
     return position > height - threshold;
   }
 
-  scrollMessages(event:Event){
+  scrollMessages(event: Event) {
     this._isNearBottom = this.isUserNearBottom();
     if (this._scrollContainer.scrollTop === 0
       && this.chat != undefined) {
-      const chatGuid = this.chat.guid; 
+      const chatGuid = this.chat.guid;
       this.GetMessagesFromBack(chatGuid).subscribe({
-        next : (messages) => {  
-          this.messengerState.SetMessages(chatGuid, messages);
+        next: (messages) => {
+          this._messengerState.SetMessages(chatGuid, messages);
           this._scrollContainer.scroll({
             top: 5,
             left: 0,
           });
         }
       });
-      
+
     }
   }
 

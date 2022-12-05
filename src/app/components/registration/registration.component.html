@@ -1,45 +1,45 @@
 <mat-card>
-    <mat-card-content>
-      <form [formGroup] = "registrationForm" (ngSubmit)="Submit()">
-        <h2>Registration</h2>
+  <mat-card-content>
+    <form [formGroup]="registrationForm" (ngSubmit)="Submit()">
+      <h2>Registration</h2>
 
-        <div *ngIf="hasErrors">
-            <div *ngFor="let error of errors">
-                {{error[0]}}
-                <mat-error *ngFor="let error of error[1]">         
-                    {{error}}
-                </mat-error>
-            </div>
+      <div *ngIf="hasErrors">
+        <div *ngFor="let error of errors">
+          {{error[0]}}
+          <mat-error *ngFor="let error of error[1]">
+            {{error}}
+          </mat-error>
         </div>
+      </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Name" formControlName = "name">
-        </mat-form-field>
-        <mat-error *ngIf="this.registrationForm.controls['name'].hasError('minlength')">
-          Min length 3
-        </mat-error>
-        <mat-error *ngIf="this.registrationForm.controls['name'].hasError('maxlength')">
-          Max length 36
-        </mat-error>
-        <mat-error *ngIf="this.registrationForm.controls['name'].hasError('pattern')">
-          Only alphabet and numbers
-        </mat-error>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+      <mat-error *ngIf="this.registrationForm.controls['name'].hasError('minlength')">
+        Min length 3
+      </mat-error>
+      <mat-error *ngIf="this.registrationForm.controls['name'].hasError('maxlength')">
+        Max length 36
+      </mat-error>
+      <mat-error *ngIf="this.registrationForm.controls['name'].hasError('pattern')">
+        Only alphabet and numbers
+      </mat-error>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" placeholder="Password" formControlName = "password">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Password confirm</mat-label>
-         <input matInput type="password" placeholder="Password confirm" formControlName = "passwordConfirm">
-          </mat-form-field>
-        <mat-error *ngIf="this.registrationForm.hasError('passwordMismatch')">
-            Password mismatch
-        </mat-error>
-         <br>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Password" formControlName="password">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password confirm</mat-label>
+        <input matInput type="password" placeholder="Password confirm" formControlName="passwordConfirm">
+      </mat-form-field>
+      <mat-error *ngIf="this.registrationForm.hasError('passwordMismatch')">
+        Password mismatch
+      </mat-error>
+      <br>
 
-        <button type="submit" mat-raised-button color="accent">Submit</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      <button type="submit" mat-raised-button color="accent">Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>

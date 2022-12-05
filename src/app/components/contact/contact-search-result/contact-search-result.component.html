@@ -1,21 +1,17 @@
 <div class="paginator">
-     <div class = "page-counter">{{this._searchForm === undefined ? 0 : this._searchForm.pageindex + 1}} of {{pageCount}}</div>
-
-     <span>&nbsp;</span>
-
-     <button mat-raised-button color="primary" (click)="PreviousPage()">
-         <mat-icon>keyboard_arrow_left</mat-icon>
-     </button>
-
-     <span>&nbsp;</span>
-
-     <button mat-raised-button color="primary" (click)="NextPage()">
-         <mat-icon>keyboard_arrow_right</mat-icon>
-     </button>
-
- </div>
+    <div class="page-counter">
+        {{this.searchForm === undefined ? 0 : this.searchForm.pageindex + 1}} of {{pageCount}}
+    </div>
+    <span>&nbsp;</span>
+    <button mat-raised-button color="primary" (click)="PreviousPage()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <span>&nbsp;</span>
+    <button mat-raised-button color="primary" (click)="NextPage()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+</div>
 
 <div class="contacts-conteiner">
     <app-contact-info [contact]="contact" *ngFor="let contact of contacts"></app-contact-info>
 </div>
-

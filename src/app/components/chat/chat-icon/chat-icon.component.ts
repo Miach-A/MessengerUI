@@ -12,11 +12,11 @@ export class ChatIconComponent implements OnInit {
   public chat!:Chat;
   public chanName:string = "";
   constructor(
-    private chatService:ChatService
+    private _chatService:ChatService
   ) { }
 
   ngOnInit(): void {
-    this.chanName = this.chatService.GetChatName(this.chat);
+    this.chanName = this._chatService.GetChatName(this.chat);
   }
 
 }
